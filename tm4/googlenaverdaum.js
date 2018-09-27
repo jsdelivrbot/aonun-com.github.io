@@ -1,6 +1,6 @@
 function google(v,t,f){
 	return $.ajax({
-			url:'http:///ftp.aonun.com/net/google/',
+			url:'http://ftp.aonun.com/net/google/',
 			dataType:'json',
 			data: {
 				q:v,
@@ -14,7 +14,7 @@ function google(v,t,f){
 }
 function naver(v,t,f){
 	return $.ajax({
-			url:'http:///ftp.aonun.com/net/naver/',
+			url:'http://ftp.aonun.com/net/naver/',
 			dataType:'json',
 			data: {
 				q:v,
@@ -28,7 +28,7 @@ function naver(v,t,f){
 }
 function daum(v,t,f){
 	return $.ajax({
-			url:'http:///ftp.aonun.com/net/daum/',
+			url:'http://ftp.aonun.com/net/daum/',
 			dataType:'json',
 			data: {
 				q:v,
