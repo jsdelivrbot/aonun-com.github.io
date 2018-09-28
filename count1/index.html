@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+<head>
+<meta charset="utf-8">
+<script type="text/javascript" src="/lib/jquery-3.2.1.min.js"></script>
+<title>카운터</title>
+</head>
+<body>
+<pre id="result"></pre>
+<textarea id="str"></textarea>
+</body>
+</html>
+<script type="text/javascript">
+var re=/[^\x00-\xFF\s]/g;
+
+var cn=/[\u4e00-\u9fff\uf900-\ufaff]/;
+var ko=/[\u3131-\u314e\u314f-\u3163\uac00-\ud7a3]/;// /[ㄱ-ㅎㅏ-ㅣ가-힣]/
+
+
+
+$('#str').on('paste input',function(){
+	var value=$('#str').val();
+	var rs='';
+	var i=0,len=value.length,cnv=0,kov=0;
+
+
+	var b=false;
+	while(i<len) {
+		if(cn.test(value[i])) cnv++;
+		else if(ko.test(value[i])) kov++;
+		i++;
+	}
+
+	rs+='\n한글: '+kov+'자\n\n中文: '+cnv+'자\n\n중한: '+(kov+cnv)+'자\n\n전체: '+len;
+	$('#result').text(rs);
+});
+
+
+$('#result').css({'width':'100%','min-height':'1em',background:'#C6EFCE'})
+$('#str').css('width','100%');
+
+
+
+
+</script>
