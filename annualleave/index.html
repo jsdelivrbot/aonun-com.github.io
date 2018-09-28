@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/vue.min.js"></script>
+<title>Anuual Leave</title>
+</head>
+<body>
+<style>
+* {
+  font-family: "MS PGothic", monospace, "Microsoft Yahei";
+}
+#app {
+  width: 100%;
+  margin:0;
+  padding: 0;
+}
+.nav {
+  position: fixed;
+  top:0;
+  left:0;
+}
+.navbox {
+  background: #fff;
+  width: 100%;
+}
+.info {
+  margin:0 auto;
+}
+.counter-reset{
+  counter-reset: n;
+}
+.counter:before {
+  min-width:8em;
+  content: counter(n);
+  counter-increment: n;
+  background: #eef;
+  padding: 3.33px;
+  font-weight: bold;
+  border-radius: 3.33px;
+}
+.R1 {background: #a4ffb8; border-radius:6.66px;}
+.R2 {background: #fdffa4; border-radius:6.66px;}
+.R3 {background: #ffdc55; border-radius:6.66px;}
+
+th{
+  background: #a7ffb3;
+}
+td {
+  font-weight: bold;
+  background:#eef;
+  border-bottom: 1px solid #999;
+}
+
+hr{
+  margin-top: 66.66px;
+}
+</style>
+<div id="app">
+<div class="navbox">
+<table class="nav">
+<tr>
+  <th>입사일(년/월/일)</th>
+  <th>퇴사일(년/월/일)</th>
+</tr>
+<tr>
+  <td>
+  <input v-model="startFullYear" type="number" min=2015 max=2099>/<input v-model="startMonth" type="number" min=1 max=12>/<input v-model="startDate" type="number" min=1 max=31>
+  </td>
+  <td>
+  <input v-model="endFullYear" type="number" min=2015 max=2099>/<input v-model="endMonth" type="number" min=1 max=12>/<input v-model="endDate" type="number" min=1 max=31>
+  </td>
+</tr>
+</table>
+</div>
+
+<div class="info">
+  <hr>
+  <h3>휴가 합계: {{totalAnnualLeaveCount}}일 (입사하셔서 퇴사하는 날까지 사용 가능한 유급휴가입니다)</h3>
+  <h4>상세 정보:</h4>
+  <table>
+    </tbody>
+    <tbody class="counter-reset">
+      <tr class="counter" v-for="item in realAnnualLeaves">
+        <td v-if="item.a==16" class="R3">{{item.t}} {{item.a}}일 생성</td>
+        <td v-else-if="item.a==15" class="R2">{{item.t}} {{item.a}}일 생성</td>
+        <td v-else-if="item.a==1" class="R1">{{item.t}} {{item.a}}일 생성</td>
+        <td>{{item.y}}년{{item.m}}월{{item.d}}일</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<code style="position:fixed;right:0;bottom:0;">수정일자: 2018년8월3일</code>
+
+<script>
+  let now=new Date();
+
+  let v=new Vue({
+    el:'#app',
+    data:{
+      startFullYear:now.getFullYear(),
+      startMonth:now.getMonth(),
+      startDate:now.getDate(),
+      endFullYear:now.getFullYear(),
+      endMonth:now.getMonth()+1,
+      endDate:now.getDate()
+    },
+    computed:{
+      totalAnnualLeave:function(){
+        let _m=0;let _b=1;
+        let y=this.endFullYear-this.startFullYear;
+        if(y<0||y>50) return _m;_b=2;
+        _m=y*12;
+
+        let m=this.endMonth-this.startMonth;
+        if(y===0&&m<=0) return _m;_b=3;
+        _m=_m+m;
+
+        let d=this.endDate-this.startDate;
+        if(d<0) _m-=1;
+
+        return _m;
+      },
+      realAnnualLeaves: function(){
+        let i=0,r, len=this.totalAnnualLeave, res=[];
+        if(len<=0||len>=120) return res;
+        
+        let y=this.startFullYear, m=this.startMonth, d=this.startDate,t,a;
+        
+        while(i++<len){
+          m++;
+          if(m>12){
+            m=m%12;
+            y++;
+          }
+          if(this.startFullYear===y){
+	          t='월차';
+	          a=1;
+	          res.push({y,m,d,t,a});
+          }
+          r=i%12;
+          if(r===0){
+            t=y+'년도 사용가능 연차';
+            if(i<36) {
+              a=15
+            }else{
+              a=16;
+            }
+            res.push({y,m,d,t,a});
+          }
+        }
+        // y,m,d,t,a  년월일 휴가유형 휴가일수
+        return res;
+      },
+      totalAnnualLeaveCount:function (){
+        let n=0;
+        this.realAnnualLeaves.forEach(function(e){
+          n+=e.a;
+        });
+        return n;
+      }
+    }
+  })
+</script>
+</body>
+</html>
