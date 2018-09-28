@@ -796,7 +796,7 @@ $(function(){
 					pushlog(v);
 				});
 			}
-		}else if(e.keyCode===19 || e.keyCode===119){// Pause Break- get google,naver,daum
+		}else if(e.keyCode===119 || e.keyCode===19){// Pause Break- get google,naver,daum
 			e.preventDefault();
 			// 改变功能为切割长文章
 			let tar=$(e.target);
@@ -813,7 +813,7 @@ $(function(){
 					let t=tar;
 					let tt=t.text();
 
-					let re=/((?!\d)\.)|(\{\\r\\n\})|(\\n)/g;
+					let re=/(\{\\r\\n\})|(\\n)/g;
 					let res=st.split(re).filter(e=>e!==undefined);
 					res.forEach((e,i,a)=>{
 						if(e==='.' && i!==0) {
@@ -2778,10 +2778,6 @@ function changeWorksFontSize(){
 
 $(()=>{
 	$(window).on('keydown',e=>{
-		// if(e.keyCode===119){// F8 hide show UI
-		// 	e.preventDefault();
-		// 	$('.buttonbox, #toolleft, #toolright').toggle()
-		// }
 		if(e.keyCode===121 && e.ctrlKey){// F10 backup
 			e.preventDefault();
 			backup();
