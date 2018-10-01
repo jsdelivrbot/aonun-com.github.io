@@ -797,6 +797,7 @@ $(function(){
 				});
 			}
 		}else if(e.keyCode===119 || e.keyCode===19){// Pause Break- get google,naver,daum
+			// 119:F8
 			e.preventDefault();
 			// 改变功能为切割长文章
 			let tar=$(e.target);
@@ -2855,9 +2856,9 @@ function addTip(text,dom){
 {// 插入特殊符号
 let chars='\\{\\r\\n\\}|\\n|['+'`~!@#$%^&*()_+-=[]{}\\|:;\'"/<>?'.split('').map(e=>'\\'+e).join('')+']+';
 // let chars='['+'`~!@#$%^&*()_+-=[]{}\\|:;\'",./<>?'.split('').map(e=>'\\'+e).join('')+']+';
-let _customChars='[\\x00-\\x19\\x21-\\xff★]+';
+let _customChars='[\\x00-\\x19\\x21-\\xff★※]+';
 $(window).on('keydown',e=>{
-	if(e.keyCode===120) {// F9
+	if(e.keyCode===120) {// 120:F9
 
 		// ctrl+shift+alt+f9 配置
 		if(e.ctrlKey&&e.shiftKey&&e.altKey){
