@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>localforage</title>
+    <meta charset="UTF-8">
+		<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+		<script src="https://cdn.rawgit.com/mozilla/localForage/master/dist/localforage.min.js"></script>
+		<!--
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js" ></script>
+    -->
+    <script src='stopExecutionOnTimeout.js'></script>
+</head>
+<body>
+  aaaa
+	<script type="text/javascript">
+ localforage.config({
+    driver: [localforage.INDEXEDDB,
+             localforage.WEBSQL,
+             localforage.LOCALSTORAGE],
+        // Force WebSQL; same as using setDriver()
+    name        : 'myApp',
+    version     : 1.0,
+    size        : Infinity, // Size of database, in bytes. WebSQL-only for now.
+    storeName   : 'keyvaluepairs', // Should be alphanumeric, with underscores.
+    description : 'some description'
+  });
+  var store = localforage.createInstance({
+    name: "nameHere"
+  });
+  let startTime = new Date().getTime()
+  var obj = []
+  for(let i=0;i<100000;i++){
+  	if (window.CP.shouldStopExecution(1)){break;}
+    obj.push({ sku: "EE00EU"+i,uid:'22OIERP'+i,name:'我们是大家都是啊附近的萨法实打实打发打发的' });
+  }
+ window.CP.exitedLoop(1);
+
+  store.setItem('key', obj, function(err, result) {
+
+  if(result){
+
+   store.getItem('key', function(err, value) {
+    if (err) {
+      console.error('Oh noes!');
+    } else {
+      console.log(value)
+      // console.log(res)
+      let selector = '22OIERP77777'
+      let queryData =_.find(value, function(codeObj){
+        let data = ''
+        if(codeObj.sku === selector ||
+                codeObj.uid === selector){
+          data = codeObj;
+        }
+        return data
+      });
+      alert("插入10W条数据所花时间："+(new Date().getTime() - startTime ))
+      // alert(queryData.sku)
+       }
+        });
+
+      }
+
+  });
+
+
+	</script>
+
+
+</body>
+</html>

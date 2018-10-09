@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- <script type="text/javascript" src="webwork.js"></script> -->
+</head>
+<body>
+	<script type="text/javascript">
+
+var time1 =0;
+let loop1=setInterval(()=>{
+	console.log(  Date.now())
+	++time1;
+	if(time1  >= 10) clearInterval(loop1)
+},1000);
+
+var goodWorker = webwork(function (data) {
+	let t=Date.now();
+    let i=0
+	console.log( data,'worker开始')
+    while(Date.now()-t<5000){
+      i++;
+    }
+    console.log(data,'worker结束')
+    return "!!" + data  + "!!" +i;
+    // return "!!" + data + imNotDefined + "!!";//未定义的变量 imNotDefined， 所以出错。
+});
+
+
+goodWorker("Test123", function(err, result) {
+    if (err) return console.log("goodWorker Errored with " + err.message);
+    console.log("first goodWorker returned with " + result);
+});
+
+
+
+
+function webwork(callback) {
+    // URL.createObjectURL
+    window.URL = window.URL || window.webkitURL;
+    
+    // "Server response", used in all examples
+    var response = "onmessage=function(event){postMessage(" + callback + "(event.data));}";
+    
+    var blob;
+    try {
+        blob = new Blob([response], {type: 'application/javascript'});
+    } catch (e) { // Backwards-compatibility
+        window.BlobBuilder = window.BlobBuilder || window.WebKitBlobBuilder || window.MozBlobBuilder;
+        blob = new BlobBuilder();
+        blob.append(response);
+        blob = blob.getBlob();
+    }
+    return function() {
+        var worker = new Worker(URL.createObjectURL(blob));
+        var args = Array.prototype.slice.call(arguments);
+        var callback
+        var ran;
+        if (typeof args[args.length - 1] === 'function') {
+            callback = args.pop();
+        } else {
+            callback = function() {};
+        }
+    
+        worker.onmessage = function(e) {
+            if (ran) { return; }
+            ran = true;
+            callback(null, e.data);
+        };
+        worker.onerror = function(e) {
+            if (ran) { return; }
+            ran = true;
+               
+            callback(e);
+            return false;
+        };
+        worker.postMessage.apply(worker, args);
+    }
+}
+
+	</script>
+
+</body>
+</html>

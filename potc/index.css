@@ -1,0 +1,32 @@
+*{margin: 0;padding: 0;font-family:'Microsoft Yahei','NSimSun','D2Coding','Dotum'; font-size: 11pt;}
+
+table{width: 100%;}
+
+tr{min-height: 10em;}
+
+.source {
+	padding:1em;
+}
+
+td{
+	border: 0.1px solid #000;
+}
+
+#ddb{color:#eee;text-align: center;}
+
+
+h1{font-size:32pt}
+
+
+textarea {
+	width: 100%;
+	min-height: 10em;
+	border: 1px solid #CCC;
+	resize: vertical;
+
+}
+#cn2,#tw2{
+	width:100%;
+	overflow: auto;
+
+}

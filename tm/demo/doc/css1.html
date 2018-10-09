@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<div>8</div>
+<style>
+body {
+  cursor:default;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+}
+div {
+  position:absolute;
+  left:100px;top:100px;
+  width:32px;height:32px;
+  border-radius:50%;
+  background:red;
+  box-shadow:0px 0px 0px red;
+  font:bold 18px/32px Monospace;
+  text-align:center;
+  color:white;
+}
+</style>
+<script>
+var div=document.querySelector("div");
+div.onmousedown=function(e){
+  var px=e.clientX,py=e.clientY;
+  var ex=div.offsetLeft,ey=div.offsetTop;
+  var broken=false;
+  var MAXDES=160;
+  var RADIUS=32;
+  document.onmousemove=function(e){
+    var mx=e.clientX,my=e.clientY;
+    var x=mx-px,y=my-py;
+    //移动元素
+    div.style.left=ex+x+"px";
+    div.style.top=ey+y+"px";
+    //计算移动了的距离
+    var des=Math.sqrt(x*x+y*y);
+    //通过距离计算出缩放
+    var scale=1/(1+des/MAXDES);
+    //如果超出MAXDES的范围则切断
+    if(scale<1/2)cutoff();
+    //如果已经切断就不计算投影
+    if(broken)return;
+    //算出x和y方向的增量
+    //取相反数是因为我们移动的是元素，投影应该在元素原来的位置
+    var dx=-1*x/des,dy=-1*y/des;
+    //遍历距离
+    var shadows=[];
+    for(var i=0;i<=des;i++){
+      //计算过渡
+      //这里偷了个懒只使用了二次函数来拟合
+      var di=i/des*2;
+      var dr=(0.5*di*di-di)*(RADIUS/2);
+      //将计算出的shadow储存下来
+      //这里除以scale是因为scale会影响投影位置，需要除以它抵消掉
+      shadows.push(dx*i/scale+"px "+dy*i/scale+"px 0px "+dr+"px red");
+    };
+    //将样式设置到元素上
+    div.style.transform="scale("+scale+","+scale+")";
+    div.style.boxShadow=shadows;
+  };
+  document.onmouseup=function(){
+    cutoff();
+    document.onmousemove=null;
+    document.onmouseup=null;
+  };
+  function cutoff(){
+    div.style.boxShadow="none",
+    div.style.transform="none",
+    broken=true;
+  };
+};
+</script>

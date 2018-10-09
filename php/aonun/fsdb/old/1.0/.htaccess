@@ -1,0 +1,5 @@
+ErrorDocument 400 http://fsdb.aonun.com/index.php
+ErrorDocument 401 http://fsdb.aonun.com/index.php
+ErrorDocument 403 http://fsdb.aonun.com/index.php
+ErrorDocument 404 http://fsdb.aonun.com/index.php
+ErrorDocument 500 http://fsdb.aonun.com/index.php

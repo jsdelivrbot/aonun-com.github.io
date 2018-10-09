@@ -1,0 +1,10 @@
+{
+	"action":{
+		"frame":{"x":0,"y":0,"width":34,"height":34},
+		"rotated":false,
+		"trimmed":false,
+		"spriteSourceSize":{"x":0,"y":0,"width":34,"height":34},
+		"sourceSize":{"width":34,"height":34},
+		"pivot":{"x":0.5,"y":0.5}	
+	}
+}

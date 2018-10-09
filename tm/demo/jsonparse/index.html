@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="/lib/jquery.min.js"></script>
+	<title>json parse</title>
+</head>
+<body>
+<textarea id="jsonString"></textarea>
+<pre id="result"></pre>
+</body>
+</html>
+<script type="text/javascript">
+$('#jsonString').css('width','100%').on('paste',function(e){
+	setTimeout(function(){
+		var json=$('#jsonString').val().trim();
+
+		try{
+			json=JSON.parse(json);
+			var row,tr,td,lb,val,table=$('<table>');
+			for(var i in json) {
+				row=json[i];
+				tr=$('<tr>');
+				for(var j in row){
+					lb=$('<label>').text(j);
+					val=$('<textarea>').text(row[j]);
+					td=$('<td>');
+					lb.append(val);
+					td.append(lb);
+					tr.append(td);
+				}
+				table.append(tr);
+
+				$('#result').append(table);
+				$('#jsonString').val('')
+			}
+		}catch(err){
+			alert(err);
+			$('#jsonString').val('')
+			return false;
+		}
+
+	})
+
+});
+
+
+
+</script>
+<style>
+td{border: 1px dashed #ccf;}
+table {border: 2px solid #ccf;}
+</style>

@@ -1,0 +1,3 @@
+[05-Apr-2018 08:10:37 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '{' in X:\web\lib\php\aonun\json.php on line 32
+[05-Apr-2018 08:10:46 Asia/Shanghai] PHP Parse error:  syntax error, unexpected '{' in X:\web\lib\php\aonun\json.php on line 32
+[05-Apr-2018 08:11:18 Asia/Shanghai] PHP Notice:  Use of undefined constant ko - assumed 'ko' in X:\web\lib\php\aonun\json.php on line 32

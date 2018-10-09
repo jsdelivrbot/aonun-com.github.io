@@ -1,0 +1,28 @@
+@font-face {
+font-family: 'unicode';
+src:url('/Sun-ExtA.ttf') format('truetype');
+font-weight: normal;
+font-style: normal;
+}
+
+*{margin: 0;padding: 0;letter-spacing:2px; font-family:unicode;font-size: 11pt;}
+
+table{width: 100%;}
+
+tr{min-height: 10em;}
+
+.source {
+	padding:1em;
+}
+
+td{
+	border: 0.1px solid #000;
+	width:50%;
+}
+
+#ddb{color:#eee;text-align: center;}
+#cn2,#tw2{width:49%;}
+
+
+
+h1{font-size:32pt}

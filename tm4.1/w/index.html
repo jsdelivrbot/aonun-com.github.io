@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/lib/jquery.js"></script>
+	<title>worker</title>
+</head>
+<body>
+
+<script>
+let w=new Worker('w.js');
+
+w.onmessage=function(e){
+	console.log(location.href, 'message', e);
+};
+
+w.onerror=function(e){
+	console.log(location.href, 'error',e);
+};
+
+
+w.onclose=function(e){
+	console.log(location.href, 'close',e);
+};
+
+
+
+
+let sw=new SharedWorker('w.js');
+let port=sw.port;
+sw.port.onmessage=function(e){
+	console.log(location.href, 'message', e);
+};
+
+sw.port.onmessageerror=function(e){
+	console.log(location.href, 'messageerror', e);
+};
+
+sw.port.onerror=function(e){
+	console.log(location.href, 'error',e);
+};
+
+sw.port.onchange=function(e){
+	console.log(location.href, 'change',e);
+};
+
+sw.port.onclose=function(e){
+	console.log(location.href, 'close',e);
+};
+
+
+</script>
+</body>
+</html>

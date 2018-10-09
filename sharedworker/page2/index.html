@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="../jquery.min.js"></script>
+	<script src="../vue.min.js"></script>
+	<title>SharedWorker</title>
+</head>
+<body>
+<div id="swInfo">
+	id: {{ id }}
+</div>
+<a href="page2" target="_blank">打开另一个窗口</a>
+<pre class="ui log"></pre>
+<script>
+
+
+	let sw, port, info={el:'#swInfo', data:{ id:0 }}, v;
+
+	v=new Vue(info);
+
+	sw=new SharedWorker('../sw.js?t='+(new Date).getMinutes());// 相同的js即可共享，只要同域名即可，不同页面也行
+	sw.addEventListener('error', function(e){
+		log('no connect');
+	});
+
+	port=sw.port;
+	port.start();
+
+	port.addEventListener('message', function(e){
+		let data, type, id;
+
+		data=e.data;
+		type=typeof data;
+
+
+		if(type==='object' && data) {
+			if(data.type==='message'){
+				log(data.id, data.data);
+			}else if(data.type==='assign'){
+				id = sw.id= info.data.id=data.data.id;
+				console.log('%cid:'+id,'background:green');
+			}
+		}else{
+			log('?', JSON.stringify(data));
+		}
+		console.log(type, data);
+	});
+
+
+	function log(id, data){
+		document.querySelector('.ui.log').prepend(`shared worker ${id} : ${data}\n\n`);
+	}
+
+	// sw.port.addEventListener('errormessage', function(e){
+	// 	document.querySelector('.ui.log').prepend(`@errormessage>> ${location.href} ${e.message}`);
+	// });
+
+
+	// sw.port.addEventListener('error', function(e){
+	// 	document.querySelector('.ui.log').prepend(`@error>> ${location.href} ${e.message}`);
+	// });
+
+	// sw.port.addEventListener('change', function(e){
+	// 	document.querySelector('.ui.log').prepend(`@change>> ${location.href}`);
+	// });
+
+	// sw.port.addEventListener('close', function(e){
+	// 	document.querySelector('.ui.log').prepend(`@close>> ${location.href}`);
+	// });
+
+
+	window.onclick=window.ondblclick=window.onwheel=function(e){
+		let data={type:e.type, id:sw.id};
+		port.postMessage(data);
+	}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" data-name="vs/editor/editor.main" href="lib/editor.main.css">
+</head>
+<body>
+
+<h2>Monaco Editor Sync Loading Sample</h2>
+<div id="container" style="width:800px;height:600px;border:1px solid grey"></div>
+
+<script>var require = { paths: { 'vs': '/node_modules/monaco-editor/min/vs' } };</script>
+<script src="lib/loader.js"></script>
+<script src="lib/editor.main.nls.js"></script>
+<script src="lib/editor.main.js"></script>
+
+<script>
+	var editor = monaco.editor.create(document.getElementById('container'), {
+		value: [
+			'function x() {',
+			'\tconsole.log("Hello world!");',
+			'}'
+		].join('\n'),
+		language: 'javascript',
+		lineNumbers:false,
+		minimap: {
+			enabled: false
+		},
+		wordWrap: 'wordWrapColumn',
+		wordWrapColumn: 40,
+	});
+
+	editor.layout({width:400,height:300})
+
+	// 修改编程语言
+	// monaco.editor.setModelLanguage(editor.getModel(), "javascript")
+</script>
+
+</body>
+</html>

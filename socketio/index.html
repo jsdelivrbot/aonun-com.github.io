@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/lib/jquery.js"></script>
+	<script src="/lib/socket.io.js"></script>
+	<script src="/lib/vue.min.js"></script>
+	<title>Chat</title>
+<style>
+#info {
+	position: fixed;
+	top:0;
+	right: 0;
+	border: 2px solid #eee;
+	color: #999;
+}
+
+#msgInput {
+	box-shadow: none;
+	border: 2px solid #59f;
+	outline: none;
+	padding: 6.66px;
+	background: #fff;
+	color: #666;
+	min-width: 40em;
+	border-radius: 6.66px;
+}
+
+#msgLogs {
+	height: 20em;
+	border: 2px solid green;
+	border-radius: 3.33px;
+	overflow: overlay;
+}
+.id{
+	background: #ccc;
+	border-radius: 3.33px;
+	margin: 0;
+	padding: 0;
+	float:left;
+	clear:left;
+}
+.log{
+	float:left;
+	clear:right;
+}
+</style>
+</head>
+<body>
+<nav class="menu">
+	<button onclick="joinRoom()">join room</button>
+	<button onclick="leaveRoom()">leave room</button>
+</nav>
+<pre id="info"></pre>
+<input id="msgInput" placeholder="a message ready to send">
+<pre id="msgLogs" ></pre>
+<script src="socketioclient.js"></script>
+<script>
+// let info = new Vue({
+// 	el:'#info',
+// 	data:conn
+// });
+
+// let msgInput=new Vue({
+// 	el:'#msgInput',
+// 	data:conn,
+// 	methods:{
+// 		send(){
+// 			if(this.data.msgI.trim().length>0){
+
+
+// 			}
+// 		}
+// 	}
+// })
+
+</script>
+</body>
+</html>

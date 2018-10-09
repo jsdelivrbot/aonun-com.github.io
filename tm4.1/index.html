@@ -1,0 +1,460 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='0'>
+<meta http-equiv='pragma' content='no-cache'>
+<link rel="stylesheet" type="text/css" href="icons.css">
+<link rel="stylesheet" type="text/css" href="/lib/kendo.common.min.css">
+<link rel="stylesheet" type="text/css" href="/lib/kendo.silver.min.css">
+<!-- algolithm -->
+<script src="/lib/diff_match_patch.js"></script>
+<!-- library -->
+<script src="/lib/localeworker.js"></script>
+<script src="/lib/localforage.min.js"></script>
+<script src="/lib/jquery-3.3.1.min.js"></script>
+<script src="/lib/jquery.animate-colors-min.js"></script>
+<script src="/lib/xlsx.full.min.js"></script>
+<script src="./lib/punycode.js"></script>
+<script src="./lib/moveable.js"></script>
+<script src="./lib/Reference.js"></script>
+<script src="./lib/Search.js"></script>
+<script src="./lib/jsfilemanager.min.js"></script>
+<script src="ao.js"></script>
+<script src="fn.textareaEdit.js"></script>
+<script src="util.format.js"></script>
+<script src="ao.browserType.js"></script>
+<script src="ao.similar.js"></script>
+<script src="Date.prototype.js"></script>
+<script src="RegExpLib.js"></script>
+<script src="TableEdit.js"></script>
+<script src="Converter.js"></script>
+<script src="saveloadSource.js"></script>
+<script src="googlenaverdaum.js"></script>
+<script src="dropfile.js"></script>
+<script src="/lib/kendo.all.min.js"></script>
+<title>TextTool</title>
+<style>
+ins {
+	background: green;
+	color: #fff;
+	text-decoration-line: none;
+}
+del{
+	background: red;
+	color: #fff;
+	text-decoration-line: none;
+}
+#works table {
+	display: contents;
+}
+.help:hover {
+	text-shadow: 1px 1px 4px #050;
+}
+.help {
+	margin:0;
+	cursor: help;
+	width: 100%;
+}
+.done {
+	box-shadow: inset -3px 0px #070;
+}
+.fa {font-size: 12pt;}
+* {user-modify:read-write-plaintext-only;outline-color:#fff7;}
+*::selection {background:#900;color:#ffc;}
+/*@media (max-width: 700px) {.buttonbox { display: none; } }
+@media (max-width: 880px) {#toolright { display: none; } }
+@media (max-width: 1100px) {#toolleft { display: none; } }*/
+tbody {border: 1px solid #0007!important;}
+#dictArrayLengthUI {
+	font-family:Arial;
+	font-size:8pt;
+	color:#fff;
+	background: #C85050;
+	font-weight: bold;
+	width:6em;
+}
+#clogs { max-height: 400px; overflow: scroll-y; }
+#googleResult, #naverResult, #daumResult {overflow:auto;white-space: pre-wrap;user-select:text;background-color:#825e9d;color:#fff;max-height:300px;}
+#lastSelect th,#lastSelect td{height:2em;text-align:center;vertical-align:middle;}
+/*#main tbody{overflow-y: auto; display: block; }
+#main{ vertical-align:top; }*/
+#rowCurrentUI,#rowTotalUI {color:blue; font-family:Verdana; font-weight:bold; }
+#tips, #statusDict {
+	width:24em;
+	min-height:24em;
+}
+#statusDict td, #tips td { background:#eee;color:#333;}
+#statusDict, #tips, #works {resize: both;}
+#status{background:rgb(184,204,228);}
+#tempResult {position:fixed;top:-200px;height:-200px;width:1px;height:1px;}
+#page_counter{position:fixed;right:0;top:0;z-index:9;}
+
+
+/*memoQ colors
+
+tips  tm
+statusDict  tb
+*/
+#tips td{
+	background: #EBBEB466;
+}
+#tips .similar{
+	width:5em!important;
+	text-align:center!important;
+	color:#fff!important;
+	background: #C85050!important;
+}
+#tips tr:nth-child(even) td{
+	background: #FFF;
+}
+#statusDict td {
+	background: #B4E1F0;
+}
+#statusDict .similar {
+	color:#fff!important;
+	background: #2D82B4!important;
+}
+#statusDict tr:nth-child(even) td {
+	background: #FFF;
+}
+#title {font-size:2em;}
+#toolleft div,#toolright div {display: block;border:2px solid #0007;background:#aaa;color:#000; border-radius:5px;padding:5px;margin:2px;max-width:10em;}
+#toolleft,#toolright {user-select:none; vertical-align:top;}
+#works {background:#fff;}
+#works {height:40em;}
+.comment {min-width:1em;}
+
+#works td.source:focus {border:2px solid #00f7;height:auto;}
+#works tr:even {background: #0001;}
+* {font-family: Tahoma,"Microsoft Yahei","MS Ghotic","Malgun Ghotic"; font-weight: bold; word-wrap: break-word; word-break: break-all; font-size:8pt;/*	background:rgb(39,40,34); color:rgb(248,248,242);*/ }
+.buttonbox {line-height:6px;}
+.buttonbox input, .buttonbox button {
+    margin: 0!important;
+    padding: 0!important;
+    width:7em;
+    font-size: 8pt;
+    height: 20px;
+    border: 1px solid #000!important;
+    border-radius: 3px;
+}
+button span {
+	position: relative;
+	bottom: 5px;
+}
+button span.icons {
+    bottom: 1px;
+    left: -6px;
+}
+
+.target:after {
+	content: attr(similar);
+	font-size: 8pt;
+	font-family: consolas;
+	color: #fff;
+	background: #999;
+	float: right;
+	bottom: 0;
+	pointer-events: none;
+	user-select: none;
+}
+
+.clogs {max-width: 800px; overflow: hidden;}
+#clogs {overflow: hidden;}
+.clog{font-size:1em; font-weight:bold; max-width:32em; }
+.clog td{ width:100%; border:1px solid #eef; background:#eee; color:#999; z-index:-9; }
+.currentEditRow td{
+	box-shadow: inset -1px -1px 3px #aaa, inset 1px 1px 3px #aaa;
+}
+/*memoQ current row color*/
+.currentEditRow .no {background:#FA6419!important;}
+.hide,.hide2,.hide3 {display:none;}
+.match {white-space:pre-wrap;}
+.qa{max-height:7em; overflow:hidden; background:#fcc; }
+.source, .target {
+	width: 40%;
+	user-modify: read-write-plaintext-only;
+	border-right:1px solid #0007!important;
+}
+#works .source, #works .target {
+	width:40%;
+}
+.util input {max-width:4em; border:none; margin: 4px 0;}
+.util {resize:none; background:#000;}
+.util th {
+	text-align:center;
+	border:none;
+	border-radius:4px;
+}
+.util.tb   th { background:#2D82B4;}
+.util.work th { background:#333;}
+.util.tm   th { background:#C85050;}
+
+body {background-color: #fff;}
+* {margin:0;padding:0;}
+#box{margin:0 auto;}
+h3 {background:#0007;color:#fff;padding:6px;border-radius:3px;text-align:center;max-width:10em;}
+table{ margin:0; padding:0; border: none; outline: none; box-shadow: inset 1px 1px #000; }
+.no {
+	width:4em;
+	margin:0;
+	padding:0 4px;
+	border-radius:3px;
+	user-select:none;
+	white-space:nowrap;
+	word-wrap:break-word;
+	word-break:break-all;
+	text-align:center;
+	color:#fff;
+	background:#0007;}
+#lsst,#ltst,#workPaste,#dictPaste {
+	margin:1px 0;
+	border:none;
+	outline:none;
+	resize:none;
+	box-shadow:1px 1px 1px #0007;
+	overflow: hidden;
+	width:6em;
+	height:2em;
+	display:block;
+}
+th,td{
+	text-align:left;
+	vertical-align:middle;
+	background:#fffe;
+	word-wrap:break-word;
+	word-break:break-all;}
+
+label.button {
+	min-width:3em; display:inline-block;
+	border:1px solid #aaa; border-radius:5px;
+	text-align:center; vertical-align:middle;
+	padding:3px;margin:1px;
+	color:#eee; background:#333;
+	user-select:none;
+}
+label.button:active{
+	opacity:.8;
+}
+label.button input[type=radio] {
+	position:relative;left:0;top:0;
+	margin:0; padding:0;
+}
+#mask table td {
+	border:1px solid #ccc; background:#fff;
+}
+#mask table{
+	background: #333;
+}
+#wp {
+	border:2px solid #000e; border-radius: 3px;
+/*	position: fixed; top:2px; left:2px;*/
+}
+#lsst,#ltst{min-width:2em;}
+</style>
+</head>
+<body>
+			<div id="workWindow">
+				<table>
+					<tbody class="util work">
+						<tr>
+							<th class="buttonbox" colspan="5">
+								<button id="MatchWork80" title="Match 80%"><span class="icons_writeDocument icons"></span><span>80%</span></button>
+								<button id="MatchWork100" title="Match 100% to Work(F1) (remove: alt+click)"><span class="icons_writeDocument icons"></span><span>100%</span></button>
+								<button id="ImportTextLines" title="Import text lines&#13;"><span class="icons_writeDocument icons"></span><span>Import</span></button>
+								<button id="gotoUntranslationTarget" title="Go to Untranslation Target(F2)"><span class="icons_search icons"></span><span>GoBlank</span></button>
+								<button id="downloadWorksExcel" title="download as excel file."><span class="icons_download icons"></span><span>Down.xls</span></button>
+								<button id="downloadWork" title="Download All.txt (ctrl:empty comment add datetime) (shift:all comment replace datetime)"><span class="icons_download icons"></span><span>All</span></button>
+								<button id="downloadWorkT" title="[F3]&#13;copy target to memory&#13;ctrl:download file"><span class="icons_download icons"></span><span>Target</span></button>
+								<button id="toggleComments" title="Hide or show by Comments"><span class="icons_watch icons"></span><span>Comment</span></button>
+								<button id="numQA" title="Check the number problem"><span class="icons_watch icons"></span><span>NumQA</span></button>
+								<button id="dictQA" title="The problem of checking words"><span class="icons_watch icons"></span><span>TBQA</span></button>
+								<button id="selectWorks" title="Select all word segments in the workspace"><span class="icons_selection icons"></span><span>Select</span></button>
+								<button id="mergeDict" title="Confirm all word segments in the workspace."><span class="icons_ok icons"></span><span>Confirm</span></button>
+								<button id="clearWork" title="Remove Mission"><span class="icons_trash icons"></span><span>Remove</span></button></button>
+								<svg width="60" height="12" id="wp" xmlns="http://www.w3.org/2000/xhtml">
+									<rect x="0" y="0" width="100%" height="100%" fill="#000a"/>
+									<rect x=0 y=1 width="0" height="10" fill="#f00e" class="nospace" />
+									<rect x=0 y=2 width="0" height="8" fill="#0c0e" class="done" />
+									<text x=10 y=10 font-size=8 font-family="verdana" fill="#fff">0%</text>
+								</svg>
+							</th>
+						</tr>
+						<tr>
+							<th>No</th>
+							<th class="utilsource">
+								<input id="worksSourceRegExp" type="checkbox" title="Use RegExp">
+								<input id="worksSourceFilter" placeholder="filter">
+								<input id="worksSourceReplaceButton" type="button" value="Rep">
+								<input id="worksSourceSearch" placeholder="search">
+								<input id="worksSourceReplace" placeholder="replace">
+							</th>
+							<th class="utiltarget">
+								<input id="worksTargetRegExp" type="checkbox" title="Use RegExp">
+								<input id="worksTargetFilter" placeholder="filter">
+								<input id="worksTargetReplaceButton" type="button" value="Rep">
+								<input id="worksTargetSearch" placeholder="search">
+								<input id="worksTargetReplace" placeholder="replace">
+							</th>
+						</tr>
+					</tbody>
+					<tbody id="works"></tbody>
+				</table>
+			</div>
+
+			<div id="dictWindow">
+				<table>
+					<tbody class="util tb">
+						<tr>
+							<th>No</th>
+							<th class="utilsource">
+								<input id="statusDictSourceRegExp" type="checkbox" title="Use RegExp">
+								<input id="statusDictSourceFilter" placeholder="filter">
+								<input id="statusDictSourceReplaceButton" type="button" value="Rep">
+								<input id="statusDictSourceSearch" placeholder="search">
+								<input id="statusDictSourceReplace" placeholder="replace">
+							</th>
+							<th class="utiltarget">
+								<input id="statusDictTargetRegExp" type="checkbox" title="Use RegExp">
+								<input id="statusDictTargetFilter" placeholder="filter">
+								<input id="statusDictTargetReplaceButton" type="button" value="Rep">
+								<input id="statusDictTargetSearch" placeholder="search">
+								<input id="statusDictTargetReplace" placeholder="replace">
+							</th>
+							<th>Similar</th>
+							<th>Index</th>
+						</tr>
+					</tbody>
+					<tbody id="statusDict"></tbody>
+				</table>			
+			</div>
+
+			<div id="tipsWindow">
+				<table>
+					<tbody class="util tm">
+						<tr>
+							<th class="buttonbox" colspan="5">
+								<span id="dictArrayLengthUI"></span><br>
+								<button id="autoSizeDictWindow" title="resize view window" title="flip Dictionary"><span class="icons_resize icons"></span><span>winSize</span></button>
+								<button id="flipDict" title="flip Dictionary" title="flip Dictionary"><span class="icons_retweet icons"></span><span>FlipDict</span></button>
+								<button id="downloadDictXLS" title="flip Dictionary" title="Dowolaod Dictionary .xls"><span class="icons_download icons"></span><span>Dict.xls</span></button>
+								<button id="downloadDict" title="flip Dictionary" title="Dowolaod Dictionary .xls"><span class="icons_download icons"></span><span>Dict.txt</span></button>
+								<button id="clearDict" title="Empty Mission"><span class="icons_trash icons"></span><span>Remove</span></button>
+								<button id="restoreButton" title="Restore dictionary"><span class="icons_refresh icons"></span><span>Restore</span></button>
+							</th>
+						</tr>
+						<tr>
+							<th>No</th>
+							<th class="utilsource">
+								<input id="tipsSourceRegExp" type="checkbox" title="Use RegExp">
+								<input id="tipsSourceFilterAll" placeholder="Dict Filter">
+								<input id="tipsSourceFilter" placeholder="filter">
+								<input id="tipsSourceReplaceButton" type="button" value="Rep">
+								<input id="tipsSourceSearch" placeholder="search">
+								<input id="tipsSourceReplace" placeholder="replace">
+							</th>
+							<th class="utiltarget">
+								<input id="tipsTargetRegExp" type="checkbox" title="Use RegExp">
+								<input id="tipsTargetFilterAll" placeholder="Dict Filter">
+								<input id="tipsTargetFilter" placeholder="filter">
+								<input id="tipsTargetReplaceButton" type="button" value="Rep">
+								<input id="tipsTargetSearch" placeholder="search">
+								<input id="tipsTargetReplace" placeholder="replace">
+							</th>
+							<th>Similar</th>
+							<th>Index</th>
+						</tr>
+					</tbody>
+					<tbody id="tips"></tbody>
+				</table>
+			</div>
+
+		<div id="toolright">
+			<div>
+				<h3>Import paste</h3>
+				<textarea id="workPaste" placeholder="Mission"></textarea>
+				<textarea id="dictPaste" placeholder="Dictionary"></textarea>
+			</div>
+			<div>
+				<h3 title="[ctrl+q] save the [source,target] set.">Last Selector</h3>
+				<table>
+					<tr>
+						<td>
+						<strong>source:</strong><br>
+						<p id="lsst" contenteditable="plaintext-only" placeholder="source"></p>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<strong>target:</strong><br>
+						<p id="ltst" contenteditable="plaintext-only" placeholder="target"></p>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<h3>Enter key color</h3>
+				<label><input id="ctrlEnter" type="checkbox" checked>Enable</label><br>
+				<input type="color" id="ctrlEnterColor" value="#80ff80">
+			</div>
+			<div>
+				<h3>Works Font Size</h3>
+				<input type="number" id="worksFontSize" value="8" min="8" max="50" step="1">
+			</div>
+
+			<div>
+				<h3>Auto Tip</h3>
+				<label><input id="useDictTip" type="checkbox" checked>Enable</label><br>
+				<label>Suitability:<input id="similarPercent" value=40 type="number" min=0 max=100></label><br>
+				<label><input id="auto100" type="checkbox" checked>Auto use 100% matchs</label>
+			</div>
+			<div>
+				<h3>Google Naver Daum</h3>
+				<label><input id="useGoogle" type="checkbox">Google</label><br>
+				<label><input id="useNaver" type="checkbox">Naver</label><br>
+				<label><input id="useDaum" type="checkbox">Daum</label><br>
+				<select id="netTarget" type="checkbox">
+					<option value="zh-CN">zn-CN</option>
+					<option value="zh-TW">zh-TW</option>
+					<option value="ko">Korean</option>
+					<option value="jp">Japanese</option>
+					<option value="en">English</option>
+					<option value="fr">French</option>
+					<option value="ru">Russian</option>
+					<option value="de">Deutsch</option>
+				</select>
+			</div>
+			<div style="background:#825e9d;"><section id="googleResult"></section></div>
+			<div style="background:#825e9d;"><section id="daumResult"></section></div>
+			<div style="background:#825e9d;"><section id="naverResult"></section></div>
+			<div id="clogs"></div>
+
+<div>
+	<h3>other</h3>
+	<a href="/tmx" target="_blank">smartcat tmx transfer</a>
+</div>
+<div>
+	<h3>help</h3>
+	<b>마우스 갖다 대면 도움말이 보입니다.</b>
+		<p class="help" title="기능:기록에서 100% 일치한 내용을 미션에 채워줍니다.">[F1]  Match 100%</p>
+		<p class="help" title="비어 있는 칸으로 커서를 이동합니다.">[F2]  Goto Empty</p>
+		<p class="help" title="미션과 팁이외의 컨텐츠를 숨길 수 있습니다.">[F9]  Hide UI</p>
+		<p class="help" title="지금 바로 수동백업합니다.(30분마다 자동 백업)">[Ctrl+F10] backup</p>
+		<p class="help" title="구글에서 찾아봅니다.">select+[Pause]</p>
+		<p class="help" title="위 칸의 내용을 복사합니다.">[Ctrl+Shift+D]</p>
+		<p class="help" title="소스를 복사합니다.">[Ctrl+Ins] copy S</p>
+		<p class="help" title="선택한 소스 타겟을 메모리에 저장합니다.">[Ctrl+Q]add ST</p>
+		<p class="help" title="빨강색 팁에서 1번~10번까지 퀵키로 현재칸에 복사 가능합니다.">[Ctrl+1] copy</p>
+		<p class="help" title="스마트 매칭을 시도합니다.">[Ctrl+`] copy</p>
+		<p class="help" title="Target 복사">[F3] copy</p>
+		<p class="help" title="빨강색 팁에서 1번~10번까지 지정한 내용으로 스마트 매칭을 시도합니다.">[Ctrl+Shift+1]</p>
+		<p class="help" title="하늘색 팀에서 1번~10번까지 퀵키로 현재칸에 복사 가능합니다.">[Alt+1] copy</p>
+		<p class="help" title="마우스 우클릭으로 행을 삭제할 수 있습니다.&#13;범위: 하늘색 팁, 빨강색 팁, 미션 번호.">mouse right</p>
+</div>
+
+</td>
+
+<textarea id="tempResult"></textarea>
+
+<img id="page_counter" src="https://www.reliablecounter.com/count.php?page=aonun.com/tm4&digit=style/plain/30/&reloads=0" alt="" title="" border="0">
+</body>
+<style id="activeStyle"></style>
+</html>

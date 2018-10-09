@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="/lib/localeworker.js"></script>
+	<script src="/lib/jquery.js"></script>
+	<title>worker manager</title>
+</head>
+<body>
+
+</body>
+</html>
+<script>
+
+
+let lw=new LocaleWorker('test',null,function(e){
+	setInterval(function(){
+		this.send(Date.now())
+	},1000)
+	let a=e.data;
+	console.log(a)
+
+	if(a[0]==='close') close();
+})
+
+</script>

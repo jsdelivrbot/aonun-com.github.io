@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/lib/jquery.js"></script>
+	<title>contenteditable</title>
+	<style>
+		pre,div {
+			white-space: pre-wrap;
+		}
+		.tag {
+			/*user-select: none;*/
+			background: #900;
+			color:#fff;
+		}
+		span {
+			outline: none;
+		}
+	</style>
+</head>
+<body>
+<article>
+	display:block 时编辑会自动用div包裹换行内容。
+
+</article>
+<h3>pre</h3>
+<pre id="pre" contenteditable="true">hello, <span class="tag" contenteditable="false">tag</span> , thank you.</pre>
+
+<h3>div</h3>
+<div id="div" contenteditable="true">hello, <span class="tag" contenteditable="false">tag</span> , thank you.</div>
+
+<h3>span</h3>
+<span id="span" contenteditable="true">
+	hello, <span class="tag" contenteditable="false">tag</span> , thank you.
+</span>
+</body>
+</html>
+<script>
+
+
+
+
+
+const Keyboard=(function (undefined){
+	function Keyboard(){}
+	Keyboard.init=function(f,keyCode){
+		let on=true, obj={};
+		f = (f || (function(e){
+			console.log('Fire:'+e.key);
+		})).bind(obj);
+		document.addEventListener('keyup',function(e){
+			let b=e.keyCode===keyCode;
+			if(!b  && e.ctrlKey){
+				on=false;
+			}else if(on && b){
+				e.preventDefault();
+				e.stopPropagation();
+				f(e);
+			}else{
+				on=true;
+			}
+		});
+
+	};
+	Keyboard.ctrl=function(f){
+		Keyboard.init(f,17);
+	};
+	Keyboard.shift=function(f){
+		Keyboard.init(f,16);
+	};
+	Keyboard.alt=function(f){
+		Keyboard.init(f,18);
+	};
+
+	return Keyboard;
+})();
+
+
+Keyboard.ctrl(function(e){
+	this.on=!this.on;
+	console.log(this.on)
+	let tip=$('<div>').text(new Date()).appendTo('body').css({background:'#090',fontSize:'8px',color:'#fff'});
+});
+
+
+
+
+
+
+</script>

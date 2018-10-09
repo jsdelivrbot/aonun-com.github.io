@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<!-- saved from url=(0052)http://localhost/doc/javascript-runoob.com.html#h_13 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link rel="stylesheet" href="./javascript-runoob.com_files/runoob.css" type="text/css" media="all"><style>#leftcolumn {max-width:8em; position:absolute; left: 0;}#content {max-width:40em; position:absolute; left: 9em;}</style></head>
+
+
+<body>
+	<div id="leftcolumn"><a title="JavaScript 教程" href="http://localhost/doc/javascript-runoob.com.html#h_0" style="font-weight: bold; color: rgb(255, 255, 255); background-color: rgb(150, 185, 125);">JavaScript 教程</a><a title="JavaScript 简介" href="http://localhost/doc/javascript-runoob.com.html#h_1">JavaScript 简介</a><a title="JavaScript 用法" href="http://localhost/doc/javascript-runoob.com.html#h_2">JavaScript 用法</a><a title="JavaScript 输出" href="http://localhost/doc/javascript-runoob.com.html#h_3">JavaScript 输出</a><a title="JavaScript 语法 " href="http://localhost/doc/javascript-runoob.com.html#h_4">JavaScript 语法</a><a title="JavaScript 语句" href="http://localhost/doc/javascript-runoob.com.html#h_5">JavaScript 语句</a><a title="JavaScript 注释" href="http://localhost/doc/javascript-runoob.com.html#h_6">JavaScript 注释</a><a title="JavaScript  变量" href="http://localhost/doc/javascript-runoob.com.html#h_7">JavaScript 变量</a><a title="JavaScript 数据类型" href="http://localhost/doc/javascript-runoob.com.html#h_8">JavaScript 数据类型</a><a title="JavaScript 对象" href="http://localhost/doc/javascript-runoob.com.html#h_9">JavaScript 对象</a><a title="JavaScript 函数" href="http://localhost/doc/javascript-runoob.com.html#h_10">JavaScript 函数</a><a title="JavaScript 作用域" href="http://localhost/doc/javascript-runoob.com.html#h_11">JavaScript 作用域</a><a title="JavaScript 事件" href="http://localhost/doc/javascript-runoob.com.html#h_12">JavaScript 事件</a><a title="JavaScript 字符串" href="http://localhost/doc/javascript-runoob.com.html#h_13">JavaScript 字符串</a><a title="JavaScript 运算符" href="http://localhost/doc/javascript-runoob.com.html#h_14">JavaScript 运算符</a><a title="JavaScript 比较和逻辑运算符" href="http://localhost/doc/javascript-runoob.com.html#h_15">JavaScript 比较</a><a title="JavaScript If…Else 语句" href="http://localhost/doc/javascript-runoob.com.html#h_16">JavaScript 条件语句</a><a title="JavaScript switch 语句" href="http://localhost/doc/javascript-runoob.com.html#h_17">JavaScript switch 语句</a><a title="JavaScript for 循环" href="http://localhost/doc/javascript-runoob.com.html#h_18">JavaScript for 循环</a><a title="JavaScript while 循环" href="http://localhost/doc/javascript-runoob.com.html#h_19">JavaScript while 循环</a><a title="JavaScript Break 和 Continue 语句" href="http://localhost/doc/javascript-runoob.com.html#h_20">JavaScript Break 和 Continue 语句</a><a title="JavaScript typeof" href="http://localhost/doc/javascript-runoob.com.html#h_21">JavaScript typeof</a><a title="JavaScript 类型转换" href="http://localhost/doc/javascript-runoob.com.html#h_22">JavaScript 类型转换</a><a title="JavaScript 正则表达式" href="http://localhost/doc/javascript-runoob.com.html#h_23">JavaScript 正则表达式</a><a title="JavaScript 错误 – Throw、Try 和 Catch" href="http://localhost/doc/javascript-runoob.com.html#h_24">JavaScript 错误</a><a title="JavaScript 调试" href="http://localhost/doc/javascript-runoob.com.html#h_25">JavaScript 调试</a><a title="JavaScript 变量提升" href="http://localhost/doc/javascript-runoob.com.html#h_26">JavaScript 变量提升</a><a title="JavaScript 严格模式" href="http://localhost/doc/javascript-runoob.com.html#h_27">JavaScript 严格模式</a><a title="JavaScript 使用误区" href="http://localhost/doc/javascript-runoob.com.html#h_28">JavaScript 使用误区</a><a title="JavaScript 表单验证" href="http://localhost/doc/javascript-runoob.com.html#h_29">JavaScript 表单验证</a><a href="http://localhost/doc/javascript-runoob.com.html#h_30">JavaScript 保留关键字</a><a href="http://localhost/doc/javascript-runoob.com.html#h_31">JavaScript JSON</a><a href="http://localhost/doc/javascript-runoob.com.html#h_32">JavaScript void</a><a href="http://localhost/doc/javascript-runoob.com.html#h_33">JavaScript 代码规范</a><a title="JavaScript 函数定义" href="http://localhost/doc/javascript-runoob.com.html#h_34">JavaScript 函数定义</a><a title="JavaScript 函数参数" href="http://localhost/doc/javascript-runoob.com.html#h_35">JavaScript 函数参数</a><a title="JavaScript 函数调用" href="http://localhost/doc/javascript-runoob.com.html#h_36">JavaScript 函数调用</a><a title="JavaScript 闭包" href="http://localhost/doc/javascript-runoob.com.html#h_37">JavaScript 闭包</a><a title="JavaScript HTML DOM" href="http://localhost/doc/javascript-runoob.com.html#h_38">DOM 简介</a><a title="JavaScript HTML DOM 改变 HTML 内容" href="http://localhost/doc/javascript-runoob.com.html#h_39">DOM HTML</a><a title="JavaScript HTML DOM 改变 CSS" href="http://localhost/doc/javascript-runoob.com.html#h_40">DOM CSS</a><a title="JavaScript HTML DOM 事件" href="http://localhost/doc/javascript-runoob.com.html#h_41">DOM 事件</a><a href="http://localhost/doc/javascript-runoob.com.html#h_42">DOM EventListener</a><a title="JavaScript HTML DOM 元素" href="http://localhost/doc/javascript-runoob.com.html#h_43">DOM 元素</a><a title="JavaScript 对象" href="http://localhost/doc/javascript-runoob.com.html#h_44">JavaScript 对象</a><a title="JavaScript Number 对象" href="http://localhost/doc/javascript-runoob.com.html#h_45">JavaScript Number 对象</a><a title="JavaScript 字符串（String）对象" href="http://localhost/doc/javascript-runoob.com.html#h_46">JavaScript String</a><a title="JavaScript Date（日期）对象" href="http://localhost/doc/javascript-runoob.com.html#h_47">JavaScript Date（日期）</a><a title="JavaScript  Array（数组）对象" href="http://localhost/doc/javascript-runoob.com.html#h_48">JavaScript Array（数组）</a><a title="JavaScript Boolean（布尔）对象" href="http://localhost/doc/javascript-runoob.com.html#h_49">JavaScript Boolean（布尔）</a><a title="JavaScript Math（算数）对象" href="http://localhost/doc/javascript-runoob.com.html#h_50">JavaScript Math（算数）</a><a title="JavaScript RegExp 对象" href="http://localhost/doc/javascript-runoob.com.html#h_51">JavaScript RegExp 对象</a><a title="JavaScript Window" href="http://localhost/doc/javascript-runoob.com.html#h_52">JavaScript Window</a><a title="JavaScript Window Screen" href="http://localhost/doc/javascript-runoob.com.html#h_53">JavaScript Window Screen</a><a title="JavaScript Window Location" href="http://localhost/doc/javascript-runoob.com.html#h_54">JavaScript Window Location</a><a title="JavaScript Window History" href="http://localhost/doc/javascript-runoob.com.html#h_55">JavaScript Window History</a><a title="JavaScript Window Navigator" href="http://localhost/doc/javascript-runoob.com.html#h_56">JavaScript Navigator</a><a title="JavaScript 弹窗" href="http://localhost/doc/javascript-runoob.com.html#h_57">JavaScript 弹窗</a><a title="JavaScript 计时事件" href="http://localhost/doc/javascript-runoob.com.html#h_58">JavaScript 计时事件</a><a title="JavaScript Cookies" href="http://localhost/doc/javascript-runoob.com.html#h_59">JavaScript Cookies</a><a title="JavaScript 库" href="http://localhost/doc/javascript-runoob.com.html#h_60">JavaScript 库</a><a title="JavaScript 测试 jQuery" href="http://localhost/doc/javascript-runoob.com.html#h_61">JavaScript 测试 jQuery</a><a title="JavaScript 测试 Prototype" href="http://localhost/doc/javascript-runoob.com.html#h_62">JavaScript 测试 Prototype</a><a title="JavaScript 实例" href="http://localhost/doc/javascript-runoob.com.html#h_63">JavaScript 实例</a><a title="JavaScript 对象实例" href="http://localhost/doc/javascript-runoob.com.html#h_64">JavaScript 对象实例</a><a title="JavaScript 浏览器对象实例" href="http://localhost/doc/javascript-runoob.com.html#h_65">JavaScript 浏览器对象实例</a><a title="JavaScript HTML DOM 实例" href="http://localhost/doc/javascript-runoob.com.html#h_66">JavaScript HTML DOM 实例</a><a title="JavaScript 总结" href="http://localhost/doc/javascript-runoob.com.html#h_67">JavaScript 总结</a><a href="http://localhost/doc/javascript-runoob.com.html#h_68">JavaScript 对象</a><a href="http://localhost/doc/javascript-runoob.com.html#h_69">HTML DOM 对象</a></div>
+<div id="content">
+<div class="article-intro" id="h_0">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_1">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_2">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_3">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_4">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_5">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_6">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_7">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_8">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_9">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_10">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_11">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_12">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_13">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_14">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_15">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_16">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_17">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_18">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_19">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div><div class="article-intro" id="h_20">
+<h1>JavaScript <span class="color_h1">教程</span>
+</h1>
+<div class="tutintro">
+<p>JavaScript 是 Web 的编程语言。</p>
+<p>所有现代的 HTML 页面都使用 JavaScript。</p>
+<p>JavaScript 非常容易学。</p>
+<p>本教程将教你学习从初级到高级JavaScript知识。</p>
+</div>
+<h2 class="tutheader">JavaScript 在线实例</h2>
+<p>本教程包含了大量的 JavaScript 实例， 您可以点击 "尝试一下" 来在线查看实例。</p>
+
+
+
+<table class="lamp"><tbody><tr>
+<th style="width:34px"></th>
+<td>如果能根据本站的实例一步一个脚印学习，你将会在很短的时间内学会 JavaScript。 </td>
+</tr></tbody></table>
+<br>
+<h2 class="tutheader">为什么学习 JavaScript?</h2>
+<p>JavaScript web 开发人员必须学习的 3 门语言中的一门：</p>
+<ol>
+<li><strong>HTML</strong> 定义了网页的内容</li>
+<li><strong>CSS</strong> 描述了网页的布局</li>
+<li><strong>JavaScript</strong> 网页的行为</li>
+</ol>
+<p>本教程是关于 JavaScript 及介绍 JavaScript 如何与 HTML 和 CSS 一起工作。</p>
+<br><h2 class="tutheader">谁适合阅读本教程?</h2>
+<p>1. 如果您想学习 JavaScript，您可以学习本教程：</p>
+<p>了解 JavaScript 是如何与 HTML 和 CSS 一起工作的。</p>
+<p>2. 如果在此之前您已经使用过 JavaScript，您也可以阅读本教程：</p>
+<p>JavaScript 一直在升级，所以我们需要时刻了解 JavaScript 的新技术。</p>
+<br><h2 class="tutheader">阅读本教程前，您需要了解的知识：</h2>
+<p>阅读本教程，您需要有以下基础：</p>
+<ul>
+<li>HTML 和 CSS 基础</li>
+</ul>
+<p>如果您想学习这些基础知识，您可以在我们的首页找到相应的教程<a href="http://localhost/">菜鸟教程</a>。</p>
+<br><h2 class="tutheader">JavaScript 实例</h2>
+<p>学习 100 多个 JavaScript 实例！</p>
+<p>在实例页面中，您可以点击 "尝试一下" 来查看 JavaScript 在线实例。</p>
+<ul>
+<li><a href="http://localhost/doc/js-examples.html">JavaScript 实例</a></li>
+<li><a href="http://localhost/doc/js-ex-objects.html">JavaScript 对象实例</a></li>
+<li><a href="http://localhost/doc/js-ex-browser.html">JavaScript 浏览器支持实例</a></li>
+<li><a href="http://localhost/doc/js-ex-dom.html">JavaScript HTML DOM 实例</a></li>
+</ul>
+<br><h2 class="tutheader">JavaScript 测验</h2>
+<p>在菜鸟教程中测试您的 JavaScript 技能！</p>
+<br><h2 class="tutheader">JavaScript 参考手册</h2>
+<p>在菜鸟教程中，我们为您提供完整的 JavaScript 对象、浏览器对象、HTML DOM 对象参考手册。</p>
+<p>以下手册包含了每个对象、属性、方法的实例。</p>
+<ul>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">JavaScript 内置对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">Browser 对象</a></li>
+<li><a href="http://localhost/jsref/jsref-tutorial.html">HTML DOM 对象</a></li>
+</ul>
+</div></div></body></html>

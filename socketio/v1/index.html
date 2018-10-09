@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="./dist/jquery-1.12.0.min.js"></script>
+<script src="./dist/socket.io.js"></script>
+<title>Socket.IO</title>
+</head>
+<body>
+<style>
+.box  {width:100%;height:100%;background:#ccc;display:grid;grid-row-gap: 50px;}
+.line {height:100%;background:red;display:inline-grid;}
+</style>
+<div class="box">
+  <div class="line">1</div>
+  <div class="line">2</div>
+</div>
+
+
+<script>
+$(window).on('load resize',(e)=>{
+  $('.box').height(window.innerHeight-20)
+});
+</script>
+
+<script>
+
+let url,path,opts,s,socket;
+url=':3900';
+// url='http://d:3900';
+// url='http://d:3900/room-1/?token=A';
+// url='http://d:3900/?token=A';
+// url='http://d:3900';
+// 自动会改为 ws://d:3900/socket.io/?token=A&EIO=3&transport=websocket&sid=w1QBveSbj42kwpTrAAAD
+// let port='3900';
+// let path=':3900/socket.io';
+// let path='/';
+// let opts={
+//   port,
+//   path,
+  // transportOptions: {polling:{extraHeaders:{'x-clientid':'abc'}}},
+// };
+opts={
+  hostname:'d',
+  policyPort:'3900',
+  path:'/cn-1',
+  // path:'/private',
+  // reconnection:false,
+  // reconnectionAttempts:1,
+  // reconnectionDelay:15000,
+  // reconnectionDelayMax:25000,
+  // timeout:1000,
+  transports:['websocket'],
+  // query:{token:'AAA'},
+  // upgrade:false,
+  // forceJSONP:false,
+  // jsonp:false,
+  // forceBase64:false,
+  // enablesXDR:false,
+  // forceNew:true,// 永远创建不同的实例
+  // timestampRequests:false,
+  // transportOptions: {polling:{extraHeaders:{'x-clientid':'abc'}}},
+  // transportOptions:{},
+  // rememberUpgrade:false,
+  // requestTimeout:1000,
+  // autoConnect:false,
+};
+s=socket=io(url,opts);
+// socket.open();// autoConnect:false,
+// socket.close();
+// socket.connect();// ===open()
+// socket.disconnect();// ===close()
+// socket.send(...?args,?ack())
+// socket.emit(eventName,...?args,?ack())
+
+
+// 自定义事件
+socket.on('hi',(e)=>{
+  console.log(e,arguments.length);
+});
+
+socket.on('connect',()=>{
+  // socket.binary(false).send('非二进制');
+  // socket.emit('hi','你好');
+  // socket.emit('binary',1,'2',{3:'4',5:new ArrayBuffer(6)})
+  socket.emit('join','room-1');
+  // socket.emit('rooms');
+
+  // console.group('socket');
+  // console.log('id=',socket.id);
+  // console.log('connected=', socket.connected);
+  // console.log('disconnected=', socket.disconnected);
+  // console.log('io.opts=',socket.io.opts);
+  // console.groupEnd('socket');
+});
+
+// socket.on('reconnect_attempt', (num)=>{
+//   socket.io.opts.query={ token:'abc' };
+//   socket.io.opts.port=3900;
+//   socket.io.opts.transports=['polling','websocket'];
+// });
+
+socket.on('message',(...a)=>console.log('s@message',...a));
+
+// 
+socket.on('connect',()=>console.info('connect'));
+// socket.on('connection');没有该事件
+socket.on('error',(error)=>console.info('error',error));
+socket.on('connect_error',(err)=>console.log(err));
+socket.on('connect_timeout',(err)=>console.log('connect_timeout'));
+socket.on('reconnect',(attemptNumber)=>console.log('reconnect',attemptNumber));
+socket.on('reconnect_attempt',(attemptNumber)=>console.log('reconnect_attempt',attemptNumber));
+socket.on('reconnecting',(attemptNumber)=>console.log('reconnecting',attemptNumber));
+socket.on('reconnect_error',(err)=>console.log('reconnect_error',err));
+socket.on('reconnect_failed',()=>console.log('reconnect_failed'));
+socket.on('ping',()=>console.log('ping'));
+socket.on('pong',(latency)=>console.log('pong',latency));
+// socket.on('disconnect',(reason)=>{console.log(reason);socket.open();});
+
+
+s.__proto__.join=function (name='room-9'){
+  return this.emit('join',name);
+};
+s.__proto__.leave=function (name='room-9'){
+  return this.emit('leave',name);
+};
+s.__proto__.broadcast=function (message='广播'){
+  return this.emit('broadcast',message);
+};
+s.__proto__.rooms=function (){
+  return this.emit('rooms');
+};
+s.__proto__.to=function (room,...a){
+  return this.emit('to',room,...a);
+};
+
+
+// 其他连接
+let s1=io(url,opts);
+s1.on('message',(...a)=>{
+  console.log('s1@message',...a);
+});
+s1.on('connect',()=>{
+  // 进入房间room-1
+  s1.emit('join','room-1');
+  s1.emit('message','我s1');
+});
+
+let s2=io(url,{path:'/cn-1'});
+s2.on('message',(...a)=>{
+  console.log('s2@message',...a);
+});
+s2.on('connect',()=>{
+  // 进入房间room-2
+  s2.emit('join','room-2');
+  s2.emit('message','我s2');
+});
+
+
+</script>
+</body>
+</html>

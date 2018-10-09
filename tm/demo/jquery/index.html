@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="/lib/jquery-3.2.1.min.js"></script>
+	<style type="text/css">
+		*{margin: 2}
+		div,table,th,td{border: 1px solid #ccf}
+		.box{background:rgba(0,0,255,.1);height:2em;width:2em;padding:1em;border:2px solid red;}
+		.selected {2px solid red;}
+
+		table, tr, th, td {padding:4px; border:1px solid #ccc;}
+	</style>
+	<title>demo-jquery</title>
+</head>
+<body>
+
+
+<label>selector:<input type="text" name="selector"></label>
+<input type="button" value="edit" onclic="createEdit">
+<script>
+function createEdit(){
+	$('<table><tr><td></td><td></td></tr></table>').appendTo('#doc')
+}
+</script>
+
+<div id="doc"></div>
+
+<input type="radio" name="selector" value="*">
+<lebel>class:.<input type="radio" name="selector" value="."></lebel>
+<label>element:<input type="radio" name="selector" value=""></label>
+<label><input type="radio" name="selector" value="*">
+<script>
+var v=$(':radio').change(function(e){
+	console.log(e.type, this)
+}).length
+console.log(v)
+</script>
+
+
+<textarea id="code" rows="3" cols="70"></textarea>
+<script>
+$('#code').on('keydown change input',function(e){
+	var v=this.value.trim()
+	if(e.keyCode===13 && v!==''){
+		if(e.ctrlKey) {
+			e.stopPropagation()
+			e.preventDefault()
+			eval('"use strict";'+this.value)
+		}else if(e.altKey){
+			return this.value+='\n';
+		}else{
+			e.stopPropagation()
+			e.preventDefault()
+			eval(this.value)
+		}
+	}
+})
+
+
+
+
+</script>
+
+
+<script>
+function rgb(){
+	return 'rgb('+h()+','+h()+','+h()+')'
+}
+function rgba(){
+	return 'rgba('+h()+','+h()+','+h()+','+Math.random().toFixed(2)+')'
+}
+function h(){
+	return Math.ceil(Math.random()*255)
+}
+
+function gray(){
+	return 'rgba(0,0,0,'+(0.1+Math.random()*0.6).toFixed(2)+')'
+}
+</script>
+
+<div>
+	<input type="button" onclick="add(event)" value="add box">
+	<input type="button" onclick="remove(event)" value="remove box">
+</div>
+<div id="_box"></div>
+
+<hr>
+
+<table id="table">
+	<tr><th>col-1</th><th>col-2</th><th>col-3</th><th>col-4</th><th>col-5</th></tr>
+	<tr><td>data-1-1</td><td>data-1-2</td><td>data-1-3</td><td>data-1-4</td><td>data-1-5</td></tr>
+	<tr><td>data-2-1</td><td>data-2-2</td><td>data-2-3</td><td>data-2-4</td><td>data-2-5</td></tr>
+	<tr><td>data-3-1</td><td>data-3-2</td><td>data-3-3</td><td>data-3-4</td><td>data<br>-3<br>-5</td></tr>
+	<tr><td>data-4-1</td><td>data-4-2</td><td>data-4-3</td><td>data-4-4</td><td>data-4-5</td></tr>
+	<tr><td>data-5-1</td><td>data-5-2</td><td>data-5-3</td><td>data-5-4</td><td>data-5-5</td></tr>
+</table>
+
+
+
+<style type="text/css" id="excelStylesheet"><![CDATA[
+table	{mso-displayed-decimal-separator:"\.";mso-displayed-thousand-separator:"\,";}
+tr{mso-height-source:auto;mso-ruby-visibility:none;}
+td {border: 1px solid #ccc; mso-style-parent:style0; mso-ignore:padding; mso-generic-font-family:auto; mso-font-charset:134; mso-number-format:General; text-align:general; vertical-align:middle; mso-background-source:auto; mso-pattern:auto; mso-protection:locked visible; mso-rotate:0;}
+br {mso-data-placement:same-cell;}
+.cn-Hans{font-family:"Microsoft YaHei";font-size:11pt;}
+.cn-Hant{font-family:"Microsoft YaHei";font-size:11pt;}
+.ko{font-family:"Malgun Ghotic";font-size:11pt;}
+]]></style>
+<table>
+  <tr> <td class="cn-Hans">简体1<br>中国2</td> <td class="cn-Hant">繁體3<br>中國4</td></tr>
+  <tr > <td colspan="2" class="ko">병합 <b>텍스트</b> 5</td></tr>
+</table>
+
+
+<script type="text/javascript">
+var excelstyle=`<style type="text/css"><![CDATA[
+tr
+	{mso-height-source:auto;
+	mso-ruby-visibility:none;}
+col
+	{mso-width-source:auto;
+	mso-ruby-visibility:none;}
+br
+	{mso-data-placement:same-cell;}
+ruby
+	{ruby-align:left;}
+.style0
+	{mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	white-space:nowrap;
+	mso-rotate:0;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:宋体;
+	mso-generic-font-family:auto;
+	mso-font-charset:134;
+	border:none;
+	mso-protection:locked visible;
+	mso-style-name:常规;
+	mso-style-id:0;}
+.style16
+	{color:blue;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"\B9D1\C740 \ACE0\B515", sans-serif;
+	mso-font-charset:0;
+	mso-style-name:超链接;
+	mso-style-id:8;}
+a:link
+	{color:blue;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"\B9D1\C740 \ACE0\B515", sans-serif;
+	mso-font-charset:0;}
+a:visited
+	{color:purple;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:宋体;
+	mso-generic-font-family:auto;
+	mso-font-charset:134;}
+.font7
+	{color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;}
+.font10
+	{color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"\B9D1\C740 \ACE0\B515", sans-serif;
+	mso-font-charset:0;}
+.font11
+	{color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"\B9D1\C740 \ACE0\B515", sans-serif;
+	mso-font-charset:0;}
+.font12
+	{color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:"\B9D1\C740 \ACE0\B515", sans-serif;
+	mso-font-charset:0;}
+.font13
+	{color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:宋体;
+	mso-generic-font-family:auto;
+	mso-font-charset:134;}
+td
+	{mso-style-parent:style0;
+	padding-top:1px;
+	padding-right:1px;
+	padding-left:1px;
+	mso-ignore:padding;
+	color:black;
+	font-size:11.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:宋体;
+	mso-generic-font-family:auto;
+	mso-font-charset:134;
+	mso-number-format:General;
+	text-align:general;
+	vertical-align:middle;
+	border:none;
+	mso-background-source:auto;
+	mso-pattern:auto;
+	mso-protection:locked visible;
+	white-space:nowrap;
+	mso-rotate:0;}
+.xl65
+	{mso-style-parent:style0;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;
+	mso-number-format:"\@";}
+.xl66
+	{mso-style-parent:style0;
+	font-weight:700;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;
+	mso-number-format:"\@";}
+.xl67
+	{mso-style-parent:style16;
+	color:blue;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;
+	mso-number-format:"\@";}
+.xl68
+	{mso-style-parent:style16;
+	color:blue;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;
+	mso-number-format:"\@";
+	white-space:normal;}
+.xl69
+	{mso-style-parent:style0;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;}
+.xl70
+	{mso-style-parent:style16;
+	color:blue;
+	text-decoration:underline;
+	text-underline-style:single;
+	font-family:"\B9D1\C740 \ACE0\B515", sans-serif;
+	mso-font-charset:0;
+	mso-number-format:"\@";}
+.xl71
+	{mso-style-parent:style0;
+	font-family:D2Coding, monospace;
+	mso-font-charset:0;
+	mso-number-format:"\@";
+	white-space:normal;}
+table
+	{mso-displayed-decimal-separator:"\.";
+	mso-displayed-thousand-separator:"\,";}
+@page
+	{margin:.75in .7in .75in .7in;
+	mso-header-margin:.3in;
+	mso-footer-margin:.3in;}
+ruby
+	{ruby-align:left;}
+rt
+	{color:windowtext;
+	font-size:8.0pt;
+	font-weight:400;
+	font-style:normal;
+	text-decoration:none;
+	font-family:宋体;
+	mso-generic-font-family:auto;
+	mso-font-charset:134;
+	mso-char-type:none;
+	display:none;}
+]]></style>`
+$(':root').on('copy',function(e){
+	// event.preventDefault();
+	var cd=event.clipboardData
+	// console.log(event);
+	// console.log(this, this.outerHTML)
+	// var excelbr='<style type="text/css"><!--td {border: 1px solid #ccc;}br {mso-data-placement:same-cell;}--></style>'
+	// event.clipboardData.setData('text/plain', excelbr+ $(this).get(0).outerHTML);
+	// cd.setData('text/plain', excelbr+ $(this).text());
+	// cd.setData('text/html', excelbr+ $(this).get(0).outerHTML);
+	cd.setData('text/plain', $(e.target).text().trim());
+	cd.setData('text/html', $('#excelStylesheet').get(0).outerHTML+$(e.target).get(0).outerHTML);
+	console.log('%ctext/plain\n%c%s', 'background:#cfc', 'background:#fff', cd.getData('text/plain'))
+	console.log('%ctext/html\n%c%s', 'background:#ccf', 'background:#fff', cd.getData('text/html'))
+	return false
+});
+
+// $('table,tr,th,td').on('click', function(e){
+// 	console.log(event.type)
+// 	event.stopPropagation();
+// 	event.stopImmediatePropagation();
+// 	this.contentEditable=true
+// 		$(this).addClass('selected')
+// 	console.log(this, document.activeElement)
+// 	// if(this === document.activeElement) $(this).addClass('selected')
+// })
+
+$('td').on({
+	focus:function(){
+		console.log(event.type)
+		// this.contentEditable=true
+		$(this).addClass('selected')
+	},
+	blur:function(){
+		console.log(event.type)
+		// this.contentEditable=false
+		$(this).removeClass('selected')
+	}
+})
+
+</script>
+
+<div id="div">
+	<div>div-1</div>
+	<div>div-2</div>
+	<div>div-3</div>
+	<div>div-4</div>
+	<div>div-5</div>
+</div>
+
+<div id="input">
+	<input id="button" type="button"><br>
+	<input id="text" type="text"><br>
+	<input id="radio" type="radio"><br>
+	<input id="checkbox" type="checkbox"><br>
+	<textarea id="textarea"></textarea><br>
+</div>
+
+<select id="single">
+  <option>Single</option>
+  <option>Single2</option>
+</select>
+ 
+<select id="multiple" multiple>
+  <option selected="selected">Multiple</option>
+  <option>Multiple2</option>
+  <option selected="selected">Multiple3</option>
+</select>
+
+
+
+<script>
+var keys={
+	'F3':'copytext'
+}
+
+$('#demoCopyToExcelSource').on('keydown',function(e){
+	if(e.key in keys) {
+		e.preventDefault()
+		console.log(e.defaultPrevented)
+		e.stopImmediatePropagation()
+		e.stopPropagation()
+		return console.log('运行了自定义快捷键内容：', keys[e.key])
+	}
+	with(e){
+		console.log( {key, keyCode, which } )
+	}
+	// var t=$(e.target)
+	// // setTimeout(function(){
+	// 	$('<textarea>').val(t.html()).select()
+	// 	document.execCommand('copy')
+	// // })
+
+	// // $('<textarea>').val()
+})
+</script>
+
+
+
+<script type="text/javascript">
+	function add(event){
+		var t=$('<div>').appendTo($('#_box')).addClass('box').text(Date.now())
+		if(event.ctrlKey){
+			t.attr('title', prompt('输入名称'))
+		}
+	}
+
+
+	function remove(event){
+		if(event.ctrlKey){
+			$('#_box').find('.box[title="'+prompt('输入名称')+'"])')
+		}
+		$('#_box').on('click',function(e){
+			$(e.target).fadeOut(undefined,e.target.remove)
+		})
+	}
+
+// $(function(){ 
+//     //阻止浏览器默认行。 
+//     $('#textarea').on({ 
+//         // dragleave:function(e){    //拖离 
+//         //     e.preventDefault(); 
+//         //     console.log(e.type, e)
+//         // }, 
+//         drop:function(e){  //拖后放 
+//             e.preventDefault(); 
+//             // var files = e.dataTransfer.files
+//             // var length = files.length
+//             // var urls = []
+//             // var i=0
+//             // while(i<length){
+//             // 	urls.push(URL.createObjectURL(files[i]))
+//             // 	i++
+//             // }
+
+//             // console.log(e.type, files.length, files )
+//             console.log(e.dataTransfer)
+
+//             // var fr=new FileReader();
+//             // fr.onload=function(v){
+//             // 	e.target.innerText+=v.result
+//             // }
+//             // fr.readAsText(files[0])
+
+
+
+//         }, 
+//         // dragenter:function(e){    //拖进 
+//         //     e.preventDefault(); 
+//         //     console.log(e.type, e)
+//         // }, 
+//         // dragover:function(e){    //拖来拖去 
+//         //     e.preventDefault(); 
+//         //     console.log(e.type, e)
+//         // } 
+//     }); 
+// }); 
+
+window.ondragover=function dragover_handler(ev) {
+  // console.log("dragOver");
+  // Prevent default select and drag behavior
+  ev.preventDefault();
+}
+
+window.ondrop=function drop_handler(ev) {
+  ev.preventDefault();
+  // console.log(ev.type)
+  console.log(ev.dataTransfer);
+  // If dropped items aren't files, reject them
+  var dt = ev.dataTransfer;
+  if (dt.items) {
+    // Use DataTransferItemList interface to access the file(s)
+    for (var i=0; i < dt.items.length; i++) {
+      if (dt.items[i].kind == "file") {
+      	
+        var f = dt.items[i].getAsFile();
+        console.log("items[" + i + "] ", f.name, f.type, f.size);
+      }
+      dt.items[i].getAsString(function(a){console.log(a)})
+    }
+  } else {
+    // Use DataTransfer interface to access the file(s)
+    for (var i=0; i < dt.files.length; i++) {
+    	var f = dt.files[i]
+      console.log("files[" + i + "]", f.name, f.type, f.size);
+    }
+  }
+}
+
+
+// window.ondragend=function dragend_handler(ev) {
+// 	ev.preventDefault();
+//   console.log(ev.type)
+//   console.log(ev.dataTransfer);
+//   // Remove all of the drag data
+//   var dt = ev.dataTransfer;
+//   if (dt.items) {
+//     // Use DataTransferItemList interface to remove the drag data
+//     for (var i = 0; i < dt.items.length; i++) {
+//       dt.items.remove(i);
+//     }
+//   } else {
+//     // Use DataTransfer interface to remove the drag data
+//     ev.dataTransfer.clearData();
+//   }
+// }
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<HTML>
+<HEAD>
+<TITLE>Diff Speed Test</TITLE>
+<script src="/lib/vue.min.js"></script>
+<script src="lib/diff_match_patch_uncompressed.js"></script>
+<style>
+#outputdiv {
+height:300px;
+overflow: auto;
+}
+</style>
+</HEAD>
+
+<BODY>
+<!-- app begin -->
+<H1>Diff Speed Test</H1>
+<div id="app">
+  <div>
+    <input v-model="timeout" type="number">
+    <hr>
+    <textarea v-model="text1" autofocus></textarea>
+    <textarea v-model="text2"></textarea>
+  </div>
+  <pre title="html" v-html="html"></pre>
+  <pre title="rows">{{rows}}</pre>
+  <pre title="diffs">{{diffs}}</pre>
+  <pre title="patches">{{patches}}</pre>
+</div>
+<style>
+#app {
+  font-size: 8pt;
+}
+#app div{
+  width:100%;
+  border: 1px solid #333;
+}
+#app textarea {
+  width:49%;
+  min-height:10em;
+  border: 1px solid #333;
+}
+#app *{
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+}
+#app pre {
+  padding: 1em;
+  border-radius: 1em;
+  border: 1px solid #000;
+  float: left;
+}
+#app pre:before {
+  padding: 0 1em;
+  margin: 0;
+  content: attr(title);
+  background: #000;
+  color: #fff;
+  display: flex;
+}
+</style>
+<script>
+let dmp = new diff_match_patch();
+let obj={
+  el:'#app',
+  data:{
+    timeout:1,
+    text1:'abc',
+    text2:'cba',
+    rows:''
+  },
+  computed:{
+    diffs:function(){
+      let v=dmp.diff_main(this.text1,this.text2);
+      return v;
+    },
+    patches:function(){
+      let v=dmp.patch_make(this.text1, this.text2);
+      return v;
+
+    },
+    html:function(){
+      let v=dmp.diff_prettyHtml(this.diffs);
+      return v;
+    }
+  },
+  watch:{
+    timeout:{
+      handler(n,o){
+        dmp.Diff_Timeout=parseFloat(n);
+        console.log('timeout',n,o);
+      },
+      immediate:true,
+      deep:false
+    },
+
+    text1:{
+      handler(n){
+        dr.bind(this)();
+      }
+    },
+    text2:{
+      handler(n){
+        dr.bind(this)();
+      }
+    }
+  }
+};
+
+dmp.Diff_Timeout = 0;
+let v=new Vue(obj);
+
+function dr(){
+  if(this.text1.length==0 || this.text2.length==0) return ;
+
+  let a1,a2;
+  a1=String(this.text1).split('\n');
+  a2=String(this.text2).split('\n');
+
+  if(a1.length!==a2.length) return ;
+  let res=[];
+  a1.forEach((e,i)=>res.push(dmp.diff_main(e,a2[i]).filter(e=>e[0]!==0).map(e=>e[1])));
+
+  console.log(res)
+  this.rows=res.join('\n');
+  return res;
+}
+
+
+</script>
+<!-- app end -->
+
+
+
+</BODY>
+</HTML>

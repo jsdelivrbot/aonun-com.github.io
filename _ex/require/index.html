@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="lib/require.min.js" data-main="main.js"></script>
+<script>
+	require.config({
+		baseUrl:'./',	// 默认的根目录路
+		paths:{
+			jquery:'lib/jquery.min',			// 自定义jquery的目录
+			// jquery172:'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
+		}
+	})
+
+	require(['cm', 'jquery'], (m, $)=>{
+		m.say()
+
+		console.log(m)
+
+		$('<div>').appendTo('body').text('index.html 中的script执行成功')
+	})
+
+
+</script>
+<title>require</title>
+</head>
+<body>
+</body>
+</html>

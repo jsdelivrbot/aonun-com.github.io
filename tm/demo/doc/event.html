@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html><head></head><body>
+	<div class="captureTest">
+	<span id="captureBox">
+	<span id="captureTrue">Capture True</span>
+	<span id="captureFalse">Capture False</span>
+	</span>
+	<span id="captureTrueOuter">Capture True - Outer</span>
+	<script type="text/javascript">
+	(function(){
+		var t=document.getElementById('captureTrue'),
+		f=document.getElementById('captureFalse'),
+		b=document.getElementById('captureBox'),
+		to=document.getElementById('captureTrueOuter'),
+		log=function (e) {
+			// e.stopPropagation();
+			e.returnValue=false;
+			console.log(e.type, e.button, e.detail, e.target.id, e.eventPhase, e.currentTarget.id);
+		}
+		b.addEventListener('click',log,true);// eventPhase=1
+		b.addEventListener('click',log,false);// eventPhase=3
+		t.addEventListener('click', log,true);// eventPhase=2
+		t.addEventListener('click', log,false);// eventPhase=2
+		f.addEventListener('click', log,false);// eventPhase=2
+		to.addEventListener('click',log,true);// eventPhase=2
+		to.addEventListener('click',log,false);// eventPhase=2
+
+		// click-captureTrue: 1-captureBox(true), 2-captureTrue(true,false), 3-captureBox(false)
+		// click-captureFalse: 1-captureBox(true), 2-captureTrue(false), 3-captureBox(false)
+		// click-captureTrueOuter: 2-captureTrueOuter(true,false)
+		// false-包在里面的先触发事件(3)，true-外面的先触发事件(1)
+
+		document.documentElement.style.cursor='-webkit-grab';
+		document.documentElement.onselectstart=function (e) {
+			return false;
+		};
+		document.documentElement.oncontextmenu=function (e) {
+			return false;
+		};
+
+		document.body.addEventListener('myevent',log);
+		// top.e=document.createEvent('Events');
+		var e=document.createEvent('MouseEVents');
+		e.initEvent('click',false,true);// type,bubbles,cancelable,
+		console.log(e);
+		t.dispatchEvent(e);
+	})();
+	</script>
+	<style type="text/css">
+	.captureTest span {
+		margin:2px;
+		padding:2px;
+		background:rgba(255,0,0,0.1);
+		border:1px solid #000;
+		display:inline-block;
+	}
+	</style>
+</div>
+</body></html>

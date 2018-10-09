@@ -1,0 +1,8 @@
+ErrorDocument 400 http://tm.aonun.com/default.html
+ErrorDocument 401 http://tm.aonun.com/default.html
+ErrorDocument 403 http://tm.aonun.com/default.html
+ErrorDocument 404 http://tm.aonun.com/default.html
+ErrorDocument 500 http://tm.aonun.com/default.html
+ErrorDocument 501 http://tm.aonun.com/default.html
+ErrorDocument 502 http://tm.aonun.com/default.html
+ErrorDocument 503 http://tm.aonun.com/default.html

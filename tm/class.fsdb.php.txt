@@ -1,0 +1,63 @@
+<?php
+
+class Database {
+	static public $path='D:/db/sqlite3/';
+	function __construct($name='test') {
+		$pdo=$this->pdo=new PDO('sqlite:'.self::$path.$name);
+		$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+		$pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,PDO::FETCH_ASSOC);
+		$pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
+	}
+	function getCollection($name='test',$primary=true,$pdo=null){
+		if(is_null($pdo)) $pdo=$this->pdo;
+		return new Collection($name,$primary,$pdo);
+	}
+
+}
+
+
+class Collection {
+	private $_object;
+	function __construct($name='test',$primary=true, $pdo=null){
+		if(is_null($pdo)) $pdo=new Database();
+		$obj=$this->_object=new stdClass;
+		$obj->name=$name;
+		$obj->pdo=$pdo;
+		$pdo->exec('CREATE TABLE  IF NOT EXISTS kv (k TEXT NOT NULL '.($primary?'PRIMARY KEY':'').', v REAL NOT NULL DEFAULT "N;")');
+	}
+	function __set($k,$v){
+		$obj=$this->_object;
+		$pdo=$obj->pdo;
+		$h=$pdo->prepare('replace into '.$obj->name.' kv values (?,?)');
+		$h->bindValue(1,$k,PDO::PARAM_STR);
+		$h->bindValue(2,serialize($v));
+		$h->execute();
+		return $v;
+	}
+	function __get($k){
+		$obj=$this->_object;
+		$pdo=$obj->pdo;
+		$h=$pdo->prepare('SELECT v FROM kv WHERE k=?');
+		$h->bindValue(1,$k,PDO::PARAM_STR);
+		$h->execute();
+		$v=$h->fetch();
+		return is_array($v) ? unserialize($v['v']) : null;
+	}
+	function getName(){
+		return $this->_object->name;
+	}
+}
+
+
+/*Database::$path = 'D:/tmp///';
+
+$db=new Database();
+$c=$db->getCollection();
+// var_dump($c->a='aasd');
+var_dump($db);
+var_dump($c);
+var_dump($c->pdo);*/
+
+
+

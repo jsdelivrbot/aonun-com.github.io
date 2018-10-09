@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>File</title>
+</head>
+<body><pre>
+
+<strong>FileReader</strong>
+  DONE:2
+  EMPTY:0
+  LOADING:1
+  get readyState: 读取状态（EMPTY、LOADING、DONE）。
+  get result: 读取结果，内容（DOMString）。
+  get error: 错误对象(FileError)
+ sget onloadstart: 读取开始时……(Function)
+ sget onprogress: 读取中，报告进度(progess.loaded/progress.total)
+ sget onload: 读取已成功完成。(Function)
+ sget onabort: 读取中止，例如通过abort()。 (Function)
+ sget onerror: 读取失败。(Function)
+ sget onloadend: 读取请求完成。(无论成败). (Function)
+  abort(): 中止读取文件。
+  readAsArrayBuffer(): 
+  readAsBinaryString(): 
+  readAsDataURL(): 读取文件并返回数据为 base64 encoded data url.
+  readAsText(): 读取文本文件
+
+<strong>FileError</strong>
+  ABORT_ERR: 3
+  ENCODING_ERR: 5
+  INVALID_MODIFICATION_ERR: 9
+  INVALID_STATE_ERR: 7
+  NOT_FOUND_ERR: 1
+  NOT_READABLE_ERR: 4
+  NO_MODIFICATION_ALLOWED_ERR: 6
+  PATH_EXISTS_ERR: 12
+  QUOTA_EXCEEDED_ERR: 10
+  SECURITY_ERR: 2
+  SYNTAX_ERR: 8
+  TYPE_MISMATCH_ERR: 11
+  code
+  message
+  name
+
+
+<strong>File</strong>
+new File(arrayData or arrayBuffer,name)
+get lastModified
+get name
+get webkitRelativePath
+size
+type
+slice()
+
+
+<strong>Blob</strong>
+get size
+get type
+
+
+
+<strong>XMLHttpRequest</strong>
+
+DONE                 = 4
+HEADERS_RECEIVED     = 2
+LOADING              = 3
+OPENED               = 1
+UNSENT               = 0
+
+onabort              = [handle]
+onerror              = [handle]
+onload               = [handle]
+onloadend            = [handle]
+onloadstart          = [handle]
+onprogress           = [handle] 
+onreadystatechange   = [handle]
+ontimeout            = [handle]
+readyState           = 4
+response             = 'RIFFBWAVfmt "V"Vdata...'
+responseText         = 'RIFFBWAVfmt "V"Vdata...'
+responseType         = ''
+responseURL          = 'http://doc/demo.wav'
+responseXML          = ''
+status               = 200
+statusText           = 'OK'
+timeout              = 0
+upload               = XMLHttpRequestUpload
+withCredentials      = false
+
+abort()                     主动中止请求
+getAllResponseHeaders()     请求头全部
+getResponseHeader(name)     请求头
+open(method,url)            打开
+overrideMimeType(mimeType)  更改类型
+send(parameters)            发送
+
+<i>事件流向与状态</i>
+javascript: new  open|send
+错误的url:       loadstart -> readystatechange  -> progress -> error -> loadend
+正确的url：      loadstart -> readystatechange <-> progress -> load -> loadend
+readyState:  0       1             2,3,4               3         4        4
+
+
+
+</pre>
+<script>
+var f=new File(['demo','data'],'demofile');
+
+var fr=new FileReader();
+/*fr.onabort=fr.onerror=fr.onloadstart=fr.onloadend=fr.onload=fr.onprogress=function(){
+  var result=null;
+  switch(event.type){
+    case 'abort':
+      result = event;
+      break;
+    case 'error':
+      result = event;
+      break;
+    case 'load':
+    case 'loadend':
+      result = this.result;
+      break;
+    case 'loadstart':
+    case 'progress':
+      result = Math.floor(event.loaded/event.total*100)+'%';
+      break;
+  }
+  console.log(event.type,':',result,event);
+}*/
+
+// console.warn('readAsText');
+// fr.readAsText(f);
+
+// console.warn('readAsDataURL')
+// fr.readAsDataURL(f.slice(0,3));
+
+
+
+var xhr=new XMLHttpRequest();
+xhr.open('GET','http://doc/demo.wav');
+/*xhr.onabort=xhr.onerror=xhr.onprogress=xhr.onloadstart=xhr.onload=xhr.onloadend=xhr.onreadystatechange=xhr.ontimeout=function(){
+  var result=null;
+  switch(event.type){
+    case 'loadstart':
+      // XMLHttpRequestProgressEvent
+      result = Math.floor(event.loaded/event.total*100)+'%'||'0%';
+      break;
+    case 'readstatechange':
+      // Event
+      result=this.readyState;
+      break;
+    case 'load':
+      // XMLHttpRequestProgressEvent
+    case 'loadend':
+      // XMLHttpRequestProgressEvent
+      result=typeof this.response;
+      break;
+    case 'abort':
+      // XMLHttpRequestProgressEvent
+    case 'error':
+      // XMLHttpRequestProgressEvent
+    case 'timeout':
+      // XMLHttpRequestProgressEvent
+    case 'progress':
+      // XMLHttpRequestProgressEvent
+      result=event;
+      break;
+  }
+  console.log(event.type,':', this.readyState, this.status,  event);
+};*/
+xhr.send(null);
+var f;
+xhr.addEventListener('loadend',function(){
+  // f=new File([this.response],'demo.wav');
+  db.transaction(function(t){
+    t.executeSql(
+      'INSERT INTO `files` VALUES (?)',
+      [xhr.response],
+      function s(t,r){
+        console.log(r.rows);
+        queryLog();
+      },
+      function e(t,e){
+        console.log('INSERT',e.message);
+        queryLog();
+      }
+    );
+  });
+
+  
+});
+
+function queryLog(){
+  db.readTransaction(function(transaction){
+  transaction.executeSql('SELECT * FROM `files`',null,
+    function(t,r){
+      console.log('SELECT',r.rows);
+      var i=0,len=r.rows.length,item;
+      while(i<len){
+        item=r.rows.item(i++);
+        console.log(item.file)
+      }
+    },
+    function(t,e){console.log('SELECT',e.message);})
+  });
+}
+
+
+var db=openDatabase('demo','','',1024*1024*100);
+// db.transaction(function(transaction){
+//   transaction.executeSql('CREATE TABLE IF NOT EXISTS `files` (`file` BLOB)',null,function(t,r){console.log('CREATE',r.rows);},
+//     function(t,e){console.log('CREATE',e.message)}
+//   );
+//   transaction.executeSql('SELECT * FROM `files`',null,
+//     function(t,r){console.log('SELECT',r.rows);},
+//     function(t,e){console.log('SELECT',e.message);})
+// });
+</script>
+</body>
+</html>

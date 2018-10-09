@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="jianfan.js"></script>
+	<script type="text/javascript" src="term.js"></script>
+	<script type="text/javascript" src="index.js"></script>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<title>trans</title>
+</head>
+<body spellcheck="false">
+<h1>GOD - 주사위의 신</h1>
+<div style="text-align:center;display: none">
+<pre>한 칸에 단행 내용만 있으면 여기로 가능합니다</pre>
+<table>
+	<tr><th>CN</th><th>TW</th></tr>
+	<tr><td lang="zh-Hans" id="cn" class="source" contentEditable></td><td lang="zh-Hant" id="tw" class="source" contentEditable></td></tr>
+</table>
+</div>
+
+<hr>
+<div style="text-align:center;border:2px solid #003">
+<pre>주의: 한 개 칸에 다행인 내용을 아래로 붙여주세요</pre>
+<textarea id="cn2" name="text" wrap="SOFT" tabindex="0" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" style="box-sizing: border-box; overflow-y: hidden; overflow-x: auto; padding-right: 20px;"></textarea>
+<textarea id="tw2" name="text" wrap="SOFT" tabindex="0" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" style="box-sizing: border-box; overflow-y: hidden; overflow-x: auto; padding-right: 20px;"></textarea>
+</div>
+
+<hr>
+<div>
+<pre id="tresult">아래 입력 시, 글자수가 자동으로 나타납니다~</pre>
+<input type="text" id="t1" style="width:48%;float:left" disabled>
+<input type="text" id="t2" style="width:48%;float:right" disabled><br>
+<textarea id="ta1" style="width:49%;float:left"></textarea>
+<textarea id="ta2" style="width:49%; float:right"></textarea>
+</div>
+
+
+<div style="width:96%;min-height:3em;padding:1em;border:2px solid #000;float:right;">
+<h2><button id="tg">switchAuto</button> | custom:<input type="text" id="ttgg"><button id="tg2">switchCustom</button><br>
+안녕~ Excel에서 적어도 2개 셀을 복사하여 넣어 주시면 됩니다~ 행에서 서로 다른 값이 눈에 띄이게 되지요.</h2>
+<div contenteditable id="high" style="width:90%;min-height:3em;padding:1em;border:1px dashed #000;"></div>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('#high').on('paste input',function(){
+		setTimeout(function(){
+			var maxcolnum=0;
+			$('#high').find('tr').each(function(i,e){
+				maxcolnum=Math.max(maxcolnum, e.children.length)
+			})
+
+			$('#hign').find('*').removeAttr('style')
+			$('#high').find('tr').each(function(i,e){
+				var t=$(e).find('td'), l=t.length, a=Math.random(), c
+				t.map(function(ii,ee){
+					var color='rgb(255,199,206)'
+					for(var j=0; j<l; j++) {
+						if(j===ii) continue;
+						c = $(t.get(j))
+						if($(ee).text() === c.text()) {
+							$(ee).css('background',color).attr('data-unique','false')
+							c.css('background',color).attr('data-unique','false')
+						}
+					}
+				})
+			})
+		})
+	})
+
+	$('#tg').click(function tg(){
+		$('#high').find('td[data-unique=false]').parent().toggle({duration:400,queue:false});
+	})
+
+	$('#tg2').click(function tg(){
+		$('#high').find('td[data-unique=2]').parent().toggle({duration:400,queue:false});
+	})
+
+	$('#ttgg').keyup(function(e){
+		if(e.keyCode===13) {
+			if($('#ttgg').val().trim()==='') return ;
+			var re=new RegExp($('#ttgg').val(),'gi')
+			$('#ttgg').val('')
+			
+			$('#high').find('td').each(function(i,e){
+				if(re.test($(e).text())){
+					$(e).css('background','rgb(0,232,0)').attr('data-unique','2').parent().toggle({duration:2000,queue:false})
+				}
+			})
+		}
+	})
+
+	function r255(){
+		return Math.round(Math.random()*255).toString()
+	}
+	function ra(){
+		return (Math.random()*.3+.3).toFixed(1)
+	}
+	function rc(){
+		return 'rgba('+r255()+','+r255()+','+r255()+','+ra()+')'
+	}
+})
+
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!doctype html><html><head><title>Worker</title></head><body></body></html>
+<script>
+
+let w=new Worker('worker.js'); 
+
+w.addEventListener('message',function(e){
+	console.log('main.worker.onmessage:', e.data);
+})
+
+w.addEventListener('error', function(e){
+	console.log('main.worker.onerror: %s line %s col %s', e.filename, e.lineno, e.colno);
+});
+
+w.addEventListener('close',function(e){
+	console.log('main.worker.onclose:', e);
+});
+
+
+var a=[];
+w.postMessage('MAIN: hi, worker~', a);
+console.log('main.postMessage()');
+
+
+
+// setTimeout(function (){
+// 	console.log('main.worker.terminate()');
+// 	w.terminate();// 令worker进程强制结束
+// }, 1000);
+
+addEventListener('online', function(e){
+	console.log('main.worker.ononline', e);
+});
+
+addEventListener('offline', function(e){
+	console.log('main.worker.onoffline', e);
+});
+
+</script>

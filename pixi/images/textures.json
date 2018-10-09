@@ -1,0 +1,22 @@
+{
+"frames":{
+"b0":{
+	"frame": {"x":0,"y":0,"w":34,"h":34},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":34,"h":34},
+	"sourceSize": {"w":34,"h":34},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"b1":{
+	"frame": {"x":34,"y":0,"w":34,"h":34},
+	"sourceSize": {"w":34,"h":34},
+	"pivot": {"x":0.5,"y":0.5}
+}
+},
+"meta":{
+	"image":"buttonset.png",
+	"size": {"w":242,"h":442},
+	"scale": "1"
+}
+}

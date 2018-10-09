@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Selection</title>
+<script src="/lib/vue.min.js"></script>
+</head>
+<body>
+<style>
+#app {
+	font-family: consolas,verdana;
+}
+#app pre {
+	margin: 1px; padding: 6px; background:#ccc; border-radius:6px; font-size:8pt;
+}
+#app span { background: rgba(0,0,255,0.2); }
+#app code {
+	white-space: pre;
+	tab-size: 2em;
+	background: #eee;
+	outline: none;
+	border-bottom: 1px solid #ccc;
+}
+</style>
+<div id="app" @mouseup="flush" @keydown="flush">
+	<p>
+		示例段落。<b>粗体</b>。<i>斜体</i>。<u>下划线</u>。<br>
+		<font size="2" color="#00f">有样式的文字</font>。<br>
+		<span>[房子<span>[柜子<span>[东西]</span>柜子]</span>房子]</span>
+	</p>
+	<code contenteditable>let a=["string", NaN, true];
+console.log(a);</code>
+	<h3>Selection</h3>
+	<pre v-for="e in infos">{{JSON.stringify(e,null,2)}}</pre>
+	<h3>Ragge</h3>
+	<pre v-for="e in infor">{{JSON.stringify(e,null,2)}}</pre>
+</div>
+<script>
+let v=new Vue({
+	el:'#app',
+	data:{
+		selection:window.getSelection(),
+		infos:[],
+		infor:null,
+		get range(){
+			return this.selection.type!=='None' ? this.selection.getRangeAt(0) : null;
+		},
+		set range(V){
+			this.selection.removeAllRanges();
+			this.selection.addRange(v);
+		}
+	},
+	methods:{
+		flush(e){
+
+			// console.log(e.location, e.keyCode, e.key, e.which, e.code, e.composed, e.isComposing, e.isTrusted);
+			console.log(e)
+
+			let s=this.selection;
+			if(e && e.type==='keydown' && e.location!==0){
+				return e.preventDefault();
+			}
+			if(e && e.type==='keydown' && e.location===0 && e.keyCode===9 ) {
+				e.preventDefault();
+				if(s.type!=='None'){
+					// type: None | Caret | Range
+					
+					let range=s.getRangeAt(0);
+					if(s.type==='Range') range.deleteContents();
+					range.deleteContents();
+					range.insertNode(document.createTextNode(String.fromCharCode(9)));
+
+					// 可编辑的node中，光标定位到指定node的指定位置。
+					// s.collapse(document.querySelector('code').lastChild,1);
+
+					// 导致Selection的type为'None'   selection.type==='None'
+					// s.collapse(null);
+
+					// 可编辑的node中，光标定位到结束选择位置。
+					// s.collapseToEnd();
+
+					// 可编辑的node中，光标定位到开始选择位置。
+					// s.collapseToStart();
+					// range.startContainer.parentNode.normalize();
+				}
+			}
+
+
+			if(e && e.type==='mouseup' && e.altKey) {
+
+				// 用Range删除所选内容
+				// if(s.type==='Range'){
+				// 	let range=s.getRangeAt(0);
+				// 	range.deleteContents();
+				// }
+
+				// 用Selection删除所选内容
+				// s.deleteFromDocument();
+
+
+				// 从开始位置选取到指定Node的指定Index位置
+				// s.extend(document.body.lastChild,document.body.lastChild.nodeValue.length);
+				// s.extend(document.body.firstChild,0);
+
+				// 设置选取区间
+				// s.setBaseAndExtent(anchorNode,anchorOffset,focusNode,focusOffset)
+				// s.setBaseAndExtent(document.body.firstChild,0,document.body.lastChild,0);
+
+				// s.selectAllChildren(document.querySelector('code'));
+
+				// console.log(s.toString());// 选取内容为字符串
+
+				// 是否包含code标签
+				// console.log(s.containsNode(document.querySelector('code'),false));// 选区要包含完整的code标签内容
+				// console.log(s.containsNode(document.querySelector('code'),true));// 选区可包含部分的code标签内容
+
+				if(this.selection.type!=='None'){
+					let range=this.selection.getRangeAt(0);
+
+
+					// Range选取内容不是TextNode就会报错
+					try{
+						let font=document.createElement('font');
+						font.size=4;
+						font.color='green';
+						range.surroundContents(font);
+					}catch(err){
+						console.log(err)
+					}
+
+					// self.f=range.extractContents();// #document-fragment
+
+					// range.insertNode(node)
+					// range.insertNode(self.f);
+
+					// range.selectNodeContents(node);// node本身
+					// range.selectNode(node);// node本身和父级
+
+					range.setEndAfter(range.endContainer);
+
+				}
+			}
+
+			this.infos=[];
+
+			this.infos.push({
+				toString:this.selection.toString()
+			});
+
+			this.infos.push({
+				rangeCount:s.rangeCount,
+				// baseOffset:s.baseOffset,
+				// extentOffset:s.extentOffset,
+				anchorOffset:s.anchorOffset+' 选择开始位置',
+				focusOffset:s.focusOffset+' 选择结束位置',
+				isCollapsed:s.isCollapsed,
+				type:s.type,
+			});
+
+			this.infor=[];
+
+			let range=s.rangeCount?s.getRangeAt(0):null;
+			if(range){
+				this.infor.push({
+					startContainerType: range.startContainer.nodeType,
+					startContainer: range.startContainer.nodeValue,
+					startOffset: range.startOffset
+				});
+				this.infor.push({
+					endContainerType: range.endContainer.nodeType,
+					endContainer: range.endContainer.nodeValue,
+					endOffset: range.endOffset
+				});
+
+				console.log(range.startContainer, range.endContainer);
+
+				let cac=range.commonAncestorContainer;
+
+				this.infor.push({
+					collapsed: range.collapsed+'(起始位置和结束位置是否重合)',
+					commonAncestorContainer:cac.nodeType===1?range.commonAncestorContainer.outerHTML:cac.data
+				});
+			}
+		}
+	}
+});
+</script>
+</body>
+</html>

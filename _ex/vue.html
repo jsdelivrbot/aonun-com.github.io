@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/lib/vue.js"></script>
+	<title>vue</title>
+</head>
+<body>
+<div id="journal">
+  <input type="text" v-model="message">
+  <div>{{message}}</div>
+</div>
+<script>
+var journal = new Vue({
+  el: '#journal',
+  data: {
+    message: 'Your first entry'
+  }
+});
+</script>
+</body>
+</html>

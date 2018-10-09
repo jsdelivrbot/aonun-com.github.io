@@ -1,0 +1,48 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<script src="/lib/jquery.js"></script>
+<script src="/lib/jquery-ui.js"></script>
+<style>*{font-family: "Microsoft Yahei"}</style>
+<title></title>
+</head>
+<body>
+</body>
+</html>
+<script>'use strict';$(function(){
+
+$('<pre>').text('여기 클릭해서 이벤트 기간을 붙여넣으세요.').appendTo('body');
+
+var o=$('<pre>').appendTo('body');
+var r=$('<pre>').appendTo('body');
+
+$(document).on('paste', function(e){
+	var eo=e.originalEvent;
+	var d=eo.clipboardData;
+	var t=d.getData('text/plain');
+	o.text(t);
+
+	var re=/(\d+)[\.\/](\d+)[\.\/](\d+)( (\d+):(\d+))?/g;
+
+	var ret = /이벤트( )*기간/ .test(t) ? '活动时间：':'';
+	var s = [],st,x;
+	while(x=re.exec(t)) {
+		st='';
+		if(x[1]) st+=x[1]+'年';
+		if(x[2]) st+=x[2]+'月';
+		if(x[3]) st+=x[3]+'日';
+		if(x[4]) st+=(parseInt(x[4],10)-1).toString().padStart(2,'0')+':';
+		if(x[5]) st+=x[5];
+		s.push(st)
+	}
+	ret+=s.join('~');
+	if(/점검( )*전/ .test(t)) ret+=' 维护前';
+	
+	
+	r.text(ret)
+})
+
+
+
+
+
+
+});</script>

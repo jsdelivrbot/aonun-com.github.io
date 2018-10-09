@@ -1,0 +1,232 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<script src="/lib/jquery.js"></script>
+<script src="/lib/util.format.js"></script>
+<link rel="stylesheet" type="text/css" href="index.css">
+<title>TextTool</title>
+</head>
+<body>
+<table id="box1">
+<tbody>
+<tr>
+	<td colspan="3" style="height:auto">
+		<label><input id="wrap" type="checkbox">TextareaWrap</label>
+		<button id="clearSource">clearSource</button>
+		<button id="copyToReference">copy</button>
+		<label><button id="naverGoogle">NaverGoogle</button></label>
+	</td>
+</tr>
+<tr>
+	<td rowspan="2"><textarea id="source" placeholder="source" wrap="off"></textarea></td>
+	<td rowspan="2"><textarea id="work" placeholder="work" wrap="off"></textarea></td>
+	<td><textarea id="reference" placeholder="reference" wrap="off"></textarea></td>
+</tr>
+<tr>
+	<td><textarea id="dict" placeholder="dict" wrap="off"></textarea></td>
+</tr>
+<tr>
+	<td colspan="3" style="height: 50px;">
+		<textarea id="stat" placeholder="stat" wrap="off"></textarea>
+	</td>
+</tr>
+</tbody>
+</table>
+
+<div>
+row:<span id="rowCurrentUI"></span>/<span id="rowTotalUI"></span>
+</div>
+</body>
+</html>
+<script>
+var script={
+	sourceClearMessage: 'Source 내용을 지우시겠습니까?',
+	selectionMessage: '선택위치: %s~%s (%s)\n텍스트: %s\n현재 행수：%s',
+};
+
+var s = $('#source').get(0);
+var stat = $('#stat').get(0);
+// search
+var arr
+var sarr
+var sarri
+var reg__s = /\s+/g;
+var selectionText;
+var selectionTextRecord =[];
+
+$('#source').on('select mouseup input', function(e){
+	showStat();
+});
+
+$('#source').on('keyup', function(){
+	var _rowStat = rowStat();
+	$('#rowCurrentUI').text(_rowStat.line);
+});
+
+$('#work').on('contextmenu',function(e){
+	e.preventDefault();
+	replaceWorkToSource();
+});
+
+$('#work').on('keydown',function(e){
+	if(e.keyCode===91 && e.ctrlKey===true && e.metaKey===true && e.shiftKey===false && e.altKey===false) {
+		// Meta - Windows Key
+		replaceWorkToSource(e);
+	}else if(e.KeyCode===19) {
+
+		var ret=searchDict(getSelectionText('work'));
+		console.log(ret)
+	}
+});
+
+function getSelectionText(id) // javascript
+{
+    // obtain the object reference for the <textarea>
+    var txtarea = document.getElementById(id);
+    // obtain the index of the first selected character
+    var start = txtarea.selectionStart;
+    // obtain the index of the last selected character
+    var finish = txtarea.selectionEnd;
+    // obtain the selected text
+    var sel = txtarea.value.substring(start, finish);
+    // do something with the selected content
+    return sel;
+}
+
+
+function replaceWorkToSource(e){
+	if(arr===undefined||sarr===undefined||sarri===undefined) return console.error('缺少');
+	var newdata = $('#work').val().split('\n');
+
+	if(newdata.length === sarr.length) {
+
+		for(var i=0,len=newdata.length; i<len; i++) {
+			arr[sarri[i]] = newdata[i];
+		}
+
+		$('#source').val(arr.join('\n'));
+
+		console.log(arr,sarr,sarri)
+	}else{
+		if(e) e.preventDefault();
+		console.error('need row: %d, current row: %d',sarr.length, newdata.length)
+	}
+}
+
+
+function showStat(){
+	var selectionText = s.value.slice(s.selectionStart,s.selectionEnd);
+	var str = util.format(script.selectionMessage,
+		s.selectionStart, s.selectionEnd, s.selectionDirection,
+		selectionText
+	);
+	stat.value = str;
+
+	var _rowStat = rowStat();
+	$('#rowCurrentUI').text(_rowStat.line);
+	$('#rowTotalUI').text(rowCount());
+	search(selectionText||_rowStat.value)
+}
+
+function rowCount(){
+	return s.value.split('\n').length;
+}
+
+function rowStat(){
+	var i = s.selectionDirection==='forward' ? s.selectionEnd : s.selectionStart;
+
+	var line = s.value.slice(0,i).split('\n').length;
+	
+	var start = s.value.lastIndexOf('\n', i-1);
+		start = start===-1 ? 0 : start+1;
+	
+	var end=s.value.indexOf('\n', i);
+	end = end===-1 ? s.value.length : end;
+
+	var value = s.value.slice(start,end);
+
+	return {start, end, value, line}
+}
+
+
+
+$('#wrap').on('click',function(e){
+	if(e.target.checked) {
+		$('textarea').removeAttr('wrap');
+	}else{
+		$('textarea').attr('wrap','off');
+	}
+});
+
+
+
+function search(t){
+
+	if(t==='\x20'||t===undefined||t==='') return ;
+	arr = s.value.split('\n');
+	sarri = [];
+	sarr = arr.filter(function(e,i){
+		var b = e.replace(reg__s,'').indexOf(t.replace(reg__s, ''))!==-1;
+		if(b) {
+			sarri.push(i);
+		}
+		return b;
+	});
+	work.value = sarr.join('\n')
+	// console.log(t, sarr,sarri)
+
+
+
+	searchDict(t);
+	// searchNaverGoogle(t);
+}
+
+
+$('#naverGoogle').on('click', function(e){
+	searchNaverGoogle(t);
+});
+function searchNaverGoogle(t) {
+	var opt = 'menubar=no, location=no, resizable=no, scrollbars=no, status=no';
+	open('http://translate.naver.com/#/ko/zh-CN/'+t, 'naverPapago', opt);
+	open('https://translate.google.cn/#ko/zh-CN/'+t, 'goggleTranslate', opt);
+}
+
+
+var dictArr;
+var dictSArr;
+$('#dict').on('change',function(e){
+	dictArr = $('#dict').val().trim();
+	if(dictArr.length) {
+		dictArr = dictArr.split('\n');
+	}else{
+		dictArr=null;
+	}
+})
+
+function searchDict(t){
+	if(dictArr) {
+		dictSArr = [];
+		dictArr.filter(function(e,i){
+			var b = e.replace(reg__s,'').indexOf(t.replace(reg__s, ''))!==-1;
+			if(b) {
+				dictSArr.push(e);
+			}
+			return b;
+		});
+
+		// dictArr
+		$('#reference').val(dictSArr.join('\n'));
+	}
+}
+
+
+$('#copyToReference').click(function(e){
+	$('#reference').val($('#source').val()).select();
+	document.execCommand('copy');
+});
+
+
+$('#clearSource').click(function(e){
+	if(confirm(script.sourceClearMessage)) $('#source').val('');
+});
+
+
+</script>

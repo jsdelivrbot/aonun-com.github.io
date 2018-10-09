@@ -1,0 +1,118 @@
+<div class="post">
+	<div class="postTitle">
+		<h1><a id="cb_post_title_url" class="postTitle2" href="http://www.cnblogs.com/oneword/archive/2009/05/31/1492600.html">Javascript--dataTransfer</a></h1>
+	</div>
+	<div id="cnblogs_post_body"><p><strong>描述:</strong></p> <blockquote> <p>提供对于预定义的剪贴板格式的访问,以便在拖拽中使用</p></blockquote> <p>&nbsp;</p> <blockquote> <table cellspacing="0" cellpadding="2" width="944" border="1" unselectable="on"> <tbody> <tr> <td valign="top" align="middle" width="181"><strong>属性</strong></td> <td valign="top" align="middle" width="343"><strong>描述</strong></td> <td valign="top" align="middle" width="417"><strong>参数</strong></td></tr> <tr> <td width="181">dropEffect[=sCursorStyle]</td> <td width="343">设置或获取拖拽操作的类型和要显示的光标类型</td> <td width="417">可选的<br>copy 复制样式被显示<br>link&nbsp; 链接样式被显示<br>move&nbsp; 移动样式被显示<br>none&nbsp; 默认,没有鼠标样式被定义</td></tr> <tr> <td width="181">effectAllowed[=sEffect]</td> <td width="343">设置或获取数据传送操作可应用与该对象的源元素</td> <td width="417">可选的<br>copy 选项被复制<br>link&nbsp; 选项被dataTransfer作为link方式保存<br>move&nbsp; 当放置时,对象被移动至目标对象<br>copylink&nbsp; 选项是被复制还是被作为link方式保存关键在于目标对象<br>linkmove&nbsp;选项是被作为link方式保存还是被移动关键在于目标对象<br>all 所有效果都被支持<br>none 不支持任何效果<br>uninitialized 默认不能通过这个属性传递任何值</td></tr></tbody></table></blockquote> <p><strong>说明:</strong></p> <blockquote> <p>effectAllowed定义了在源对象上的操作,可定义在ondragstart事件中.</p> <p>dropEffect定义了在目标对象上的操作,可定义在ondrop,ondragenter,ondragover事件中.</p> <p>effectAllowed可以定义all操作,但是dropEffect可以定义copy操作.</p> <p>The target object of a drag-and-drop operation can set the <b>dropEffect</b> during the <b>ondragenter</b>, <b>ondragover</b>, and <b>ondrop</b> events. To display the desired cursor until the final drop, the default action of the <b>ondragenter</b>, <b>ondragover</b>, and <b>ondrop</b> events must be canceled and the <b>dropEffect</b> must be set.</p></blockquote> <p><strong>例子:</strong></p> <blockquote><pre>    &lt;span ondragstart="<span style="color: #8b0000">DragStart()</span>"&gt;
+        This Is A Test String.
+    &lt;/span&gt;
+    &lt;p&gt; &lt;/p&gt;
+    &lt;div id="<span style="color: #8b0000">dv</span>" style="<span style="color: #8b0000">border:solid 1px black;height:150px;width:200px</span>" ondrop="<span style="color: #8b0000">Drop()</span>" ondragover="<span style="color: #8b0000">DragOver()</span>"</pre><pre>        ondragenter="<span style="color: #8b0000">DragEnter()</span>"&gt;
+        [Drop To Here]
+    &lt;/div&gt;
+    &lt;script type="<span style="color: #8b0000">text/javascript</span>"&gt;
+        function DragStart(){
+            <span style="color: #0000ff">event</span>.dataTransfer.effectAllowed="<span style="color: #8b0000">copy</span>";
+        }
+        
+        function Drop(){
+            DragOver();          
+            <span style="color: #0000ff">event</span>.srcElement.innerText=<span style="color: #0000ff">event</span>.srcElement.innerText+<span style="color: #0000ff">event</span>.dataTransfer.getData("<span style="color: #8b0000">text</span>");
+        }
+        
+        function DragEnter(){
+            DragOver();
+            <span style="color: #0000ff">event</span>.dataTransfer.dropEffect="<span style="color: #8b0000">copy</span>";
+        }
+        
+        function DragOver(){
+            <span style="color: #0000ff">event</span>.returnValue=<span style="color: #0000ff">false</span>;
+        }
+        
+    &lt;/script&gt;</pre></blockquote>
+<p>&nbsp;</p>
+<blockquote>
+<table cellspacing="0" cellpadding="2" width="903" border="1" unselectable="on">
+<tbody>
+<tr>
+<td valign="top" align="middle" width="176"><strong>方法</strong></td>
+<td valign="top" align="middle" width="380"><strong>描述</strong></td>
+<td valign="top" align="middle" width="345"><strong>参数</strong></td></tr>
+<tr>
+<td valign="top" width="178">setData(sFormat,sData)</td>
+<td valign="top" width="378">将指定格式的数据赋值给dataTransfer或者clipboardData</td>
+<td valign="top" width="345">sFormat:URL,Text</td></tr>
+<tr>
+<td valign="top" width="179">getData(sFormat)</td>
+<td valign="top" width="377">从dataTransfer或者clipboardData中获取值</td>
+<td valign="top" width="345">sFormat:URL,Text</td></tr>
+<tr>
+<td valign="top" width="180">clearData([sFormat])</td>
+<td valign="top" width="375">通过dataTransfer或者clipboardData中删除某种格式的数据</td>
+<td valign="top" width="345">sFormat:Text,URL,File,HTML,Image</td></tr></tbody></table></blockquote>
+<p><strong>例子:</strong></p>
+<blockquote><pre>&lt;SCRIPT&gt;
+function InitiateDrag(){   
+    <span style="color: #0000ff">event</span>.dataTransfer.setData("<span style="color: #8b0000">URL</span>", document.getElementById("<span style="color: #8b0000">oSource</span>").href);    
+}
+
+function FinishDrag(){
+    document.getElementById("<span style="color: #8b0000">oTarget</span>").innerText = <span style="color: #0000ff">event</span>.dataTransfer.getData("<span style="color: #8b0000">URL</span>");
+}
+&lt;/SCRIPT&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+    &lt;A ID="<span style="color: #8b0000">oSource</span>" href="<span style="color: #8b0000">http://www.sohu.com</span>" ondragstart="<span style="color: #8b0000">InitiateDrag()</span>" onclick="<span style="color: #8b0000">return false;</span>" &gt;Test Anchor&lt;/A&gt;
+    &lt;SPAN ID="<span style="color: #8b0000">oTarget</span>" ondragenter="<span style="color: #8b0000">FinishDrag()</span>"&gt;Drop Here&lt;/SPAN&gt;
+&lt;/BODY&gt;</pre></blockquote>
+<p><strong>效果:</strong></p>
+<blockquote>
+<p><a href="http://images.cnblogs.com/cnblogs_com/oneword/WindowsLiveWriter/JavascriptdataTranster_11DE5/image_3.png" atomicselection="true"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="67" alt="image" src="http://images.cnblogs.com/cnblogs_com/oneword/WindowsLiveWriter/JavascriptdataTranster_11DE5/image_thumb_3.png" width="240" border="0"></a> </p></blockquote>
+<blockquote>
+<p>选中Test Anchor,然后拖放至Drop Here时,效果如下:</p>
+<p><a href="http://images.cnblogs.com/cnblogs_com/oneword/WindowsLiveWriter/JavascriptdataTranster_11DE5/image_1.png" atomicselection="true"><img style="border-top-width: 0px; border-left-width: 0px; border-bottom-width: 0px; border-right-width: 0px" height="60" alt="image" src="http://images.cnblogs.com/cnblogs_com/oneword/WindowsLiveWriter/JavascriptdataTranster_11DE5/image_thumb_1.png" width="280" border="0"></a></p></blockquote></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory">分类: <a href="http://www.cnblogs.com/oneword/category/192757.html">Javascript</a></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info"><div id="green_channel">
+绿色通道：
+<a href="javascript:void(0);" id="green_channel_digg" onclick="DiggIt(1492600,cb_blogId,1);green_channel_success(this,'谢谢推荐！');">好文要顶</a>
+<a id="green_channel_follow" onclick="c_follow();" href="javascript:void(0);">关注我</a>
+<a id="green_channel_favorite" onclick="AddToWz(cb_entryId);return false;" href="javascript:void(0);">收藏该文</a><a id="green_channel_contact" href="http://space.cnblogs.com/msg/send/Localhost" target="_blank">与我联系</a>
+<a id="green_channel_weibo" href="javascript:void(0);" title="分享至新浪微博" onclick="ShareToTsina()"><img src="http://static.cnblogs.com/images/icon_weibo_24.png" alt=""></a>
+</div>
+<div id="author_profile">
+<div id="author_profile_info" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/oneword/" target="_blank"><img src="http://pic.cnitblog.com/face/u61049.jpg" class="author_avatar" alt=""></a>
+<div id="author_profile_detail" class="author_profile_info">
+<a href="http://home.cnblogs.com/u/oneword/">Localhost</a><br>
+<a href="http://home.cnblogs.com/u/oneword/followees">关注 - 0</a><br>
+<a href="http://home.cnblogs.com/u/oneword/followers">粉丝 - 93</a>
+</div>
+</div>
+<div class="clear"></div>
+<div id="author_profile_honor"></div>
+<div id="author_profile_follow">
+    <a href="javascript:void(0);" onclick="c_follow();return false;">+加关注</a>
+</div>
+</div>
+<div id="div_digg">										
+    <div class="diggit" onclick="votePost(1492600,'Digg')">
+        <span class="diggnum" id="digg_count">0</span>
+    </div>
+	<div class="buryit" onclick="votePost(1492600,'Bury')"> 
+		<span class="burynum" id="bury_count">0</span>
+	</div>
+	<div class="clear"></div>	
+	<div class="diggword" id="digg_tips">
+    (请您对文章做出评价)
+    </div>	
+</div>
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"><a href="http://www.cnblogs.com/oneword/archive/2009/05/28/1491483.html" class="p_n_p_prefix">« </a> 上一篇：<a href="http://www.cnblogs.com/oneword/archive/2009/05/28/1491483.html" title="发布于2009-05-28 22:12">Javascript--location</a><br><a href="http://www.cnblogs.com/oneword/archive/2009/05/31/1492639.html" class="p_n_p_prefix">» </a> 下一篇：<a href="http://www.cnblogs.com/oneword/archive/2009/05/31/1492639.html" title="发布于2009-05-31 09:25">Javascript--screen</a><br></div>
+</div>
+
+
+	<div class="postDesc">posted on <span id="post-date">2009-05-31 08:20</span> <a href="http://www.cnblogs.com/oneword/">Localhost</a> 阅读(<span id="post_view_count">3377</span>) 评论(<span id="post_comment_count">1</span>)  <a href="http://i.cnblogs.com/EditPosts.aspx?postid=1492600" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(1492600);return false;">收藏</a></div>
+</div>

@@ -1,0 +1,2 @@
+node ./socketioserver.js
+pause

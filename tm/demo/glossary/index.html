@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script src="/lib/jquery-3.2.1.min.js"></script>
+	<script src="/lib/jquery.hotkeys.min.js"></script>
+<style type="text/css">
+*{margin: 0}
+div,table,th,td{border: 1px solid #ccf}
+.box{background:rgba(0,0,255,.1);height:2em;width:2em;padding:1em;border:2px solid red;}
+.selected {0.5px solid red;}
+table {width:90%;}
+table, tr, th, td {padding:4px; border:0.5px solid #000;}
+#excelTableEditer {
+border: 0.5px dashed #ccf;
+padding: 0.5em;
+background: #eef;
+width:100%;
+min-height:10em;
+}
+td:visted {
+background:green;
+}
+</style>
+<style id="excelStylesheet">
+table	{mso-displayed-decimal-separator:"\.";mso-displayed-thousand-separator:"\,";}
+tr{mso-height-source:auto;mso-ruby-visibility:none;}
+td {border: 0.5px dashed #999; mso-style-parent:style0; mso-ignore:padding; mso-generic-font-family:auto; mso-font-charset:134; mso-number-format:General; text-align:general; vertical-align:middle; mso-background-source:auto; mso-pattern:auto; mso-protection:locked visible; mso-rotate:0;}
+br {mso-data-placement:same-cell;}
+.cn-Hans{font-family:"Microsoft YaHei";}
+.cn-Hant{font-family:"Microsoft YaHei";}
+.ko{font-family:"Malgun Ghotic";}
+.jp{font-family:"MS Ghotic";}
+</style>
+	<title>Excel-copy-paste</title>
+</head>
+<body>
+	<div id="excelTableEditer" contenteditable></div>
+<pre>기능설명:
+F4키로 편집중인 칸을 지웁니다.</pre>
+<script type="text/javascript">
+var colorRed='rgb(255,199,206)';
+
+function copyData2(e){
+	var cd=event.clipboardData, css=$('#excelStylesheet').html();
+
+	// cd.setData('text/plain', this.textContent.trim());
+	cd.setData('text/html', '<style type="text/css">'+css+'</style>'+$(this).html());
+	// console.log('%ctext/plain\n%c%s', 'background:#cfc', 'background:#fff', cd.getData('text/plain'));
+	console.log('%ctext/html\n%c%s', 'background:#ccf', 'background:#fff', cd.getData('text/html'));
+	return false;// === event.preventDefault();
+}
+function pasteData2(e){
+	var cd=event.clipboardData;
+	// console.log('%ctext/plain\n%c%s', 'background:#cfc', 'background:#fff', cd.getData('text/plain'));
+	// console.log('%ctext/html\n%c%s', 'background:#ccf', 'background:#fff', cd.getData('text/html'));
+	var html=cd.getData('text/html')
+	var table=$(html).filter('table');
+	$('#excelTableEditer').html(table)
+	table.find('*').add(table).removeAttr('border cellspacing cellpadding width height class align');
+
+
+	var lib=[]
+	table.find('tr').each(function(i,e){
+
+		var s=$(e).find('td:eq(0)'), st=s.text();
+		var t=$(e).find('td:eq(1)'), tt=t.text();
+
+		lib.forEach(function(e){
+			if(e[0]===st && e[1]!==tt) {
+				s.css('background',colorRed)
+				t.css('background',colorRed).after($('<td>').text(e[1]))
+			}
+		})
+		lib.push([st,tt])
+	})
+	return false;
+}
+function copyData(){
+	var range1 = document.createRange();
+	range1.selectNode($('#excelTableEditer').get(0));// 设定range包含的节点对象 
+	var range2 = document.createRange();
+	range2.selectNode($('#excelStylesheet').get(0));// 设定range包含的节点对象 
+
+	/* 窗口的selection对象，表示用户选择的文本 */
+	const selection = window.getSelection();
+	if(selection.rangeCount > 0) selection.removeAllRanges(); // 将已经包含的已选择的对象清除掉
+	// selection.addRange(range2);
+	selection.addRange(range1);                                // 将要复制的区域的range对象添加到selection对象中
+
+	document.execCommand('copy'); // 执行copy命令，copy用户选择的文本
+	selection.removeAllRanges()
+}
+
+$(function(){
+	$('#excelTableEditer').on('copy',copyData2);
+	$('#excelTableEditer').on('paste',pasteData2);
+	$('#excelTableEditer').bind('keyup','shift+f4',function(e){
+		var t=window.getSelection().focusNode;
+		while(true){
+			t=t.parentElement;
+			if(t.nodeName==='TR') break;
+			console.log(t.nodeName);
+		}
+		t.remove();
+		return false;
+	});
+	$('#excelTableEditer').bind('keyup','f4',function(e){
+		var t=window.getSelection().focusNode;
+		if(t.nodeType===3 || t.nodeName==='TD'){
+			t.remove()
+		}
+		return false;
+	});
+});
+
+</script>
+</body>
+</html>

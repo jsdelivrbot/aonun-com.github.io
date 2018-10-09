@@ -1,0 +1,287 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='0'>
+<meta http-equiv='pragma' content='no-cache'>
+<script src="/lib/jquery-3.3.1.min.js"></script>
+<script src="/lib/jquery.animate-colors-min.js"></script>
+<script src="/lib/xlsx.full.min.js"></script>
+<script src="/lib/Reference.js"></script>
+<script src="/lib/jstorage.js"></script>
+<script src="/lib/punycode.js"></script>
+<script src="/lib/moveable.js"></script>
+<script src="/lib/Search.js"></script>
+<script src="/lib/jsfilemanager.min.js"></script>
+<script src="ao.js"></script>
+<script src="fn.textareaEdit.js"></script>
+<script src="util.format.js"></script>
+<script src="ao.browserType.js"></script>
+<script src="ao.similar.js"></script>
+<script src="Date.prototype.js"></script>
+<script src="RegExpLib.js"></script>
+<script src="TableEdit.js"></script>
+<script src="Converter.js"></script>
+<script src="saveloadSource.js"></script>
+<script src="dropfile.js"></script>
+<script src="googlenaverdaum.js"></script>
+<title>TextTool</title>
+<style>
+#tempResult {position:fixed;top:-200px;height:-200px;width:1px;height:1px;}
+#toolleft,#toolright {user-select:none; vertical-align:top;}
+#toolleft div,#toolright div {
+	display: block;border:2px solid #900;background:#aaa;color:#000;
+	border-radius:5px;padding:5px;margin:2px;width:16em;}
+
+.currentEditRow {box-shadow: 0 0 3px #000;}
+
+body {
+	background-color: rgb(255, 255, 255);
+	background-image: linear-gradient(to bottom, #000,#010 10%,#000);
+}
+* {
+	font-family: Tahoma,"Microsoft Yahei","MS Ghotic","Malgun Ghotic";
+	font-size: 9pt;
+	font-weight: bold;
+	word-wrap: break-word;
+	word-break: break-all;
+/*	background:rgb(39,40,34); 
+	color:rgb(248,248,242);*/
+}
+
+.match {white-space:pre-wrap;}
+textarea {
+	border:none;
+	outline:none;
+	resize:both;
+	overflow:scroll;
+	min-width:100px;
+	min-height:17px;
+}
+
+table{
+	border:1px solid #ccc;
+	border-style:inset;
+}
+
+th,td{
+    text-align:left;
+    vertical-align:middle;
+    background:rgba(255,255,255,0.6);
+}
+td.no {
+	border-radius:1em;
+	width:6em;
+	user-select:none;
+	white-space:nowrap;
+	word-wrap:break-word;
+	word-break:break-all;
+	text-align:center;
+	color:#fff;
+	background:#ccc;}
+
+#rowCurrentUI,#rowTotalUI {
+	color:blue;
+    font-family:Verdana;
+    font-weight:bold;
+}
+.qa{
+	max-height:7em;
+	overflow:hidden;
+	background:#fcc;
+}
+
+#googleResult, #naverResult, #daumResult {overflow:auto;white-space: pre-wrap;user-select:text;}
+.hide,.hide2,.hide3 {display:none;}
+
+#clogs {
+	height:10em;
+	overflow:auto;
+}
+.clog{
+	background:#339;
+	color:#fff;
+	font-size:1em;
+	font-weight:bold;
+	max-width:24em;
+}
+.clog td{ max-width:24em; }
+#status{background:rgb(184,204,228);}
+
+textarea {width:128px;height:32px;display:block;}
+.target,.source{
+	user-modify: read-write-plaintext-only;
+	width:24em;
+}
+
+#main{ min-width:70em;vertical-align:top; }
+#main tbody{overflow-y: auto; display: block; }
+
+#statusDict, #tips, #works {resize: vertical;}
+#statusDict {height:6em; #aac;}
+#tips {height:16em;}
+#works {height:30em;min-height:2em;}
+#works td.target:focus {padding:1em 0;}
+
+#title {font-size:2em;}
+
+
+
+#lastSelect th,#lastSelect td{height:2em;text-align:center;vertical-align:middle;}
+body,#box{margin:0 auto;padding:0;}
+/*#box {min-height:2400px;}*/
+
+.util {resize:none;}
+.util input {max-width:6em;}
+.utilsource,.utiltarget{width:24em; text-align:center; background: #ccf; border:none; border-radius:4px; }
+#works {background:#eee;}
+
+#statusDict td, #tips td { background:#ccc;color:#333;}
+h3 {background:#900;color:#fff;padding:6px;border-radius:3px;text-align:center;}
+
+#tips tr:nth-child(even) td,#statusDict tr:nth-child(even) td {background:#eee;}
+.buttonbox {max-width:24em;}
+</style>
+</head>
+<body>
+<table id="box">
+	<!-- <thead><tr><th colspan="2" id="title"></th></tr></thead> -->
+	<tr>
+		<td id="toolleft">
+			<div>
+				<h3>Auto Tip</h3>
+				<label><input id="useDictTip" type="checkbox" checked>Enable</label><br>
+				<label>Suitability:<input id="similarPercent" value=40 type="number" min=0 max=100></label><br>
+				<label><input id="auto100" type="checkbox" checked>Auto use 100% matchs</label>
+			</div>
+			<div>
+				<h3>Google Naver Daum</h3>
+				<label><input id="useGoogle" type="checkbox">Google</label><br>
+				<label><input id="useNaver" type="checkbox">Naver</label><br>
+				<label><input id="useDaum" type="checkbox">Daum</label><br>
+				<select id="netTarget" type="checkbox">
+					<option value="zh-CN">Chinese(Simplified)</option>
+					<option value="zh-TW">Chinese(Traditional)</option>
+					<option value="ko">Korean</option>
+					<option value="jp">Japanese</option>
+					<option value="en">English</option>
+					<option value="fr">French</option>
+					<option value="ru">Russian</option>
+					<option value="de">Deutsch</option>
+				</select>
+			</div>
+			<div><h3></h3><section id="googleResult"></section></div>
+			<div><h3></h3><section id="daumResult"></section></div>
+			<div><h3></h3><section id="naverResult"></section></div>
+		</td>
+		<td id="main">
+			<table>
+				<tbody class="util">
+					<tr>
+						<th class="utilsource">
+							<input id="statusDictSourceFilter" placeholder="filter">
+							<input id="statusDictSourceRegExp" type="checkbox" title="Use RegExp">
+							<input id="statusDictSourceReplaceButton" type="button" value="Rep">
+							<br>
+							<input id="statusDictSourceSearch" placeholder="search">
+							<input id="statusDictSourceReplace" placeholder="replace">
+						</th>
+						<th class="utiltarget">
+							<input id="statusDictTargetFilter" placeholder="filter">
+							<input id="statusDictTargetRegExp" type="checkbox" title="Use RegExp">
+							<input id="statusDictTargetReplaceButton" type="button" value="Rep">
+							<br>
+							<input id="statusDictTargetSearch" placeholder="search">
+							<input id="statusDictTargetReplace" placeholder="replace">
+						</th>
+					</tr>
+				</tbody>
+				<tbody id="statusDict"></tbody>
+				<tbody class="util">
+					<tr>
+						<th class="utilsource">
+							<input id="worksSourceFilter" placeholder="filter">
+							<input id="worksSourceRegExp" type="checkbox" title="Use RegExp">
+							<input id="worksSourceReplaceButton" type="button" value="Rep">
+							<br>
+							<input id="worksSourceSearch" placeholder="search">
+							<input id="worksSourceReplace" placeholder="replace">
+						</th>
+						<th class="utiltarget">
+							<input id="worksTargetFilter" placeholder="filter">
+							<input id="worksTargetRegExp" type="checkbox" title="Use RegExp">
+							<input id="worksTargetReplaceButton" type="button" value="Rep">
+							<br>
+							<input id="worksTargetSearch" placeholder="search">
+							<input id="worksTargetReplace" placeholder="replace">
+						</th>
+						<th class="buttonbox">
+							<input id="MatchWork100" value="🙏100" title="Match 100% to Work(F1) (remove: alt+click)" type="button">
+							<input id="ImportTextLines" value="🙏Imp" title="Import text lines&#13;" type="button">
+							<input id="gotoUntranslationTarget" value="👇Go" title="Go to Untranslation Target(F2)" type="button">
+							<input id="downloadWorksExcel" value="💚.xls" title="download as excel file." type="button">
+							<input id="downloadWork" value="🔖All" title="Download All.txt (ctrl:empty comment add datetime) (shift:all comment replace datetime)" type="button">
+							<input id="downloadWorkT" value="🔖tar" title="copy target to memory&#13;ctrl:download file" type="button">
+							<input id="numQA" value="numQA" title="Check numbers" type="button">
+							<input id="dictQA" value="dictQA" title="Check numbers" type="button">
+							<input id="selectWorks" value="🔲" title="Select All" type="button">
+							<input id="clearWork" value="❌" title="Empty Mission" type="button">
+						</th>
+					</tr>
+				</tbody>
+				<tbody id="works"></tbody>
+				<tbody id="tips"></tbody>
+				<tbody class="util">
+					<tr>
+						<th class="utilsource">
+							<input id="tipsSourceFilterAll" placeholder="Dict Filter">
+							<input id="tipsSourceFilter" placeholder="filter">
+							<input id="tipsSourceRegExp" type="checkbox" title="Use RegExp">
+							<input id="tipsSourceReplaceButton" type="button" value="Rep">
+							<br>
+							<input id="tipsSourceSearch" placeholder="search">
+							<input id="tipsSourceReplace" placeholder="replace">
+						</th>
+						<th class="utiltarget">
+							<input id="tipsTargetFilterAll" placeholder="Dict Filter">
+							<input id="tipsTargetFilter" placeholder="filter">
+							<input id="tipsTargetRegExp" type="checkbox" title="Use RegExp">
+							<input id="tipsTargetReplaceButton" type="button" value="Rep">
+							<br>
+							<input id="tipsTargetSearch" placeholder="search">
+							<input id="tipsTargetReplace" placeholder="replace">
+						</th>
+						<th class="buttonbox">
+							<input id="downloadDictXLS" value="⬇️Dict.xls" title=“Dowolaod Dictionary .xls" type="button">
+							<input id="downloadDict" value="⬇️Dict.txt" title=“Dowolaod Dictionary" type="button">
+							<input id="clearDict" value="❌" title="Empty Dictionary" type="button">
+						</th>
+					</tr>
+				</tbody>
+				<tbody id="clogs"></tbody>
+			</table>
+		</td>
+		<td id="toolright">
+			<div>
+				<h3>Import paste</h3>
+				<textarea id="workPaste" placeholder="Mission"></textarea>
+				<textarea id="dictPaste" placeholder="Dictionary"></textarea>
+			</div>
+			<div>
+				<h3>Last Selector</h3>
+				<table id="lastSelect">
+					<tr><th>Source</th><th>Target</th></tr>
+					<tr>
+						<td id="lsst" contenteditable="plaintext-only"></td>
+						<td id="ltst" contenteditable="plaintext-only"></td>
+					</tr>
+				</table>
+			</div>
+			<div>
+				<h3>Enter key color</h3>
+				<label><input id="ctrlEnter" type="checkbox" checked>Enable</label><br>
+				<input type="color" id="ctrlEnterColor" value="#80ff80">
+			</div>
+		</td>
+	</tr>
+</table>
+<textarea id="tempResult"></textarea>
+</body></html>

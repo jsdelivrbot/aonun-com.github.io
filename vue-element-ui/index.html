@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <!-- import CSS -->
+  <link rel="stylesheet" href="./lib/vue-element-ui.min.css">
+  <script src="./lib/vue.min.js"></script>
+  <script src="./lib/vue-element-ui.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>vue-element-ui组件</p>
+    <el-button @click="visible = !visible">弹窗</el-button>
+    <el-dialog :visible.sync="visible" title="标题">
+      <p>内容</p>
+    </el-dialog>
+  </div>
+
+  <div id="app2">
+    <pre>使用filters,只显示输入框中的数字和点.
+
+\{\{ message | filterA | filterB }}
+value过滤2次
+
+\{\{ message | filter('arg1','arg2') }}
+
+将message过滤. 如同运行了 filter(message,arg1,arg2)</pre>
+    <input v-model="value">
+    <span>{{value}}</span> - <span>{{value|f1|num}}</span>
+  </div>
+</body>
+  <script>
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { visible: false }
+      }
+    })
+
+    new Vue({
+      el:'#app2',
+      data: {
+        value:1
+      },
+      filters:{
+        f1(v){
+          let a=String(v).match(/[\d\.]+/g);
+          console.log(a);
+          return a.join('');
+        },
+        num(v){
+          return parseFloat(v);
+        }
+      }
+    })
+  </script>
+</html>
+<style>
+div[id]:before{
+  content:attr(id);
+  background: black;
+  color: white;
+  width: 110%;
+  border-radius: 0.5em;
+  display: block;
+
+}
+div[id]{
+  background: #ccc;
+  padding: 1em;
+  border-radius: 1em;
+  border: 2px solid #999;
+}
+</style>

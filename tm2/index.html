@@ -1,0 +1,166 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<meta http-equiv='cache-control' content='no-cache'>
+<meta http-equiv='expires' content='0'>
+<meta http-equiv='pragma' content='no-cache'>
+<script src="lib/jquery.js"></script>
+<script src="fn.textareaEdit.js"></script>
+<script src="util.format.js"></script>
+<script src="ao.browserType.js"></script>
+<script src="ao.similar.js"></script>
+<script src="lib/prototype.js/Date.prototype.js"></script>
+<script src="lib/ao.js"></script>
+<script src="RegExpLib.js"></script>
+<script src="TableEdit.js"></script>
+<script src="Converter.js"></script>
+<script src="saveloadSource.js"></script>
+<script src="lib/Reference.js"></script>
+<script src="lib/createjs.js"></script>
+<script src="lib/easeljs.js"></script>
+<script src="lib/jstorage.js"></script>
+<script src="lib/moveable.js"></script>
+<script src="lib/Search.js"></script>
+<script src="lib/jsfilemanager.min.js"></script>
+<script src="dropfile.js"></script>
+<script src="googlenaverdaum.js"></script>
+<title>TextTool</title>
+<style>
+body {
+	background-color: rgb(255, 255, 255); background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAT0lEQVQ4T2N8/fr/fwYiADfPP4avX5gIqmQEGSgqyshISOW373//c3EyE1Q3aiDukBwNQ5xhQ/1kAwpsQomaFHnqu3A06+EM/9GcQr+cAgBGqZrSrFyxegAAAABJRU5ErkJggg==");
+}
+* {
+	font-family: Tahoma,"Microsoft Yahei","MS Ghotic","Malgun Ghotic";
+	font-size: 9pt;
+	font-weight: bold;
+	word-wrap: break-word;
+	word-break: break-all;
+/*	background:rgb(39,40,34); 
+	color:rgb(248,248,242);*/
+}
+
+textarea {
+	border:none;
+	outline:none;
+	resize:both;
+	overflow:scroll;
+	min-width: 100px;
+	min-height: 17px;
+}
+
+table{
+	border:1px solid #ccc;
+	border-style: inset;
+}
+label {
+	font-weight: bold;
+	user-select: none;
+}
+
+th,td{
+	min-width: 16px;
+	max-width: 256px;
+    vertical-align: top;
+    text-align: left;
+    background: rgba(255,255,255,0.6);
+    border:1px solid #ccc;
+}
+#stat {
+	width:80%;
+}
+#rowCurrentUI,#rowTotalUI {
+	color: blue;
+    font-family: Verdana;
+    font-weight: bold;
+}
+p:before {
+    content:attr(data-foo) " ";
+}
+#box4 *:before {
+	content:"123";
+	position: relative;
+	left:0;
+}
+
+#box2{display:flex;}
+.box {border:2px solid green; position:relative;  }
+.box h3{ background: #C6EFCE; font-size:9px; font-family:Tahoma; color:green; user-select:none; font-style: italic;}
+
+#box3 {width:100%;}
+
+#google td,#name td,#daum td {font-size: 9px;min-width:120px;}
+#google td{ background: rgba(0,0,255,0.1);}
+#naver td{ background: rgba(0,255,0,0.1);}
+#daum td{ background: rgba(255,255,0,0.1);}
+
+#log {position: fixed; right:0; top:0; background:#333;color:#ccc; }
+.hide {display: none;}
+
+#tips {
+	box-shadow: 2px 2px 2px #888;
+	background: rgb(198,239,206);
+}
+
+#clogs{position:fixed;right:0;bottom:128px;max-width:50%;}
+.clog{background:rgba(0,0,0,0.1);font-size:9px;}
+#status{background:rgb(184,204,228);}
+#toolbottom {position:fixed;  left:0;bottom:0;}
+#toolbottom input{width: 80px;}
+label{border: 1px solid #ccc; background: #eee;padding: 9px;display:table-cell;}
+#tooltop input {display: table-cell;}
+#tooltop{position: fixed;left:0;top: 0;}
+#works{margin:128px 0;}
+textarea {width:128px;height:32px;}
+#righttop{position: fixed;right: 0;top: 100px;}
+.target,.source{
+	user-modify: read-write-plaintext-only;
+}
+</style>
+</head>
+<body>
+<div id="clogs"></div>
+<div id="tooltop">
+	<input id="MatchWork100" value="🙏100" title="Match 100% to Work" type="button">
+	<input id="clearWork" value="❌work" title="Empty Mission" type="button">
+	<input id="downloadWork" value="⬇work" title="Download Mission" type="button">
+	<input id="downloadDict" value="⬇Dict" title=“Dowolaod Dictionary" type="button"></label>
+	<label><input id="useDictTip" type="checkbox" checked>Auto Tips</label>
+	<label><input id="auto100" type="checkbox" checked>Auto Input 100%</label>
+	<label>Suitability:<input id="similarPercent" value=40 type="number" min=0 max=100></label>
+	<label><input id="ctrlEnter" type="checkbox" checked>[Enter]Color<input type="color" id="ctrlEnterColor" value="#80ff80"></label>
+<!-- 	<label><input id="useGoogle" type="checkbox">Google</label>
+	<label><input id="useNaver" type="checkbox">Naver</label>
+	<select id="targetLang">
+	    <option disabled >Target Language</option>
+	    <option value="zh-CN" selected>zh-CN</option>
+	    <option value="zh-TW">zh-TW</option>
+	    <option value="en">English</option>
+	    <option value="ja">Japan</option>
+	    <option value="ko">Korea</option>
+	</select> -->
+</div>
+	<table id="righttop">
+		<tbody id="status">
+			<tr><th colspan="3">[Ctrl+Q] Append To Dictionary</th></tr>
+			<tr><th>Source</th><th>Target</th></tr>
+			<tr><td><i id="lsst"></i></td><td><i id="ltst"></i></td></tr>
+		</tbody>
+		<tbody>
+			<tr>
+				<td><textarea id="workPaste" placeholder="Mission"></textarea></td>
+				<td><textarea id="dictPaste" placeholder="Dictionary"></textarea></td>
+			</tr>
+		</tbody>
+		<tbody id="statusDict">
+		</tbody>
+		<tbody><tr>
+		<td id="googleResult"></td>
+		<td id="naverResult"></td></tr>
+		</tbody>
+	</table>
+
+<div id="works"></div>
+<div id="tips"></div>
+<div id="toolbottom">
+	<label>Mission Source<input id="worksSourceSearch"></label> <label>Mission Target<input id="worksTargetSearch"></label>
+	<label>Dictionary Source<input id="dictsSourceSearch"></label> <label>Dictionary Target<input id="dictsTargetSearch"></label>
+</div>
+</body></html>

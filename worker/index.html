@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="jquery.min.js"></script>
+	<script src="vue.min.js"></script>
+	<title>worker</title>
+</head>
+<body>
+<pre class="ui log"></pre>
+<script>
+let w=new Worker('w.js?t='+Date.now());
+
+w.onmessage=function(e){
+	console.log(location.href, 'message', e);
+	log(e.type, JSON.stringify(e.data));
+};
+
+w.onerror=function(e){
+	console.log(location.href, 'error',e);
+	log(e.type, e.stack);
+};
+
+w.onclose=function(e){
+	console.log(location.href, 'close',e);
+	log(e.type);
+};
+
+w.addEventListener('postmessage',function(e){
+	console.log(e.type, e);
+});
+
+function log(type, data){
+	document.querySelector('.ui.log').prepend(`${type} : ${data}\n\n`);
+}
+</script>
+</body>
+</html>

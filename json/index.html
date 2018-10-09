@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="./JSON.deepParse.js"></script>
+	<title>JSON</title>
+</head>
+<body>
+<style>
+#json{ width:100%; height:10em; }
+</style>
+<textarea id="json"></textarea>
+<pre id="obj"></pre>
+<script>
+
+let json=document.querySelector('#json');
+let obj=document.querySelector('#obj');
+let _obj;
+json.addEventListener('change',(e)=>{
+	_obj=JSON.deepParse(json.value);
+	console.log(_obj);
+
+	obj.textContent=JSON.stringify(_obj,' ',2);
+});
+
+
+</script>
+</body>
+</html>

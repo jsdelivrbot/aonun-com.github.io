@@ -1,0 +1,3 @@
+function tableEdit(table,undefined){
+	
+}

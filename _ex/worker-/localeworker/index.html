@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf8">
+<script src="/lib/createLocaleWorker.js"></script>
+<style>
+html,body {margin:1px;padding: 1px;}
+textarea {width:400px;height:300px;display:inline-block;}
+iframe {width:800px;height:600px;}
+</style>
+<title>LocaleWorker</title>
+</head>
+<body>
+<textarea id="maincode"></textarea>
+<!-- <textarea id="workercode"></textarea> -->
+<input id="reflush" type="button" value="Reflush">
+<iframe id="iframe"></iframe>
+</body>
+</html>
+<script>
+let mu,wu;
+
+function $(v){
+	return document.querySelector(v)
+}
+
+$('#maincode').value=`let w=createLocaleWorker((e)=>{// main.onmessage
+
+console.log('main.onmessage:', e.data)
+
+
+
+}, (e)=>{// worker.onmessage
+
+console.log('worker.onmessage:', e.data)
+
+})`;
+
+$('#reflush').onclick=()=>{
+	let mc, wc, mcf, wcf, html;
+	
+	mc=$('#maincode').value
+	html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><script src="${location.origin}/lib/createLocaleWorker.js"><\/script></head><body></body></html><script>${mc}<\/script>`;
+	mcf=new Blob([html], {type:'text/html'})
+	
+	// wc=$('#workercode').value
+	// wcf=new Blob([wc], {type:'text/javascript'})
+
+	// console.log(html, wc)
+	URL.revokeObjectURL(mu)
+	// URL.revokeObjectURL(wu)
+
+	mu=URL.createObjectURL(mcf)
+	// wu=URL.createObjectURL(wcf)
+
+	$('#iframe').src=mu;
+
+}
+
+$('#maincode').onkeydown=(e)=>{
+	if(e.keyCode==13&&e.ctrlKey) {
+		let e=new Event('click')
+		e.target=$('#reflush')
+		$('#reflush').dispatchEvent(e)
+	}
+}
+
+</script>

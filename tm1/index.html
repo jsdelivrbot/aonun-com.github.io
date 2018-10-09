@@ -1,0 +1,676 @@
+
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<script src="jquery.js"></script>
+<script src="fn.textareaEdit.js"></script>
+<script src="util.format.js"></script>
+<script src="ao.browserType.js"></script>
+<script src="Date.prototype.js"></script>
+<title>TextTool</title>
+<style>
+* {
+	font-family: Tahoma,"Microsoft Yahei","MS Ghotic","Malgun Ghotic";
+	font-size: 9pt;
+	font-weight: bold;
+	margin: 0;
+	padding: 0;
+	word-wrap: break-word;
+	word-break: break-all;
+}
+#box1 td {
+	min-width: 20em;
+	width:50em;
+	height:24em;
+}
+
+#box1 td:nth-child(3), #box2 td {
+	vertical-align: top;
+	background: rgba(0,255,0,0.1);
+	margin: 1px;
+	text-align: left;
+	border-left: 1px solid green;
+	max-width: 260px;
+}
+
+textarea {
+	width: 100%;
+	height: 100%;
+	border:1px solid green;
+	border-style: inset;
+	outline:none;
+	resize: vertical;
+}
+table{
+	border:1px solid #eee;
+	border-style: inset;
+}
+label {
+	font-weight: bold;
+}
+
+td{
+    vertical-align: top;
+    text-align: left;
+}
+#naver,#daum{
+	font-size: 9pt;
+}
+#stat {
+	width:80%;
+}
+#rowCurrentUI,#rowTotalUI {
+	color: blue;
+    font-family: Verdana;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<table>
+
+<tbody id="box1">
+<tr>
+	<td colspan="3" style="height:auto;padding-bottom:6px;">
+		<button id="save">저장</button>
+		<button id="copyToReference">소스복사</button>
+		<button id="clearSource">소스비움</button>
+		<button id="workUnique">워크유일</button>
+		<label><input id="wrap" type="checkbox">박스줄바꿈</label>
+		<label><input type="checkbox" id="naverGoogleDaum">실시간참조</label>
+		<span id="log"></span>
+	</td>
+</tr>
+<tr>
+	<td style="height:auto">SOURCE ( <span id="rowCurrentUI"></span>/<span id="rowTotalUI"></span> )</td>
+	<td style="height:auto">WORK</td>
+	<td style="height:auto">REFERENCE</td>
+</tr>
+<tr>
+	<td rowspan="2"><textarea id="source" placeholder="source" wrap="off"></textarea></td>
+	<td rowspan="2"><textarea id="work" placeholder="work" wrap="off"></textarea></td>
+	<td><textarea id="reference" placeholder="reference" wrap="off" readOnly></textarea></td>
+</tr>
+<tr>
+	<td><textarea id="dict" placeholder="dict" wrap="off"></textarea></td>
+</tr>
+</tbody>
+
+<tbody id="box2">
+<tr>
+	<td style="height:auto">GOOGLE</td>
+	<td style="height:auto">NAVER</td>
+	<td style="height:auto">DAUM</td>
+</tr>
+<tr>
+	<td id="google" style="height:auto;"></td>
+	<td id="naver" style="height:auto;"></td>
+	<td id="daum" style="height:auto;"></td>
+</tr>
+</tbody>
+
+</table>
+
+<table> <tbody><tr>
+	<td><textarea id="copySource"></textarea></td>
+	<td><textarea id="copyResultTextarea"></textarea></td>
+	<td><textareaid id="stat" readonly></textarea></td>
+</tr></tbody> </table>
+</body>
+</html>
+<script>
+var script={
+	browserNotIsChrome: '브라우저가 Chrome이 아니어서 정상적으로 사용할 수 없습니다.',
+	sourceClearMessage: 'Source 내용을 지우시겠습니까?',
+	selectionMessage: '선택위치: %s~%s(%s)  텍스트: %s',
+	workReplaceMessage: 'work에서 아래 검색 바꿈을 실행하시겠습니까?\n검색 내용: %s\n바꿀 내용: %s'
+};
+</script>
+<script>
+(function(){
+	var browser = browserType();
+	if(!browser.chrome) {
+		alert(script.browserNotIsChrome);
+	}
+	$('#stat').attr('placeholder', browser.result);
+})();
+</script>
+<script>
+if(!Array.from(navigator.languages).some(function(e){ return /^zh/ .test(e); })){
+	$('#naverGoogleDaum').hide();
+	console.log('浏览器语言没有中文，屏蔽了中文功能');
+}
+</script>
+<script>
+var s = $('#source').get(0);
+var stat = $('#stat').get(0);
+// search
+var arr
+var sarr
+var sarri
+var reg__s =/\s+/g;
+var selectionText;
+var selectionTextRecord =[];
+var _naverGoogleDaum = false;
+var _dontSearch=false;
+
+
+var mousedownTarget;
+$(window).on('mousedown',function(e){
+	mousedownTarget=e.target;
+});
+
+$('#source').on('select mouseup', function(e){
+	if(mousedownTarget===e.target) showStat();
+});
+
+
+$('#source').on('keyup', function(e){
+	if(e.keyCode===65 && e.ctrlKey) return e.preventDefault();
+	var _rowStat = rowStat();
+	$('#rowCurrentUI').text(_rowStat.line);
+});
+
+// 复制原文
+$('#source').on('paste',function(e){
+	$('#copySource').val(e.originalEvent.clipboardData.getData('text/plain'));
+})
+
+$('#work').on('contextmenu',function(e){
+	e.preventDefault();
+	replaceWorkToSource();
+	saveSource();
+	_dontSearch=false;
+});
+
+$('#work').on('keydown',function(e){
+	_dontSearch=true;
+	if(e.keyCode===13 && e.ctrlKey===true && e.metaKey===false && e.shiftKey===false && e.altKey===false) {
+		_dontSearch=false;
+		// Meta - Windows Key 91
+		// ctrl + enter
+		e.preventDefault();
+		replaceWorkToSource(e);
+		saveSource();
+	}else if(e.keyCode==19) {
+		// pause key
+		e.preventDefault();
+		var t = getSelectionText('work');
+		if(t && t.length>0) {
+			backWorker.postMessage({searchDict:[t,dictArr]});
+		}
+	}else if(e.ctrlKey){
+		// ctrl+ 1~0 在work快速插入找到的内容
+		switch(e.keyCode) {
+			case 48:
+			case 49:
+			case 50:
+			case 51:
+			case 52:
+			case 53:
+			case 54:
+			case 55:
+			case 56:
+			case 57:{
+				e.preventDefault();
+				var key = parseInt(e.key);
+				if(typeof key==='number'){
+					var quickInserts = $('#reference').val().split('\n',10);
+					if(key>0) key-=1;
+					key=quickInserts[key];
+					if(key) $('#work').get(0).setRangeText(key.split('\t',2)[1]);
+				}
+				}
+				break;
+		}
+
+	}
+});
+
+
+$('#work').on('mouseup',function(e){
+	if(e.which===1) {
+		var t = getSelectionText('work');
+		if(e.ctrlKey){
+			search(t)
+		}else{
+			var t = getSelectionText('work');
+			if(t && t.length>0) {
+				backWorker.postMessage({searchDict:[t,dictArr]});
+			}
+		}
+	}
+});
+
+
+
+function getSelectionText(id) // javascript
+{
+    // obtain the object reference for the <textarea>
+    var txtarea = document.getElementById(id);
+    // obtain the index of the first selected character
+    var start = txtarea.selectionStart;
+    // obtain the index of the last selected character
+    var finish = txtarea.selectionEnd;
+    // obtain the selected text
+    var sel = txtarea.value.substring(start, finish);
+    // do something with the selected content
+    return sel;
+}
+
+
+function replaceWorkToSource(e){
+	if(arr===undefined||sarr===undefined||sarri===undefined) return console.error('缺少');
+	var newdata = $('#work').val().split('\n');
+
+	if(newdata.length === sarr.length) {
+		var dateNow = (new Date()).toLocaleString();
+		console.group(dateNow);
+		for(var i=0,len=newdata.length; i<len; i++) {
+			arr[sarri[i]] = newdata[i];// 替换source内容
+			console.log(sarri[i]+1,sarr[i],arr[sarri[i]]);
+		}
+		console.groupEnd(dateNow);
+
+		$('#source').val(arr.join('\n'));
+	}else{
+		if(e) e.preventDefault();
+		console.error('need row: %d, current row: %d',sarr.length, newdata.length)
+	}
+}
+
+
+function showStat(){
+	var selectionText = s.value.slice(s.selectionStart,s.selectionEnd);
+	var str = util.format(script.selectionMessage,
+		s.selectionStart, s.selectionEnd, s.selectionDirection,
+		selectionText
+	);
+	stat.value = str;
+
+	var _rowStat = rowStat();
+	$('#rowCurrentUI').text(_rowStat.line);
+	$('#rowTotalUI').text(rowCount());
+	search(selectionText||_rowStat.value)
+}
+
+function rowCount(){
+	return s.value.split('\n').length;
+}
+
+function rowStat(_s){
+	var i = s.selectionDirection==='forward' ? s.selectionEnd : s.selectionStart;
+
+	var line = s.value.slice(0,i).split('\n').length;
+	
+	var start = s.value.lastIndexOf('\n', i-1);
+		start = start===-1 ? 0 : start+1;
+	
+	var end=s.value.indexOf('\n', i);
+	end = end===-1 ? s.value.length : end;
+
+	var value = s.value.slice(start,end);
+
+	return {start:start, end:end, value:value, line:line}
+}
+
+
+function getTextareaStat(ta) {
+	var i = ta.selectionDirection==='forward' ? ta.selectionEnd : ta.selectionStart;
+
+	var line = ta.value.slice(0,i).split('\n').length;
+	
+	var start = ta.value.lastIndexOf('\n', i-1);
+		start = start===-1 ? 0 : start+1;
+	
+	var end=ta.value.indexOf('\n', i);
+	end = end===-1 ? ta.value.length : end;
+
+	var value = ta.value.slice(start,end);
+
+	return {start:start, end:end, value:value, line:line}
+}
+
+
+
+$('#wrap').on('click',function(e){
+	if(e.target.checked) {
+		$('textarea').removeAttr('wrap');
+	}else{
+		$('textarea').attr('wrap','off');
+	}
+});
+
+
+
+var _tmp_search_text;
+var _tmp_search_transfer_work_result;
+function search(t){
+	// 确认重新查找
+	if(_dontSearch) {
+		if(confirm('주의! 수정하신 내용을 아직 적용하지 않았습니다. 새로 검색을 하시겠습니까?')){
+			_dontSearch=false;
+		}else{
+			return ;
+		}
+	}
+	_dontSearch=false;
+	_tmp_search_text = t;// 保存了此次搜索的关键内容
+
+
+
+	if(t==='\x20'||t===undefined||t===''||(!t)) return ;
+	arr = s.value.split('\n');
+	sarri = [];
+	var re = /\s+/g;
+	sarr = arr.filter(function(e,i){
+		var source=e.replace(re,'');
+		var target=t.replace(re,'');
+			var b = source.indexOf(target)!==-1;
+		if(b) {
+			sarri.push(i);
+		}
+		return b;
+	});
+	_tmp_search_transfer_work_result = sarr.join('\n');
+	work.value = _tmp_search_transfer_work_result;
+
+	backWorker.postMessage({searchDict:[t,dictArr]});
+	
+
+	if(_naverGoogleDaum) searchnaverGoogleDaum(t);
+}
+
+
+$('#naverGoogleDaum').on('change', function(e){
+	_naverGoogleDaum = e.target.checked;
+});
+
+
+
+var _oldQuery;// 记录上一次的搜索内容
+function searchnaverGoogleDaum(q,s,t) {
+	if(q && q.length && _oldQuery!==q){
+		_oldQuery=q;
+
+		$.ajax({
+			url:'http://zun.aonun.com/tm/google/',
+			dataType:'json',
+			data: {
+				q:q,
+				s:s||'auto',
+				t:t||'zh-CN'
+			},
+			method:'GET'
+		}).done(function (o){
+			if(o.result) {
+				o=o.result;
+				var table = $('<table>').addClass('netTrans'), tr;
+				o.forEach(function(st){
+					tr = $('<tr>').appendTo(table);
+					$('<td>').text(st[0]).appendTo(tr);
+					$('<td>').text(st[1]).appendTo(tr);
+				});
+				$('#google').html(table);
+			}else if(o.error){
+				$('#google').text(o.error);
+			}
+		});
+
+		$.ajax({
+			url:'http://zun.aonun.com/tm/naver/',
+			dataType:'json',
+			data: {
+				q:q,
+				s:s||'auto',
+				t:t||'zh-CN'
+			},
+			method:'GET'
+		}).done(function (o){
+			if(o.result) {
+				o=o.result;
+				var table = $('<table>').addClass('netTrans'), tr;
+				o.forEach(function(st){
+					tr = $('<tr>').appendTo(table);
+					$('<td>').text(st[0]).appendTo(tr);
+					$('<td>').text(st[1]).appendTo(tr);
+				});
+				$('#naver').html(table);
+			}else if(o.error){
+				$('#naver').text(o.error);
+			}
+		});
+
+		$.ajax({
+			url:'http://zun.aonun.com/tm/daum/',
+			dataType:'json',
+			data: {
+				q:q,
+				s:s||'auto',
+				t:t||'zh-CN'
+			},
+			method:'GET'
+		}).done(function (o){
+			if(o.result) {
+				$('#daum').html(JSON.stringify(o.result).replace(/("\w+?":)/g,'<br>$&'));
+			}else if(o.error){
+				$('#daum').text(o.error);
+			}
+		});		
+	}
+}
+
+
+
+
+
+var dictArr;
+var dictSArr;
+$('#dict').on('change',function(e){
+	dictArr = $('#dict').val().trim();
+	if(dictArr.length) {
+		dictArr = dictArr.split('\n');
+	}else{
+		dictArr=null;
+	}
+	saveSource();
+})
+
+
+
+
+
+
+
+$('#copyToReference').click(function(e){
+	$('#reference').val($('#source').val()).select();
+	document.execCommand('copy');
+	copyToResultTextarea();
+});
+
+// 将译文和原文分别贴入copyResultTextarea中
+function copyToResultTextarea(){
+	var t, s, r;
+	s=$('#copySource').val().split('\n');
+	t=$('#source').val().split('\n');
+	r=[];
+	for(var i in s){
+		r.push(s[i]+'\t'+t[i]);
+	}
+	r=r.join('\n');
+	$('#copyResultTextarea').val(r);
+}
+
+
+$('#clearSource').click(function(e){
+	if(confirm(script.sourceClearMessage)) $('#source').val('');
+});
+
+
+
+
+// 按下end键，替换work中的内容。
+// $('#reference').on('click',function(e){
+// 	return false;
+// });
+$('#reference').on('contextmenu',function(e){
+		var stat=getTextareaStat(document.getElementById('reference'));
+		console.log(stat);
+
+		var arr =stat.value.split('\t')
+		var search  = arr[0]
+		var replace = arr[1]
+		// if(search && search.length && replace && replace.length&& confirm(util.format(script.workReplaceMessage, search, replace))){
+		if(search && search.length && replace && replace.length){
+			var re = new RegExp(search.split('').map(function(e){return /\s+/.test(e) ? '' : e.replace(/[\^\$\.\|\/\\\*\+\?\{\}\[\]\(\)\-]/g,'\\$&'); }).join('\\s*'),'g');
+			$('#work').val($('#work').val().replace(re, replace));
+			_dontSearch=true;
+		}
+		return false;
+})
+
+
+// 在dict中按下Tab键时，可以输入Tab内容。
+$('#dict').on('keydown',function(e){
+	if(e.keyCode===9 && !e.ctrlKey && !e.altKey && !e.shiftKey && !e.metaKey){
+		onkeydownActiveTextareaInputTabKey(e);
+	}
+})
+
+function onkeydownActiveTextareaInputTabKey(e){
+	e.preventDefault();
+	var t=e.target, v=t.value, start, end, cursor;
+	start = v.slice(0,t.selectionStart);
+	end   = v.slice(t.selectionEnd);
+	cursor = t.selectionStart+1;
+
+
+	t.value = start+'\t'+end;
+	t.setSelectionRange(cursor,cursor);
+}
+
+
+function saveSource(){
+	_saveSource('source');
+	_saveSource('dict');
+	_saveSource('copySource');
+	_saveSource('copyResultTextarea');
+
+	var d=new Date();
+	logpush('[저장]'+d.tcs+'.'+d.ms);
+}
+function loadSource(){
+	_loadSource('source');
+	_loadSource('dict');
+	_loadSource('copySource');
+	_loadSource('copyResultTextarea');
+	$('#source').trigger('input');
+	$('#dict').trigger('change')
+	// logpush('[loaded data] ')
+}
+
+function _saveSource(name){
+	localStorage.setItem(location.search+location.hash+'/'+name, $('#'+name).val());
+}
+function _loadSource(name){
+	$('#'+name).val(localStorage.getItem(location.search+location.hash+'/'+name));
+}
+
+
+function logpush(text){
+	// $('#log.log:gt(3)').remove();
+	// $('<span />').prependTo('#log').addClass('log').text(text).fadeTo(10000,0,function(){
+	// 	this.remove();
+	// });
+	$('#log').text(text).css('backgroundColor','#C6EFCE');
+	setTimeout(function(){
+		$('#log').removeAttr('style');
+	},1000);
+}
+
+loadSource();
+
+
+// 上方保存按钮
+$('#save').on('click', saveSource);
+$(window).on('beforeunload',saveSource);
+
+
+
+// work替换功能
+(function ($,undefined){
+	$('#work').on('keydown',function(e){
+		if(e.keyCode===72 && e.ctrlKey) {
+			_tmp_search_text = getSelection().toString();
+			e.preventDefault();
+			var id = 'workReplaceUI';
+			var inp=$('#'+id);
+			if(inp.length===0) {
+				inp=$('<input>')
+				.attr('id', 'workReplaceUI')
+				.appendTo('body')
+				.css({
+					zIndex:99999,
+					top:window.innerHeight/2,
+					left:window.innerWidth/2,
+					position:'fixed'
+				}).on('keydown',function(e){
+					if(e.keyCode===13||e.keyCode===9) {
+						e.preventDefault();
+						if(!_tmp_search_text) return console.error(_tmp_search_text);
+						var re = new RegExp(_tmp_search_text.split('').map(function(e){return /\s+/.test(e) ? '' : e.replace(/[\^\$\.\|\/\\\*\+\?\{\}\[\]\(\)\-]/g,'\\$&'); }).join('\\s*'),'g');
+						$('#work').val($('#work').val().replace(re, inp.val())).focus();
+						inp.val('').detach();
+						
+
+					}else if(e.keyCode===27) {
+						inp.val('').detach();
+					}
+				});
+			}
+			inp.focus();
+		}
+	});
+})(jQuery);
+
+
+
+class Convert {
+	static tmToArr(t){
+		return t.split('\n').map(e=>e.split('\t')).filter(e=>e.length>4);
+	}
+	static arrToTm(a) {
+		var tmp=[];
+		a=a.map(function(e){
+			if(e.length>0 && e instanceof Array) {
+				e.map(e=>e.trim()).join('\t');
+			}
+		})
+		return tmp;
+	}
+}
+
+
+
+var backWorker = new Worker('backworker.js');
+backWorker.onmessage=function(e) {
+	var o=e.data;
+	if(o.searchDict){
+		dictSArr=o.searchDict;
+		// console.log(dictSArr);
+		var a=[];
+		dictSArr.forEach(function(e){
+			e[2]=Math.round(e[2]);
+			a.push(e.join('\t'));
+		});
+		$('#reference').val(a.join('\n'));
+	}
+};
+
+
+
+
+</script>
+<script>
+$('#workUnique').click(function(e){
+	$('#work').val(Array.from(new Set($('#work').val().replace(/"([\s\S]+?)"/g,'$1').replace(/\t/g,'\n').replace(/\n+/g,'\n').split('\n'))).join('\n'));
+});
+</script>

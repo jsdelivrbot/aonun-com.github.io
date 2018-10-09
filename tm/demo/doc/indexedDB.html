@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	pre{word-break:break-word;}
+	</style>
+	<title>indexedDB</title>
+</head>
+<body>
+
+<fieldset><legend>indexedDB</legend><pre>
+IndexedDB 是一个为了能够在客户端存储可观数量的结构化数据，并且在这些数据上使用索引进行高性能检索的 API。虽然 DOM 存储 对于存储少量数据是非常有用的，但是它对大量结构化数据的存储就显得力不从心了。IndexedDB 则提供了这样的一个解决方案。
+此页面从根本上来说是针对该 API 对象技术描述的入口。如果你需要的是一份入门读本，你应该查阅 有关 IndexedDB 的基本概念。至于更多详细信息，请参见 使用 IndexedDB。
+IndexedDB 分别为同步和异步访问提供了单独的 API 。同步 API 本来是要用于仅供 Web Workers 内部使用，但是还没有被任何浏览器所实现。异步 API 在 Web Workers 内部和外部都可以使用。
+
+<strong>异步 API</strong>
+异步 API 方法调用完后会立即返回，而不会阻塞调用线程。要异步访问数据库，要调用 window 对象 indexedDB 属性的 open() 方法。该方法返回一个 IDBRequest 对象 (IDBOpenDBRequest)；异步操作通过在 IDBRequest 对象上触发事件来和调用程序进行通信。
+注意： indexedDB 对象在旧版本的浏览器上是带有前缀的 (在 Gecko < 16的情况下是 mozIndexedDB 属性，Chrome 中是 webkitIndexedDB ，以及IE10 的 msIndexedDB )。
+IDBFactory 提供了对数据库的访问。这是由全局对象 indexedDB 实现的接口，因而也是该 API 的入口。
+IDBCursor 遍历对象存储空间和索引。
+IDBCursorWithValue 遍历对象存储空间和索引并返回游标的当前值。
+IDBDatabase 表示到数据库的连接。只能通过这个连接来拿到一个数据库事务。
+IDBEnvironment 提供了到客户端数据库的访问。它由 window 对象实现。
+IDBIndex 提供了到索引元数据的访问。
+IDBKeyRange 定义键的范围。
+IDBObjectStore 表示一个对象存储空间。
+IDBOpenDBRequest 表示一个打开数据库的请求。
+IDBRequest 提供了到数据库异步请求结果和数据库的访问。这也是在你调用一个异步方法时所得到的。
+IDBTransaction 表示一个事务。你在数据库上创建一个事务，指定它的范围（例如你希望访问哪一个对象存储空间），并确定你希望的访问类型（只读或写入）。
+IDBVersionChangeEvent 表明数据库的版本号已经改变。
+一个早期版本的规范还定义了下面这些现在已经被删除的接口。因为可能会需要对之前编写的代码进行更新，所以我们依然对这些接口进行了文档化：
+IDBVersionChangeRequest 表示更改数据库版本号的请求。更改数据库版本的方式已经自此改变了(调用 IDBFactory.open() 而不需要再调用  IDBDatabase.setVersion())，并且 IDBOpenDBRequest 接口现在具有已经移除的 IDBVersionChangeRequest 的功能。
+IDBDatabaseException  {{ obsolete_inline() }} 表示在执行数据库操作时可能碰到的异常情况。
+规范里面还定义了 API 的同步版本。同步 API 还没有在任何浏览器中得以实现。它原本是要和 WebWorkers 一起使用的。
+
+<strong>存储空间限制</strong>
+一个单独的数据库项目的大小没有限制。然而可能会限制每个 IndexedDB 数据库的大小。这个限制（以及用户界面对它进行断言的方式）在各个浏览器上也可能有所不同：
+Firefox: 对 IndexedDB 数据库的大小没有限制。在用户界面上只会针对存储超过 50 MB 大小的 BLOB（二进制大对象）请求权限。这个大小的限额可以通过 dom.indexedDB.warningQuota 首选项进行自定义 (定义在 http://mxr.mozilla.org/mozilla-central/source/modules/libpref/src/init/all.js)。
+Google Chrome: 参见 https://developers.google.com/chrome…rage#temporary
+</pre></fieldset>
+
+
+
+
+</body>
+</html>
