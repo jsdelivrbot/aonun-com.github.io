@@ -2284,6 +2284,7 @@ $(document).on('keydown',function(e){
 		case 'Numpad7':
 		case 'Numpad8':
 		case 'Numpad9':{
+			e.preventDefault();
 			// alt+num
 			let tipName;
 			if(e.ctrlKey) {// ctrl+num
