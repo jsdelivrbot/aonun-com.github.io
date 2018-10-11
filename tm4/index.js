@@ -814,16 +814,7 @@ $(function(){
 					let t=tar;
 					let tt=t.text();
 
-					let re=/(\{\\r\\n\})|(\\n)/g;
-					let res=st.split(re).filter(e=>e!==undefined);
-					res.forEach((e,i,a)=>{
-						if(e==='.' && i!==0) {
-							a[i-1]=a[i-1]+e;
-							a[i]=undefined;
-						}
-					});
-					res=res.filter(e=>e!==undefined&&e.trim()!=='');
-					console.log(res);
+					let res=splitLongSource(st);
 
 					if(res.length>1){
 						tar.addClass('splitTarget');
@@ -835,7 +826,12 @@ $(function(){
 							let s  = $('<td class="source">').text(e).appendTo(tr)
 							let t  = $('<td class="target" contenteditable="plaintext-only">').appendTo(tr);
 							if(i===0) first=t;
-							if(e.trim()==='') tr.addClass('hide2'),console.log(e);
+							if(e.trim()==='') tr.addClass('hide2');
+							else if(e.indexOf('\\n')>-1) {
+								t.text(e);
+								tr.addClass('hide2');
+							}
+							console.log(e)
 						});
 						let w=document.getElementById('works');
 						w.scrollTo(0,w.scrollHeight);
@@ -3165,4 +3161,28 @@ function numCheck(s,t){
 
   // console.log(clac(sa,ta))
   return clac(sa,ta);
+}
+
+function splitLongSource(s){
+	let r=/(?!\d)\s*\.\s*(?!\d)|{\\r\\n}|\\n/g;
+	let a1=s.split(r);
+	let l1=a1.length;
+	if(l1<2) return false;
+	let a2=s.match(r);
+	let l2=a2.length;
+	let a=[];
+	let len=Math.max(l1,l2);
+	let i=0;
+	while(i<len){
+		let v1=a1[i], v2=a2[i]||'', chunk;
+		if(v2.indexOf('.')===-1){
+			chunk=[v1,v2];
+		}else{
+			chunk=[v1+v2];
+		}
+		a=a.concat(chunk);
+		i++;
+	}
+	a=a.filter(e=>e.length>0);
+	return a;
 }
