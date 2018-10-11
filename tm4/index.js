@@ -3164,7 +3164,7 @@ function numCheck(s,t){
 }
 
 function splitLongSource(s){
-	let r=/(?!\d)\s*\.\s*(?!\d)|{\\r\\n}|\\n/g;
+	let r=/(?!\d)\s*(\.|\?)\s*(?!\d)|{\\r\\n}|\\n/g;
 	let a1=s.split(r);
 	let l1=a1.length;
 	if(l1<2) return false;
