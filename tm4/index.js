@@ -3164,12 +3164,13 @@ function numCheck(s,t){
 }
 
 function splitLongSource(s){
-	let r=/(?!\d)\s*(\.|\?)\s*(?!\d)|{\\r\\n}|\\n/g;
+	let r=/(?!\d)\s*(?:\.|\?)\s*(?!\d)|{\\r\\n}|\\n/g;
 	let a1=s.split(r);
 	let l1=a1.length;
 	if(l1<2) return false;
 	let a2=s.match(r);
 	let l2=a2.length;
+console.warn(a1,a2)
 	let a=[];
 	let len=Math.max(l1,l2);
 	let i=0;
