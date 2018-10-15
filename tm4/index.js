@@ -2864,10 +2864,10 @@ $(window).on('keydown',e=>{
 			return _customChars=prompt('매칭 할 내용을 넣어 주세요',_customChars)||_customChars;
 		}
 		e.preventDefault();
-		insertTips(e);
+		insertTips(e);// 插入找到的内容
 	}
 });
-function insertTips(e){
+function insertTips(e){// 插入找到的内容
 	let t=$(e.target);
 	if(t.is('#works .target')){
 		let s=t.parent().find('.source');
@@ -2878,7 +2878,7 @@ function insertTips(e){
 		if(e.altKey){
 			r=r.replace(/'([\s\S]*?)'/g,'「$1」');
 			r=r.replace(/"([\s\S]*?)"/g,'『$1』');
-			r=r.replace(/:/g,'：');
+			// r=r.replace(/:/g,'：');
 		}
 		SM.text=r;
 	}
