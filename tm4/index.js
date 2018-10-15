@@ -993,6 +993,7 @@ $(function(){
 					dict.from(dict.array);
 					pushloghtml($('<p>').append($('<h6>').text('[+]')).append($('<span>').text(s)).append($('<br>')).append($('<p>').text(t)));
 				}
+
 				// ctrl+enter 换色
 				// var t=$(e.target);
 				// if($('#ctrlEnter').prop('checked')){
@@ -1049,7 +1050,15 @@ $(function(){
 				current=current.not('.done,.doneAuto,doneAutoSpace');
 			}
 			current.eq(0).focus();
-			saveDatas();
+			
+			// 延迟时间保存
+			// saveDatas();
+			if(typeof window.privateTimeout==='number'){
+				clearTimeout(window.privateTimeout);
+				window.privateTimeout=setTimeout(()=>{
+					saveDatas();
+				},1000);
+			}
 		}else if(e.ctrlKey){
 			// console.debug('ctrl+ 1~0 在work快速插入找到的内容')
 			let code=e.originalEvent.code;
