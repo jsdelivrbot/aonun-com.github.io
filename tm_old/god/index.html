@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf8">
+	<script type="text/javascript" src="/lib/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/lib/jquery.hotkeys.min.js?1"></script>
+	<script type="text/javascript">
+		(function(){
+			var s, src;
+			for(var i in arguments){
+				src = arguments[i];
+				s = document.createElement('script');
+				document.head.appendChild(s);
+				s.src = src;
+				s.onload = function(e){
+					console.log('loaded:',e.target.src);
+				}
+			}
+		})('../jianfan.js', 'term.js','index.js');
+	</script>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<title>trans</title>
+</head>
+<body spellcheck="false">
+<div style="text-align:center;display: none">
+<pre>한 칸에 단행 내용만 있으면 여기로 가능합니다</pre>
+<table>
+	<tr><th>CN</th><th>TW</th></tr>
+	<tr><td lang="zh-Hans" id="cn" class="source" contentEditable></td><td lang="zh-Hant" id="tw" class="source" contentEditable></td></tr>
+</table>
+</div>
+
+<hr>
+<div style="text-align:center;border:2px solid #003">
+<pre>주의: 한 개 칸에 다행인 내용을 아래로 붙여주세요</pre>
+<textarea id="cn2" name="text" wrap="SOFT" tabindex="0" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" style="box-sizing: border-box; overflow-y: hidden; overflow-x: auto; padding-right: 20px;width: 48%;"></textarea>
+<textarea id="tw2" name="text" wrap="SOFT" tabindex="0" dir="ltr" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off" style="box-sizing: border-box; overflow-y: hidden; overflow-x: auto; padding-right: 20px;width: 48%;"></textarea>
+</div>
+<div>
+<!-- <table>
+	<tbody> <tr><th>简体(Google)</th><th id="googleLoadingTag">繁体(Google)</th></tr> </tbody>
+	<tbody id="googleTable"></tbody>
+
+	<tbody> <tr><th>简体(AoNun)</th><th>繁体(AoNun)</th></tr> </tbody>
+	<tbody id="myTable2"></tbody>
+</table> -->
+</div>
+
+
+<hr>
+<div style="display: none;">
+<pre id="tresult">아래 입력 시, 글자수가 자동으로 나타납니다~</pre>
+<input type="text" id="t1" style="width:48%;float:left" disabled>
+<input type="text" id="t2" style="width:48%;float:right" disabled><br>
+<textarea id="ta1" style="width:49%;float:left"></textarea>
+<textarea id="ta2" style="width:49%; float:right"></textarea>
+</div>
+
+
+
+
+<div style="width:96%;padding:1em;border:2px solid #000;float:right; display:none;">
+<pre>
+<strong>사용 설명서:</strong>
+Excel파일에서 최소 2개의 열을 복사해 넣기.
+
+- [자동] 한 행에서 같은 내용을 빨간색 표시합니다.
+
+- [수동] 임의의 내용을 노란색 표시합니다.
+ [custom:]창에 단어를 입력한 후 [Enter]단축키 혹은 버튼[add]로 상술한 동일한 기능을 실행합니다.
+ 텍스트를 마우스로 선택하여 단축키 [Ctrl+q]로 custom표시가 가능합니다.
+
+ - [주의]
+  본 툴에서 excel파일로 복사할 시 [alt+c]를 사용하시기 바랍니다.
+</pre>
+<hr style="border: 1px dashed #ccc;margin:1em">
+<!-- <button id="checkBtn">check</button> -->
+<button id="showBtn">show</button>
+<button id="hideBtn">Hide</button>
+ | custom:<input type="text" id="customText"><button id="customBtn">add</button>
+<!-- <button id="copyBtn">copy</button> -->
+<div contenteditable id="high"></div>
+<div id="excel">
+<style id="excelStylesheet">
+table	{border: 0.1px solid #ccc; mso-displayed-decimal-separator:"\.";mso-displayed-thousand-separator:"\,";}
+tr{mso-height-source:auto;mso-ruby-visibility:none;}
+td { border: 0.1px solid #ccc;mso-style-parent:style0; mso-ignore:padding; mso-generic-font-family:auto; mso-font-charset:134; mso-number-format:General; text-align:general; vertical-align:middle; mso-background-source:auto; mso-pattern:auto; mso-protection:locked visible; mso-rotate:0;}
+br {mso-data-placement:same-cell;}
+.cn-Hans{font-family:"Microsoft YaHei";font-size:11pt;}
+.cn-Hant{font-family:"Microsoft YaHei";font-size:11pt;}
+.ko{font-family:"Malgun Ghotic";font-size:11pt;}
+.loading{
+	background-image: url('/img/loading.gif');
+	background-repeat:no-repeat;
+	background-position: 0% 50%;
+    background-size: 10%;
+}
+</style>
+<div id="highCustomList"></div>
+</div>
+</div>
+<script type="text/javascript">
+
+$(function(){
+	// 高亮显示功能css样式
+	$('#highCustomList').css({'margin-top':'40px'});
+	$('#high').css({
+		'border-right':'none',
+		'min-height':'10em',
+		'width':'90%',
+		'padding':'1em',
+		'border':'1px dashed #000'
+	})
+
+	// 高亮显示功能代码
+	var color='rgb(255,199,206)'
+
+
+	$('#high').on('paste input',function(){
+		checkUnique();
+	})
+
+
+	// $('#checkBtn').click(checkUnique);
+	$('#showBtn').click(function tg(){
+		$('#high').find('td[data-unique=false]').parent().fadeIn({duration:400,queue:false});
+	})
+	$('#hideBtn').click(function tg(){
+		$('#high').find('td[data-unique=false]').parent().fadeOut({duration:400,queue:false});
+	})
+
+
+
+
+
+
+	function r255(){
+		return Math.round(Math.random()*255).toString()
+	}
+	function ra(){
+		return (Math.random()*.3+.3).toFixed(1)
+	}
+	function rc(){
+		return 'rgba('+r255()+','+r255()+','+r255()+','+ra()+')'
+	}
+
+	function checkUnique(){
+		setTimeout(function(){
+			var maxcolnum=0;
+			$('#high').find('tr').each(function(i,e){
+				maxcolnum=Math.max(maxcolnum, e.children.length)
+			})
+			$('#high').find('*').removeAttr('style width align height')
+
+			$('#high').find('tr').each(function(i,e){
+				var t=$(e).find('td'), l=t.length, a=Math.random(), c
+				t.map(function(ii,ee){
+					var color='rgb(255,199,206)'
+					for(var j=0; j<l; j++) {
+						if(j===ii) continue;
+						c = $(t.get(j))
+						if($(ee).text() === c.text()) {
+							$(ee).css('background',color).attr('data-unique','false')
+							c.css('background',color).attr('data-unique','false')
+						}
+					}
+				})
+			})
+		})
+	}
+	function markCustom(e){
+		var ci = window.getSelection().toString().trim();
+		$('#customText').val(ci)
+		if(ci.length==0) return ;
+		var jo=$([])
+		$('#high').find('tr').each(function(i,e){
+			var t=$(e).find('td').each(function(i,e){
+				if($(e).text().indexOf(ci)!=-1){
+					if($(e).attr('data-unique')!=='false') jo=jo.add(e);
+				}
+			})
+		})
+		addCustomRole(ci, jo.css('background','#FFEB9C').attr('data-unique','false'))
+	}
+	$('#customText').keyup(function(e){
+		if(e.keyCode===13) {
+			var ci = $('#customText').val().trim();
+			if(ci==='') return ;
+			var jo=$([])
+			var re=new RegExp(ci,'gi')
+			$('#high').find('td').each(function(i,e){
+				if(re.test($(e).text())){
+					if($(e).attr('data-unique')!=='false')jo=jo.add(e);
+				}
+			})
+			addCustomRole(ci, jo.css('background','#FFEB9C').attr('data-unique','false'))
+		}
+	})
+	$('#customBtn').click(function(){
+		var ci = $('#customText').val().trim();
+		
+		if(ci.length==0) return ;
+		var jo=$([])
+		$('#high').find('tr').each(function(i,e){
+			var t=$(e).find('td').each(function(i,e){
+				if($(e).text().indexOf(ci)!=-1){
+					if($(e).attr('data-unique')!=='false')jo=jo.add(e);
+				}
+			})
+		})
+		addCustomRole(ci, jo.css('background','#FFEB9C').attr('data-unique','false'))
+	})
+
+	$(window).bind('keyup','ctrl+q',markCustom);
+
+
+	// 添加列表
+	function addCustomRole(text,jqueryObj) {
+		console.log(jqueryObj)
+		var t=$('<span>').appendTo('#highCustomList').on('contextmenu',function(e){
+			var b=confirm('해당 하이라이트를 취소하시겠습니까?');
+			if(b) {
+				e.target.jqueryObj.removeAttr('data-unique').css('background','')
+				e.target.remove()
+			}
+			return false;
+		}).text(text).css({'border':'1px dashed #000', 'padding':'4px', 'font-size':'14pt', 'fint-weight':'20px','background':'#FFEB9C'});
+		t.get(0).jqueryObj=jqueryObj
+	}
+
+
+
+
+	function copyData(e){
+		
+		$(window).one('copy',function(e){
+			var cd=e.originalEvent.clipboardData;
+			console.log(cd)
+
+			// cd.setData('text/plain', this.textContent.trim());
+			var data = $('#excelStylesheet').get(0).outerHTML+$('#high').find('table').get(0).outerHTML;
+			console.log(data)
+			cd.setData('text/html', data);
+			// console.log('%ctext/plain\n%c%s', 'background:#cfc', 'background:#fff', cd.getData('text/plain'));
+			console.log('%ctext/html\n%c%s', 'background:#ccf', 'background:#fff', cd.getData('text/html'));
+			return false;
+		})
+		document.execCommand('copy')
+	}
+
+	$(window).bind('keydown','alt+c', copyData)
+})
+
+
+
+</script>
+
+<!-- <a href="/log/access.log" target="_blank">log</a> -->
+</body>
+</html>
