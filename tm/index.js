@@ -146,7 +146,6 @@ function toTW(str) {
 		re.compile(row[0],'g')
 		str = str.replace(re,row[1]||'')
 	}
-	console.log(str)
 	return str||'';
 }
 
