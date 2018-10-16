@@ -120,7 +120,7 @@ var term=`特征	特徵
 term=term.trim().split('\n').map(e=>e.split('\t'));
 
 term=term.concat(TERM);
-
+term=term.filter(e=>Array.isArray(e)&&(typeof e[0]==='string'&&e[0].length>0)&&(typeof e[1]==='string'&&e[1].length>0))
 function toCN(str) {
 	term.sort((a,b)=>{
 		let x=a[1].length, y=b[1].length;
