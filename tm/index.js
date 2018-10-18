@@ -5,7 +5,11 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 
-var term=`特征	特徵
+var term=`登录	登入
+注销	登出
+激活	啟用
+推送	推播
+特征	特徵
 坐标	座標
 家伙	傢伙
 取舍	取捨
