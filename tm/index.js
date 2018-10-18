@@ -5,7 +5,8 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 
-var term=`登录	登入
+var term=`委托	委託
+登录	登入
 注销	登出
 激活	啟用
 推送	推播
