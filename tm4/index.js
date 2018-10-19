@@ -3192,7 +3192,7 @@ function splitLongSource(s) {
 	let i = 0;
 	while (i < len) {
 		let v1 = a1[i], v2 = a2[i] || '', chunk;
-		if (v2.indexOf('.') === -1) {
+		if (v2.indexOf('.') === -1 || v2.indexOf('!')===-1 || v2.indexOf('?')===-1) {
 			chunk = [v1, v2];
 		} else {
 			chunk = [v1 + v2];
