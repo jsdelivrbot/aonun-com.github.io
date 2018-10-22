@@ -8,7 +8,7 @@ for(let i=0,len=CN.length; i<len; i++) {
 var term=`
 屏蔽词	不雅詞彙
 菠萝	鳳梨
-西红柿/柿子	蕃茄
+西红柿	蕃茄
 土豆	馬鈴薯
 金枪鱼	鮪魚
 三文鱼	鮭魚
