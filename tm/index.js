@@ -4,8 +4,7 @@ const TERM=[];
 for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
-
-var term=`屏蔽词	不雅詞彙
+let term=`屏蔽词	不雅詞彙
 菠萝	鳳梨
 西红柿	蕃茄
 土豆	馬鈴薯
