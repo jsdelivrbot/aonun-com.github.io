@@ -28,7 +28,6 @@ var term=`
 电子邮箱	電子信箱
 沙发	頭香
 楼主	原PO
-顶	推
 信息	資訊
 封号	封鎖帳號
 补丁	修正檔
@@ -530,4 +529,4 @@ function fanti(s){
 
 if(typeof module==='object' && typeof module.exports==='object') {
 	module.exports={term,toCN,toTW};
-} 
+}
