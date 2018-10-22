@@ -3,6 +3,7 @@ let log = function (s, size = 5) {
 };
 log('TM 4');
 log('ddb@aonun.com', 2);
+log('20181022-1511', 1);
 
 let SM = {
 	s: window.getSelection(),
