@@ -530,4 +530,4 @@ function fanti(s){
 
 if(typeof module==='object' && typeof module.exports==='object') {
 	module.exports={term,toCN,toTW};
-}
+} 
