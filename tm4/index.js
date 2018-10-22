@@ -2888,7 +2888,7 @@ function addTip(text, dom) {
 			let s = t.parent().find('.source');
 
 			let regExp = new RegExp((e.ctrlKey || e.altKey) ? _customChars : chars, 'gm');
-			let r = s.text().match(regExp).join('');
+			let r = s.text().match(regExp).join('').replace('：',':');
 			// console.debug(regExp,r);
 			if (e.altKey) {
 				r = r.replace(/'([\s\S]*?)'/g, '「$1」');
