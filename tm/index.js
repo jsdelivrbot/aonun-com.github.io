@@ -7,6 +7,7 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term=`
+日志	日誌
 绰绰有余	綽綽有餘
 拜托	拜託
 喂食	餵食
