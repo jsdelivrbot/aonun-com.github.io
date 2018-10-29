@@ -625,3 +625,8 @@ $('#listUI [id]').on('click',function(e){
 $('#stPasteTextarea').on('change',function(e){
 	list[uid].parseText = $(e.target).val();
 });
+
+
+
+
+
