@@ -23,8 +23,8 @@ function test(str){
 	});
 }
 
-let i = 0, s='' , len=0;
-while(i<0xffff) {
+let i = 0x2600, s='' , len=0;
+while(i<0x2700) {
 	let c = String.fromCharCode(i++);
 	if(!test(c)) {
 		len++;
@@ -34,11 +34,10 @@ while(i<0xffff) {
 }
 console.log(s);
 
-// console.log('䶵'.charCodeAt(0).toString(16))
+console.log('★'.charCodeAt(0).toString(16))
 // console.log('一'.charCodeAt(0).toString(16))
 
 // console.log(Language.num.test('⑥'));
 
 // let a = Language.ko.source.replace(/[\-\[\]]/g,'');
 // console.log(a.split('').map(e=>e.charCodeAt(0)+':'+e).join('\n'));
-
