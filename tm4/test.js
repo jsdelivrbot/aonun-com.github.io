@@ -36,17 +36,19 @@ class Replacer {
 		while(true) {
 			for(let i=0; i<dictLength; i++) {
 				e = dict[i];
-				strIndex = str.search(e[0])!==-1;
+				strIndex = str.search(e[0]);
+				b = strIndex !== -1;
 				strLength = e[0].length;
-				if(strIndex) {
+				if(b) {
 					eLength = e[0].length;
 					eIndex = i;
 				}
+				console.log(e[0], strLength, strIndex, result)
 				if(strIndex===0) break;
 			}
-			console.log(e);
 
-			result += strIndex===-1 ? str.slice(0,strIndex) : e[1];
+			result += b ? e[1] : str.slice(0, strIndex);
+			
 			str = str.slice(eIndex);
 			strLength = str.length;
 			if(strLength===0) break;
@@ -61,14 +63,14 @@ class Replacer {
 let arr = [
 	['a', 'A'],
 	['ba', 'BO'],
-	['aa', 'OO'],
+	['aa', '--'],
 	// {source:'a', target:'A'},
 	// {source:'ba', target:'BO'},
 ];
 
 let r = new Replacer(arr);
+console.log(JSON.stringify(r.dict));
 console.log( r.get('abaaababaaa') );
-// console.log(JSON.stringify(r.dict));
 
 
 // {

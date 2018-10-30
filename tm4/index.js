@@ -743,6 +743,8 @@ $(function () {
 
 	// 全局按键侦听
 	$(window).on('keydown', function (e) {
+		if(e.keyCode===87&&e.ctrlKey) e.preventDefault();
+
 		if ($(e.target).is('.currentEditRow .target')) SM.lastTargetRange = undefined;
 		if (e.keyCode === 87 && e.ctrlKey) {
 			e.preventDefault();
