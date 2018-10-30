@@ -1,8 +1,3 @@
-
-
-
-
-
 class DictReplacer {
 
 	constructor(dict) {
@@ -93,7 +88,12 @@ let arr = [
 	['三才', '森次'],
 	['三', '参'],
 	['12', ']]'],
+	['\\d-(\\d)', 'A-$1']
 ];
+
+string.replace( search, replacement )
+
+string.replace( array , useRegExp)
 
 let s = '12a a---- 212 ba aa三苹果明白c aaa三才三';
 // let dr = new DictReplacer(arr);
@@ -106,18 +106,19 @@ let i=0;
 let regExpArr = arr.filter(e => Array.isArray(e) && (typeof e[0] === 'string' && e[0].length > 0));
 
 let regExp = new RegExp(regExpArr.map(e=>`(${e[0]})`).join('|'),'g');
+
 let r=s.replace(regExp, function(m){
 	let v;
 	arr.some(e=>{
 		let b=e[0]===m;
 		v = e[1];
 		return b;
-	})
+	});
 	return v;
 });
 
-
 console.log(s);
+
 console.log(r);
 
 
