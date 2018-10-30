@@ -7,6 +7,7 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term=`
+本地化	在地化
 骷髅	骷髏
 抑郁	抑鬱
 复活	復活
