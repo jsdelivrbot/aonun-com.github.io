@@ -38,22 +38,20 @@ function dictReplacer(str, dict, useRegExp=false) {
 			let b = e[0] === strArgs[0];
 			v = e[1];
 			// 支持正则表达式
+			console.log(b);
+			
 			if(useRegExp) {
-				v.replace(/(\$)?\$(\d{1,2}|&)/g, function (...vArgs) {
+				v = v.replace(/(\$)?\$(\d{1,2}|\&)/g, function (...vArgs) {
 					// return vArgs[1] ? vArgs[0].slice(1) : strArgs[vArgs[2]];
-					console.log(JSON.stringify(vArgs));
-					
 					let r;
 					if(vArgs[1]) {
 						r = vArgs[0].slice(1);
 					}else{
-
 						r = strArgs[vArgs[2]];
 						console.log(r);
 						if(r==='&') {
 							r = m;
 						}
-						
 					}
 					return r;
 				});
