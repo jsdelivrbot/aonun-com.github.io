@@ -3,11 +3,24 @@
 
 
 
-class Replacer {
+class DictReplacer {
 
 	constructor(dict) {
 		// [ {source, target}, ... ]
-		dict.sort((a, b) => {
+		this.init(dict);
+	}
+
+	init(dict) {
+		this.dict(dict);
+	}
+
+	dict(dict, sort = true, filter = true) {
+		if (!Array.isArray(dict)) return this.dict = [], this.length = 0;
+
+		if (filter) dict = dict.filter((e) => {
+			return Array.isArray(e) && typeof e[0] === 'string' && e[0].length > 0;
+		});
+		if (sort) dict.sort((a, b) => {
 			let la = a[0].length;
 			let lb = b[0].length;
 			if (la === lb) {
@@ -28,30 +41,38 @@ class Replacer {
 		this.length = dict.length;
 	}
 
-	get(str) {
+	encode(str) {
 		let result = '', dict = this.dict, dictLength = this.length,
-			strIndex=0, strLength = str.length, e, b,
-			eLength, eIndex;
+			strIndex, strIndexOld, e, b, row;
 
-		while(true) {
-			for(let i=0; i<dictLength; i++) {
-				e = dict[i];
-				strIndex = str.search(e[0]);
+		while (true) {
+			for (let i = 0; i < dictLength; i++) {
+				row = dict[i];
+				strIndex = str.indexOf(row[0]);
 				b = strIndex !== -1;
-				strLength = e[0].length;
-				if(b) {
-					eLength = e[0].length;
-					eIndex = i;
+				if (b) {
+					if (strIndexOld !== strIndex) {
+						e = row;
+						strIndexOld = strIndex;
+					}
 				}
-				console.log(e[0], strLength, strIndex, result)
-				if(strIndex===0) break;
+				if (strIndexOld === 0) break;
+				if(row[0]==='12') console.log(strIndex, strIndexOld, str);
+				
 			}
-
-			result += b ? e[1] : str.slice(0, strIndex);
-			
-			str = str.slice(eIndex);
-			strLength = str.length;
-			if(strLength===0) break;
+			if (b) {
+				if (strIndexOld !== 0) {
+					result += str.slice(0, strIndexOld);
+					str = str.slice(strIndexOld);
+				}
+				result += e[1];
+				str = str.slice(e[0].length);
+			} else {
+				result += str;
+				str = '';
+			}
+			strIndexOld = undefined;
+			if (str.length === 0) break;
 		}
 		return result;
 	}
@@ -61,16 +82,46 @@ class Replacer {
 
 
 let arr = [
-	['a', 'A'],
 	['ba', 'BO'],
-	['aa', '--'],
-	// {source:'a', target:'A'},
-	// {source:'ba', target:'BO'},
+	['aa', 'AA'],
+	['a', '_'],
+	['', '*'],
+	// undefined,
+	// ' ',
+	[' ', '~'],
+	['_', '~'],
+	['三才', '森次'],
+	['三', '参'],
+	['12', ']]'],
 ];
 
-let r = new Replacer(arr);
-console.log(JSON.stringify(r.dict));
-console.log( r.get('abaaababaaa') );
+let s = '12a a---- 212 ba aa三苹果明白c aaa三才三';
+// let dr = new DictReplacer(arr);
+// console.log(JSON.stringify(dr.dict));
+// console.log(s);
+// console.log(dr.encode(s));
+
+let i=0;
+
+let regExpArr = arr.filter(e => Array.isArray(e) && (typeof e[0] === 'string' && e[0].length > 0));
+
+let regExp = new RegExp(regExpArr.map(e=>`(${e[0]})`).join('|'),'g');
+let r=s.replace(regExp, function(m){
+	let v;
+	arr.some(e=>{
+		let b=e[0]===m;
+		v = e[1];
+		return b;
+	})
+	return v;
+});
+
+
+console.log(s);
+console.log(r);
+
+
+// console.log(regExp)
 
 
 // {
