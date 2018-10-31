@@ -16,7 +16,8 @@ let dict = [
 let str = '12aba\\(a) \\b';
 
 console.log(str);
-console.log(dictReplacer(str, dict));
+console.log(dictReplacer(str, dict,false));
+console.log(dictReplacer(str, dict,true));
 
 
 function dictReplacer(str, dict, useRegExp=false) {
@@ -80,3 +81,5 @@ function dictReplacer(str, dict, useRegExp=false) {
 // {
 // 	let s = 
 // }
+
+
