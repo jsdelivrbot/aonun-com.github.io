@@ -7,5 +7,5 @@ let o={
 };
 
 g.o=o;
-// console.log(this);// DedicatedWorkerGlobalScop
+console.log(this);// DedicatedWorkerGlobalScop
 })(this);
