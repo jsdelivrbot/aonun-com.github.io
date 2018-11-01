@@ -1,3 +1,5 @@
+// Replacer.js
+// MIT
 !(function (g) {
 	class Replacer {
 		offRegExp(src, opt = 'gim') {
