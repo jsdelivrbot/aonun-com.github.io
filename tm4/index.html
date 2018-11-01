@@ -85,7 +85,7 @@ tbody {border: 1px solid #0007!important;}
 #main tbody{overflow-y: auto; display: block; }
 #main{ vertical-align:top; }
 #rowCurrentUI,#rowTotalUI {color:blue; font-family:Verdana; font-weight:bold; }
-#statusDict {height:6em; #eee;}
+#statusDict {height:6em; background-color: #eee;}
 #statusDict td, #tips td { background:#eee;color:#333;}
 #statusDict, #tips, #works {resize: vertical;}
 #status{background:rgb(184,204,228);}
@@ -157,7 +157,10 @@ button span.icons {
 .hide,.hide2,.hide3,.emptyRow {display:none;}
 .match {white-space:pre-wrap;}
 .qa{max-height:7em; overflow:hidden; background:#fcc; }
-.target,.source{user-modify: read-write-plaintext-only; width:24em; min-width:4em; border-right:1px solid #0007!important;}
+.target,.source{
+	-webkit-user-modify: read-write-plaintext-only;
+	user-modify: read-write-plaintext-only;
+	width:24em; min-width:4em; border-right:1px solid #0007!important;}
 .util input {max-width:4em; border:none; margin: 4px 0;}
 .util {resize:none; background:#000;}
 .util th {

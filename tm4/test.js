@@ -15,8 +15,8 @@ function longSegmentSplit(str) {
 		console.log(after);
 		return e + '\0';
 	});
-	p = p.replace(/\{\\r\\n\}|\\r\\n|\\r|\\n/g, '$&\0'));
-	p = p.split('\0').map(e => e.trim().filter(e => e.length > 0);
+	p = p.replace(/\{\\r\\n\}|\\r\\n|\\r|\\n/g, '$&\0');
+	p = p.split('\0').map(e => e.trim()).filter(e => e.length > 0);
 
 	// console.log(JSON.stringify(p));
 	return p;
