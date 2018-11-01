@@ -1,9 +1,9 @@
 let log = function (s, size = 5) {
 	console.log("%c" + s, " text-shadow: 0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);font-size:" + size + "em");
 };
-log('TM 4');
-log('ddb@aonun.com', 2);
-log('20181101-1625', 1);
+// log('TM 4');
+// log('ddb@aonun.com', 2);
+// log('20181101-1625', 1);
 
 let SM = {
 	s: window.getSelection(),
@@ -138,8 +138,8 @@ let lwsd2 = new LocaleWorker('searchDictionary2',
 			});
 			res.forEach((kv, i) => {
 				$('<tr>').appendTo('#statusDict')
-					.append($('<td class="no">').text(i + 1))
 					.append($('<td class="source">').text(kv[0]))
+					.append($('<td class="no">').text(i + 1))
 					.append($('<td class="target" contenteditable="plaintext-only">').text(kv[1]))
 					.append($('<td class="similar">').text('Auto'))
 					.append($('<td class="index">').text(kv[2]))
@@ -185,15 +185,19 @@ let lwsd = new LocaleWorker('searchDictionary',
 		if (data[0] === 200) {
 			lwsd.done = true;
 			let a = data[1];
+			a.forEach((e,i,a)=>{
+				e.splice(1,0,i+1);
+			});
 			let table = ao.arrayToTable(a);
 			// 显示到#tips中
-			$('td:nth-child(4)', table).addClass('index');
-			$('td:nth-child(3)', table).addClass('similar').each((i, e) => e.textContent = parseInt(e.textContent) + '%');
-			$('td:nth-child(2)', table).attr({ 'contenteditable': 'plaintext-only' }).addClass('target');
+			$('td:nth-child(5)', table).addClass('index');
+			$('td:nth-child(4)', table).addClass('similar').each((i, e) => e.textContent = parseInt(e.textContent) + '%');
+			$('td:nth-child(3)', table).attr({ 'contenteditable': 'plaintext-only' }).addClass('target');
+			$('td:nth-child(2)', table).addClass('no');
 			$('td:nth-child(1)', table).attr({ 'contenteditable': 'plaintext-only' }).addClass('source');
-			$('tr', table).each(function (i, tr) {
-				$(tr).prepend($('<td class="no"></td>').text(i + 1));
-			});
+			// $('tr', table).each(function (i, tr) {
+			// 	$(tr).prepend($('<td class="no"></td>').text(i + 1));
+			// });
 			$('#tips').html(table.innerHTML).prop('scrollTop', 0);
 			// console.log($('#auto100').prop('checked') && a && a[0] &&a[0][2]==100)
 			// 规则A：对于如果最后一个编辑的内容，不要采取自动插入。
@@ -469,12 +473,12 @@ $(function () {
 
 					a.forEach((e, i) => {
 						let tr = table.appendChild(document.createElement('tr'));
-						let no = tr.appendChild(document.createElement('td'));
-						no.classList.add('no');
-						no.textContent = i + 1;
 						let source = tr.appendChild(document.createElement('td'));
 						source.classList.add('source');
 						source.textContent = e[0];
+						let no = tr.appendChild(document.createElement('td'));
+						no.classList.add('no');
+						no.textContent = i + 1;
 						let target = tr.appendChild(document.createElement('td'));
 						target.classList.add('target');
 						target.contentEditable = 'plaintext-only';
@@ -825,8 +829,8 @@ $(function () {
 						let first;
 						res.forEach((e, i) => {
 							let tr = $(`<tr class="split">`).appendTo('#works');
-							let no = $('<td class="no">').text(i + 1).appendTo(tr);
 							let s = $('<td class="source">').text(e).appendTo(tr)
+							let no = $('<td class="no">').text(i + 1).appendTo(tr);
 							let t = $('<td class="target" contenteditable="plaintext-only">').appendTo(tr);
 							if (i === 0) first = t;
 							if (e.trim() === '') tr.addClass('hide2');
@@ -1137,8 +1141,11 @@ $(function () {
 				var t = lastSourceSelectionText;
 				var a = dict.search(t, Number($('#similarPercent').val()));
 				// 提示内容
+				a.forEach((e,i,a)=>{
+					e.splice(1,0,i+1);
+				});
+				console.log(a);
 				var table = ao.arrayToTable(a);
-				console.table(table);
 				
 				$('td:nth-child(4)', table).addClass('index');
 				$('td:nth-child(3)', table).addClass('similar').each((_, e) => e.textContent = parseInt(e.textContent) + '%');
@@ -1253,6 +1260,16 @@ $(function () {
 	});
 	$('#downloadWork').click(function (e) {
 		showTip('잠시만 기다려 주십시오.(최대 30초 대기)');
+
+		// 随便贴进去的数据
+		{
+			let name = 'clip';
+			let data = $('#works>tr').map((i,e)=>$(e).find('.source').text().replace(/\n/g,'\\n').replace(/\t/g,'\\t')+'\t'+$(e).find('.target').text().replace(/\n/g,'\\n').replace(/\t/g,'\\t')).toArray().join('\n')
+			// 下载works时，textKey。
+			downloadFile(name + 'work', data);
+		}
+
+
 		let
 			ctrl = e.ctrlKey,
 			shift = e.shiftKey,
@@ -1291,7 +1308,6 @@ $(function () {
 			});
 
 			let name = table.getAttribute('dataname');
-			console.log(name);
 
 			var data = r.join('\n');
 			// 下载works时，textKey。

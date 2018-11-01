@@ -46,28 +46,34 @@ del { background: red; color: #fff; }
 	cursor: help;
 }
 .doneSmart{
-	background:#f66;
+	background:#f66!important;
+	color: #fff!important;
 }
 .doneAuto{
-	background:#c8ebff;
+	background:#c8ebff!important;
+	box-shadow: inset -3px 0px #2D82B4!important;
+	color: #000!important;
 }
 .doneAutoSpace {
-	background:#e6e6e6;
+	box-shadow: inset -3px 0px #333!important;
+	background:#e6e6e6!important;
+	color: #000!important;
 }
 .done {
 	box-shadow: inset -3px 0px #070!important;
-	background: #c0ffc0;
+	background: #c0ffc0!important;
+	color: #000!important;
 }
 .fa {font-size: 12pt;}
-* {user-modify:read-write-plaintext-only;outline-color:#fff7;}
-*::selection {background:#900;color:#ffc;}
+
+*::selection {
+	background: #999;
+    text-shadow: 0 0 3px #ccc;
+}
 /*@media (max-width: 700px) {.buttonbox { display: none; } }
 @media (max-width: 880px) {#toolright { display: none; } }
 @media (max-width: 1100px) {#toolleft { display: none; } }*/
-/*@media (max-width: 60em) {
-	#works td,#tips td,#statusDict td { display: none; }
-	#works td.no, #works td.source, #works td.target, #tips td.no, #tips td.source, #tips td.target, #statusDict td.no, #statusDict td.source, #statusDict td.target{ display:inherit; }
-}*/
+/*@media (max-width: 60em) {}*/
 
 tbody {border: 1px solid #0007!important;}
 
@@ -99,7 +105,7 @@ statusDict  tb
 #tips td{
 	background: #EBBEB466;
 }
-#tips .similar{
+#tips .no, #tips .similar{
 	color:#fff!important;
 	background: #C85050!important;
 }
@@ -109,7 +115,7 @@ statusDict  tb
 #statusDict td {
 	background: #B4E1F0;
 }
-#statusDict .similar {
+#statusDict .no, #statusDict .similar {
 	color:#fff!important;
 	background: #2D82B4!important;
 }
@@ -123,8 +129,6 @@ statusDict  tb
 #works {background:#fff;}
 #works {height:30em;min-height:2em;}
 #works td {height:1em;}
-#works td.target {border:none;height:auto;}
-#works td.source:focus {border:2px solid #00f7;height:auto;}
 #works td {min-width:1em;}
 #works tr:nth-child(even) { background: #000; }
 * {font-family: Tahoma,"Microsoft Yahei","MS Ghotic","Malgun Ghotic"; font-weight: bold; word-wrap: break-word; word-break: break-all; font-size:8pt;/*	background:rgb(39,40,34); color:rgb(248,248,242);*/ }
@@ -151,16 +155,42 @@ button span.icons {
 #clogs {overflow: hidden;}
 .clog {font-size:8pt; max-width:32em; background: rgba(255,255,255,.1); }
 .clog td{ width:100%; border:1px solid #eef; background:#eee; color:#999; z-index:-9; }
-.currentEditRow td{ box-shadow: inset 0px -1px 1px #999; }
-/*memoQ current row color*/
-.currentEditRow .no { background: #FA6419!important; }
+table {
+	border-collapse:collapse;
+}
 .hide,.hide2,.hide3,.emptyRow {display:none;}
 .match {white-space:pre-wrap;}
 .qa{max-height:7em; overflow:hidden; background:#fcc; }
 .target{
 	-webkit-user-modify: read-write-plaintext-only;
 	user-modify: read-write-plaintext-only;
-	width:24em; min-width:4em; border-right:1px solid #0007!important;}
+}
+.source, .target
+{
+	outline: none;
+	border: none;
+	width:24em; min-width:4em;
+}
+.no {
+	margin:0;
+	padding:0 4px;
+	border-radius: 0;
+	user-select:none;
+	white-space:nowrap;
+	word-wrap:break-word;
+	word-break:break-all;
+	text-align:center;
+	color: #eee;
+}
+/* .memoQ currentEditRow{ color: #FA6419!important; } */
+.currentEditRow td {
+	border-top: 2px solid #ccc;
+	border-bottom: 2px solid #ccc;
+}
+.currentEditRow .no {
+	color: #666;
+}
+
 .util input {max-width:4em; border:none; margin: 4px 0;}
 .util {resize:none; background:#000;}
 .util th {
@@ -180,17 +210,7 @@ body,#box{margin:0;padding:0;}
 #box{margin:0 auto;}
 h3 {background:#0007;color:#fff;padding:6px;border-radius:3px;text-align:center;max-width:18em;}
 table{border:1px solid #fff; border-style:inset; }
-td.no {
-	margin:0;
-	padding:0 4px;
-	border-radius:3px;
-	user-select:none;
-	white-space:nowrap;
-	word-wrap:break-word;
-	word-break:break-all;
-	text-align:center;
-	color:#fff;
-	background:#0007;}
+
 
 #workPaste:focus {
 	background:#333333;color:#ffffff;
@@ -207,12 +227,13 @@ td.no {
 	width:100%; height:3em;
 	display:block; background: #fff; color:#00c;
 }
-th,td{
+th, td {
 	text-align:left;
 	vertical-align:middle;
 	background:#fffe;
 	word-wrap:break-word;
-	word-break:break-all;}
+	word-break:break-all;
+}
 
 label.button {
 	min-width:3em; display:inline-block;
@@ -253,6 +274,16 @@ label.button input[type=radio] {
 	background: #00f;
 	padding: 4px 8px;
 	border-radius: 6px;
+}
+
+.split *{
+	background: #000;
+	color: #fff;
+}
+.splitTarget {
+	background: #000!important;
+	color:#ccc!important;
+	-webkit-user-modify: read-only!important;
 }
 </style>
 </head>
