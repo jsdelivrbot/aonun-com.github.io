@@ -3182,31 +3182,34 @@ function numCheck(s, t) {
 	return clac(sa, ta);
 }
 
-function splitLongSource(s) {
-	let r = /(?!\d)\s*(?:\.|\?|\!)\s*(?!\d)|{\\r\\n}|\\n/g;
-	let a1 = s.split(r);
-	let l1 = a1.length;
-	if (l1 < 2) return false;
-	let a2 = s.match(r);
-	let l2 = a2.length;
-	console.warn(a1, a2)
-	let a = [];
-	let len = Math.max(l1, l2);
-	let i = 0;
-	while (i < len) {
-		let v1 = a1[i], v2 = a2[i] || '', chunk;
-		if (v2.indexOf('.') === -1 || v2.indexOf('!')===-1 || v2.indexOf('?')===-1) {
-			chunk = [v1, v2];
-		} else {
-			chunk = [v1 + v2];
-		}
-		a = a.concat(chunk);
-		i++;
-	}
-	a = a.filter(e => e.length > 0);
-	return a;
-}
+// function splitLongSource(s) {
+// 	let r = /(?!\d)\s*(?:\.|\?|\!)\s*(?!\d)|{\\r\\n}|\\n/g;
+// 	let a1 = s.split(r);
+// 	let l1 = a1.length;
+// 	if (l1 < 2) return false;
+// 	let a2 = s.match(r);
+// 	let l2 = a2.length;
+// 	console.warn(a1, a2)
+// 	let a = [];
+// 	let len = Math.max(l1, l2);
+// 	let i = 0;
+// 	while (i < len) {
+// 		let v1 = a1[i], v2 = a2[i] || '', chunk;
+// 		if (v2.indexOf('.') === -1 || v2.indexOf('!')===-1 || v2.indexOf('?')===-1) {
+// 			chunk = [v1, v2];
+// 		} else {
+// 			chunk = [v1 + v2];
+// 		}
+// 		a = a.concat(chunk);
+// 		i++;
+// 	}
+// 	a = a.filter(e => e.length > 0);
+// 	return a;
+// }
 
+function splitLongSource(str) {
+	return longSegmentSplit(str)
+}
 
 {
 	// 让.source可以编辑
