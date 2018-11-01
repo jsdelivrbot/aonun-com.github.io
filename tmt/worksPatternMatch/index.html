@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/lib/vue.min.js"></script>
+    <script src="/lib/diff_match_patch.js"></script>
+</head>
+
+<body>
+
+
+
+    <script>
+
+
+        let tm = [
+            { s: `[T1] 집결용 경량 키`, t: `[1阶]集结用轻型船舵` },
+            { s: `[T1] 집결용 갑옷 안감`, t: `[1阶]集结用盔甲内衬` },
+            { s: `[T1] 집결용 건조 약초`, t: `[1阶]集结用晒干的药草` },
+            { s: `[T1] 집결용 윤활유`, t: `[1阶]集结用润滑油` },
+            { s: `방수포 조각`, t: `防水布边角料` },
+        ];
+
+
+        let mission = [
+            { s: `[T1] 집결용 방수포 조각` }
+        ];
+
+
+        let dmp = new diff_match_patch();
+        let m = dmp.diff_main(trims(tm[0].s), trims(tm[1].s));
+        console.log(m);
+        m = dmp.diff_main(trims(tm[0].t), trims(tm[1].t));
+        console.log(m);
+
+        console.log(trims(tm[1].s));
+
+
+        function trims(s) {
+            return s.replace(/\s+/g, '');
+        }
+
+        function main(a, b) {
+            console.log(a,b);
+            
+            let s = new diff_match_patch();
+            let t = new diff_match_patch();
+            let sm = dmp.diff_main(trims(a.s||''), trims(b.s||''));
+            let tm = dmp.diff_main(trims(a.t||''), trims(b.t||''));
+            let sl = sm.length;
+            let tl = tm.length;
+            let kv = [];
+
+            if (sl === tl) {
+                for (let i = 0; i < sl; i++) {
+                    kv.push({s:sm[i][1], t:tm[i][1], sc:sm[i][0], tc:tm[i][0], count:1});
+                }
+            }
+            return kv;
+        }
+
+        let result=[];
+        tm.reduce((r,e,i,a)=>{
+            console.log(r,e,i,a)
+            result.push(... main(r,e));
+            return e;
+        });
+        console.log(result);
+
+
+
+
+    </script>
+
+</body>
+
+</html>

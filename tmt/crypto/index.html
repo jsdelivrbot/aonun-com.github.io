@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Crypto</title>
+    <script src="/lib/sha3.min.js"></script>
+
+    <style>
+        #app {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            height: 90vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <textarea></textarea>
+        <textarea></textarea>
+    </div>
+
+    <script>
+        let app = document.getElementById('app');
+
+        let source = app.children.item(0);
+        let target = app.children.item(1);
+
+
+        source.oninput = function () {
+            target.value = sha3_256(source.value);
+        };
+
+
+
+    </script>
+</body>
+
+</html>

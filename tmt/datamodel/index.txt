@@ -1,0 +1,9 @@
+﻿segment
+
+
+<segments>
+uid,content,birthtime,ctime,lang,category,trans,reference,md5,sha256
+
+
+
+

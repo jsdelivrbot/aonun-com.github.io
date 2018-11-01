@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RSA</title>
+<script src="./jsencrypt.min.js"></script>
+<script src="/lib/vue.min.js"></script>
+</head>
+<body>
+
+<div id="vue">
+  <textarea v-model="originText"></textarea>
+  <textarea v-model="encryptText" readonly></textarea>
+  <textarea v-model="decryptText" readonly></textarea>
+  <textarea v-model="privateKey" readonly></textarea>
+  <textarea v-model="publicKey" readonly></textarea>
+</div>
+<style type="text/css">
+#vue textarea {
+  width: 32em;
+  margin: 1px auto;
+  background: #efe;
+  color: #030;
+  overflow: hidden;
+  resize: none;
+  height: 32em;
+  display: block;
+}
+</style>
+<script type="text/javascript">
+let v=new Vue({
+  el:'#vue',
+  
+  data:{
+    e:new JSEncrypt,
+    originText:undefined,
+  },
+
+  computed:{
+    privateKey:function(){
+      return this.e.getPrivateKey();
+    },
+    publicKey:function(){
+      return this.e.getPublicKey();
+    },
+    encryptText:{
+      get:function(){
+        let encrypt=new JSEncrypt();
+        encrypt.setPublicKey(this.publicKey);
+        return encrypt.encrypt(this.originText);
+      }
+    },
+    decryptText:{
+      get:function(){
+        let decrypt=new JSEncrypt();
+        decrypt.setPrivateKey(this.privateKey);
+        try{
+          return decrypt.decrypt(this.encryptText);
+        }catch(err){
+          return err.message;
+        }
+      }
+    }
+  }
+});
+
+
+// 公钥解密
+let encrypt=new JSEncrypt();
+encrypt.setPublicKey(v.publicKey);
+v.encryptText=encrypt.encrypt(v.originText);
+
+
+// 私钥加密
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="/lib/jquery-1.12.0.min.js"></script>
+<script src="/lib/similarText.js"></script>
+<script src="/lib/vue.min.js"></script>
+<title>mission list</title>
+</head>
+<body>
+<style>
+* {
+	font-family: Arial,Verdana,NSimSun, Dotum, MSGhotic;
+	border: none;
+	outline: none;
+	margin: 0;
+	padding: 0;
+}
+/*.box  {width:100%;height:100%;background:#ccc;display:grid;grid-row-gap: 50px;}
+.line {height:100%;background:red;display:inline-grid;}
+#works{
+  height: 100%;
+}
+#works td{
+  background: #9f9;
+  min-width: 8em;
+  text-align: center;
+}
+#works * {
+  margin: 0 auto;
+  padding: 3px;
+  width: 24em;
+  overflow-y:visible;
+  display: block
+}
+#works hr {
+  border:1px solid #ccc;
+  width:24em;
+  margin:20% auto;
+}
+#works p {
+  min-width: 24em;
+  border:inset 2px solid #ccc;
+  border-radius:3.33px;
+  margin-top: 1px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  background: #eee;
+}
+#works p:focus {
+  background: #fffe;
+}
+#works p::before {
+  content: attr(id);
+  background: #ccc;
+  color: #666;
+  border-radius: 3px;
+  transform: rotate(-12deg) translate(-120%,-66%);
+  transition: all .5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  position: absolute;
+}
+#works p:focus::before {
+  background: #ccfc;
+  transform: rotate(-6deg) translate(-10%,-125%) scale(1.2);
+  color:#00fc;
+  font-weight: bold;
+}*/
+#works .t,#works .s {
+  color: #999;
+}
+#works .modify {
+  -webkit-user-modify: read-write-plaintext-only;
+  user-modify: read-write-plaintext-only;
+}
+#works p:hover {
+  background: #fff;
+}
+.stPair {
+	background:#ccf;
+	width: calc(32vw);
+	margin: 1px auto;
+	border-radius: 5px;
+}
+.s, .t {
+	background: #fffc;
+  padding: 3px;
+  resize: none;
+  width: 100%;
+}
+.s {
+  border-bottom: 1px dashed #fff;
+}
+.t:focus {
+  background: #fff;
+  outline-color: #f00c;
+  outline-width: 2px;
+  border-bottom-left-radius: 5px; 
+  border-bottom-right-radius: 5px; 
+}
+
+</style>
+
+
+<style>
+#leftUI, #rightUI {
+  position: absolute;
+  width: calc(32vw);
+  min-height: 2px;
+  color:#000;
+  /*z-index: -1;*/
+}
+#leftUI {
+  text-align: right;
+  background: #fcc;
+}
+#rightUI {
+  text-align: left;
+  background: #cfc;
+  transform: translateX(66vw);
+}
+.current {
+  color:#000;
+}
+</style>
+<div id="leftUI">
+</div>
+<div id="rightUI">
+</div>
+
+<div id="works">
+
+	<div class="stPair" v-for="(row) in rows">
+		<p class="s" v-on:focus.prevent="onCenter">{{row.s}}</p>
+    <textarea class="t"
+      v-on:focus.prevent="onFocus"
+      v-on:blur.prevent="onBlur"
+      v-on:input="onInput"
+      v-model="row.t"></textarea>
+		<p class="length">{{row.s.length}},{{row.t.length}}</p>
+	</div>
+</div>
+
+<!-- <div id="works">
+  <hr>
+  <textarea v-for="(row) in rows" type="text"
+  contenteditable="plaintext-only" 
+  v-bind:value="row" v-bind:id="`i${row}`"
+  v-on:focus.prevent="onCenter"></textarea>
+  <hr>
+</div> -->
+
+<script>
+let x;
+let rows=[];
+let methods={
+  onFocus:function(e){
+    let target=e.target;
+    x=target;
+
+    if(v.opts.editContentAutoCenter) e.target.scrollIntoView({
+      // behavior:`smooth`,
+      // behavior:`auto`,
+      // block:`center`,
+      inline:`center`
+      // inline:`nearest`
+    });
+
+    {// leftUI自动跟随
+      // let rect=e.target.getBoundingClientRect();
+      let leftUI=document.querySelector('#leftUI');
+      leftUI.style.top=target.offsetTop+'px';
+
+      let rightUI=document.querySelector('#rightUI');
+      rightUI.style.top=target.offsetTop+'px';
+    }
+
+    {
+      // 当前stPair高亮
+      target.parentElement.classList.add('current');
+    }
+
+    {
+      // 左边显示出所有原文中匹配度差不多的内容
+      let target=e.target;
+      let t=target.previousElementSibling.innerText;
+      let leftUI=document.querySelector('#leftUI');
+      leftUI.innerHTML='';
+
+      document.querySelectorAll('#works .s').forEach(e=>{
+        let v=similarText(t,e.innerText,true);
+        console.log(v)
+        if (v>50) {
+          let p=document.createElement('p');
+          p.innerText=e.innerText;
+          leftUI.appendChild(p);
+        }
+      });
+
+      similarText()
+      // leftUI.appendChild();
+    }
+  },
+
+  onBlur(e){
+    let target=e.target;
+
+    {
+      // 解除当前stPair高亮
+      target.parentElement.classList.remove('current');
+    }
+  },
+
+  onText:function(e){
+    // console.log(e.type,e.target, e.target.textContent)
+    console.log(e.target.textContent);
+    e.target.textContent=e.target.innerText.trim();
+  },
+
+  onInput:function(e){
+    {
+      // 功能：<textarea>标签自适应高度
+      let target=e.target;
+      let style=e.target.style;
+      style.height='auto';
+      style.height=target.scrollHeight+'px';
+    }
+  },
+
+  onChange:function(e){
+    console.log(e.type)
+    // console.log(this);
+    // this.e.target.innerText
+  }
+};
+
+let v=new Vue({
+  el:'#works',
+  data:{
+  	rows,
+    opts:{
+      editContentAutoCenter:true
+    },
+  },
+  methods,
+});
+
+let i=1;
+while(i<100){
+  v.rows.push({
+  	s:i + '-'+randomString(10),
+  	t:''
+  });
+  i++;
+}
+
+
+let p=new Proxy(rows, {
+	  set:function(target,k,v){
+    console.log(k,v);
+    return target[k]=v;
+  },
+  get:function(target,k){
+    return target[k];
+  },
+  apply:function(target,thisArg,args){
+    console.log( args);
+    return 1
+  }
+});
+
+
+
+function randomString(len=1,caps=true){
+  len=Math.max(1,len), s='';
+  while(len-->0){
+    if(caps){
+      s+=String.fromCharCode(Math.floor(Math.random()*26)+97);
+    }else{
+      s+=String.fromCharCode(Math.floor(Math.random()*26)+65);
+    }
+  }
+  return s;
+}
+
+Array.prototype.extends
+function remove(o,a){
+  let i;
+  i=a.indexOf(o);
+  while(i!==-1){
+    a.splice(i,1);
+    i=a.indexOf(o);
+  }
+  return a;
+}
+
+
+Object.prototype.ddb=function(...args){
+  let thisArg=this;
+  if(!thisArg.__proto__.ddb) thisArg.__proto__.ddb=Object.create(null);
+  args.forEach(f=>{
+    thisArg.__proto__.ddb[f.name||'_']=f;
+  });
+};
+
+a=[1,2,3]
+aa=[11,22,33]
+a.ddb(function (){return this;});
+
+
+
+
+
+
+
+</script>
+
+</body>
+</html>

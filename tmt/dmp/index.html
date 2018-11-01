@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<HTML>
+<HEAD>
+<TITLE>Diff Speed Test</TITLE>
+<script src="/lib/jquery.min.js"></script>
+<script src="/lib/vue.min.js"></script>
+<script src="/lib/localforage.js"></script>
+<script src="/lib/diff_match_patch.js"></script>
+<link rel="stylesheet" href="main.css">
+</HEAD>
+<BODY>
+<!-- app begin -->
+<H1>Diff Speed Test</H1>
+<div id="app">
+  <div class="grid4">
+    <pre id="text1" v-on:input="onInput"></pre>
+    <pre id="text2" v-on:input="onInput"></pre>
+    <!-- <textarea v-model="text102" autofocus></textarea>
+    <textarea v-model="text202"></textarea>
+    <div class="length">{{text102length}}</div>
+    <div class="length">{{text202length}}</div>
+    <div v-html="text103"></div>
+    <div v-html="text203"></div>
+    <div v-html="text104"></div>
+    <div v-html="text204"></div> -->
+  </div>
+  <div>
+    <input v-model="timeout" type="number">
+    <hr>
+  </div>
+  <pre title="html" v-html="html"></pre>
+  <pre title="rows">{{rows}}</pre>
+  <pre title="main">{{main}}</pre>
+  <pre title="patches">{{patches}}</pre>
+</div>
+
+
+
+<script src="main.js"></script>
+</BODY>
+</HTML>

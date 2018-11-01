@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="/lib/localforage.min.js"></script>
+	<title>indexedDB</title>
+</head>
+
+<body>
+
+</body>
+<script>
+	class IDB {
+		constructor(name, version) {
+			this.init(name, version);
+		}
+
+		init(name, version) {
+			let t = this;
+			let q = this.q = indexedDB.open(name, version);
+			q.addEventListener('blocked', function (e) { });
+			q.addEventListener('error', function (e) { });
+			q.addEventListener('upgradeneeded', function (e) {
+				let db = e.target.result;
+				let osn = db.objectStoreNames;
+				let uo = t.upgradeOption;
+				let os, uov, oso = {}, osi = {};
+				// os:objectStore, uov:upgradeOptionValue, oso:objectStoreOption, osi:objectStoreIndex
+				if (typeof uo === 'object' && uo !== null) {
+					for (let k in uo) {
+						if (osn.contains(k)) {
+							db.deleteObjectStore(k);
+						}
+						uov = uo[k];
+						if (typeof uov === 'object' && uov !== null) {
+							for (let i in uov) {
+								if (i === 'keyPath' || i === 'autoIncrement') oso[i] = uov[i];
+								else osi[i] = uov[i];
+							}
+						}
+						os = db.createObjectStore(k, uov);
+						for (let i in osi) {
+							/* 
+							objectStore.createIndex(
+								indexName:String,
+								keyPath:String,
+								objectParameters:{unique:true,multiEntry:false,locale:'zh-CN'})
+							 */
+							os.createIndex(i, i, osi[i]);
+						}
+					}
+				}
+			});
+			q.addEventListener('success', function (e) {
+				t.db = e.target.result;
+				t.name = t.db.name;
+				t.version = t.db.version;
+				console.log(t.name, t.version);
+
+			});
+		}
+
+		upgrade(o) {
+			if (typeof o === 'object' && o !== null) {
+				// if (typeof o === 'object' && o!==null && Object.keys(o).length) {
+				let db = this.db;
+				db.close();
+				this.init(db.name, db.version + 1);
+				this.upgradeOption = o;
+				console.log('yes');
+			} else {
+				console.log('no');
+			}
+		}
+
+		o(name, v) {
+			let mode = (typeof v === 'object' && v !== null) ? 'readwrite' : 'readonly';
+			let x = this.db.transaction(this.db.objectStoreNames, mode);
+			
+			return new Proxy(IDB.o, {
+				get(o, k, p) {
+					let os = x.objectStore(k);
+					if (typeof os[k] === 'function') {
+						return new Proxy(os[k], {
+							apply(f, t, a) {
+								// let _ = f(...a);// Error
+								console.log(t,a)
+								let _ = os[k](...a);
+								let promise = new Promise(function(resolve,reject){
+									_.onsuccess = e => {
+										resolve(x.result);
+										// console.group('IDBRequest-' + e.type);
+										// console.log(_.result, q.readyState, q.error, q.result);
+										// // console.log(q);
+										// // console.log(e);
+										// console.groupEnd('IDBRequest-' + e.type);
+									};
+									_.onerror = e => {
+										reject(x.error);
+										// console.group('IDBRequest-' + e.type);
+										// console.log(_.result, q.readyState, q.error, q.result);
+										// // console.log(q.error, q.readyState);
+										// // console.log(q);
+										// // console.log(e);
+										// console.groupEnd('IDBRequest-' + e.type);
+									};
+								});
+								return promise;
+							}
+						});
+					} else {
+						return typeof v;
+					}
+				}
+			});
+		}
+
+		index() { }
+
+	}
+	IDB.o = Object.create(null);
+
+	let q, db, os, v = 9;
+
+	let d = new IDB('test');
+	d.upgrade(null);
+
+	function openIDB(dbname, version) {
+		// indexedDB;// IDBFactory
+
+		q = indexedDB.open(dbname, version);// IDBOpenDBRequest
+		q.onupgradeneeded = e => {
+			db = e.target.result;
+
+			{
+				let name = 't';
+				let b = db.objectStoreNames.contains(name);
+				if (!b) {
+					db.createObjectStore(name);
+				}
+			}
+
+			{
+				let name = 'k';
+				let b = db.objectStoreNames.contains(name);
+				if (!b) {
+					db.createObjectStore(name, { keyPath: 'k' });
+				}
+			}
+
+			{
+				let name = 'ki';
+				let b = db.objectStoreNames.contains(name);
+				if (!b) {
+					db.createObjectStore(name, { keyPath: 'k', autoIncrement: true });
+				}
+			}
+
+			{
+				let name = 'kii';
+				let b = db.objectStoreNames.contains(name);
+				if (!b) {
+					let o = db.createObjectStore(name, { keyPath: 'k', autoIncrement: true });
+					o.createIndex('i', 'i');
+					o.createIndex('iu', 'iu', { unique: true });
+				}
+			}
+			console.log('q-' + e.type, q.readyState, q.source, db);
+		};
+
+		q.onblocked = e => {
+			console.log('q-' + e.type, q.readyState);
+		};
+
+		q.onerror = e => {
+			db = e.target.result;
+			// 打开低版本时
+			console.log('q-' + e.type, q.readyState, q.source, db);
+		};
+
+		q.onsuccess = e => {
+			db = e.target.result;
+			db.onabort = e => {
+				console.log('db-' + e.type, q.error, q.readyState);
+			};
+			db.onclose = e => {
+				console.log('db-' + e.type, q.error, q.readyState);
+			};
+			db.onerror = e => {
+				console.log('db-' + e.type, q.error, q.readyState);
+			};
+			db.onversionchange = e => {
+				console.log('db-' + e.type, q.error, q.readyState);
+			};
+			db.onblocked = e => {
+				console.log('db-' + e.type, q.error, q.readyState);
+			};
+			db.onsuccess = e => {
+				console.log('db-' + e.type, q.error, q.readyState);
+			};
+
+			if (db.version < v) {
+				// 当前版本不正确
+				db.close();// 关闭当前数据库
+				db = null;
+				openIDB(dbname, v);// 重新打开数据库, 并指定为新版本号
+			}
+
+			// transaction   {db, error, mode, objectStoreNames, objectStore, onabort, oncomplete, onerror }
+			os = (name, isWrite = true) => {
+				let tx = db.transaction(db.objectStoreNames, isWrite ? 'readwrite' : 'readonly');
+				tx.onabort = tx.oncomplete = tx.onerror = e => {
+					console.info('transaction-' + e.type);
+				};
+
+				// return {
+				// 	objectStore:tx.objectStore(name),
+				// 	add(...args){
+				// 		let q = this.objectStore.add(...args);
+				// 		this.hand(q);
+				// 	},
+				// 	delete(...args){
+				// 		let q = this.objectStore.delete(...args);
+				// 		this.hand(q);
+				// 	},
+				// 	put(...args){
+				// 		let q = this.objectStore.put(...args);
+				// 		this.hand(q);
+				// 	},
+				// 	get(...args){
+				// 		let q = this.objectStore.put(...args);
+				// 		this.hand(q);
+				// 	},
+				// 	getAll(...args){
+				// 		let q = this.objectStore.put(...args);
+				// 		this.hand(q);
+				// 	},
+				// 	hand(q) {// IDBRequest  { error, result, source, readyState, transaction }
+				// 		q.onsuccess=e=>{
+				// 			console.group('IDBRequest-'+e.type);
+				// 			console.log(q.readyState, q.error, q.result);
+				// 			// console.log(q);
+				// 			// console.log(e);
+				// 			console.groupEnd('IDBRequest-'+e.type);
+				// 		};
+				// 		q.onerror = e=>{
+				// 			console.group('IDBRequest-'+e.type);
+				// 			console.log(q.readyState, q.error, q.result);
+				// 			// console.log(q.error, q.readyState);
+				// 			// console.log(q);
+				// 			// console.log(e);
+				// 			console.groupEnd('IDBRequest-'+e.type);
+				// 		};
+				// 	}
+				// };
+
+				return new Proxy({}, {
+					get(o, k, p) {
+						let os = tx.objectStore(name);
+						let v = os[k];
+						if (typeof v === 'function') {
+
+							return new Proxy(v, {
+								apply(f, t, a) {
+									// let _ = f(...a);// Error
+									let _ = os[k](...a);
+									_.onsuccess = e => {
+										console.group('IDBRequest-' + e.type);
+										console.log(_.result, q.readyState, q.error, q.result);
+										// console.log(q);
+										// console.log(e);
+										console.groupEnd('IDBRequest-' + e.type);
+									};
+									_.onerror = e => {
+										console.group('IDBRequest-' + e.type);
+										console.log(_.result, q.readyState, q.error, q.result);
+										// console.log(q.error, q.readyState);
+										// console.log(q);
+										// console.log(e);
+										console.groupEnd('IDBRequest-' + e.type);
+									};
+									return _;
+								}
+							});
+						} else {
+							return typeof v;
+						}
+					}
+				})
+			}
+
+			// objectStore.openCursor()
+
+			console.log('q-' + e.type, q.readyState, q.source === null, db.name, db.version, new Set(db.objectStoreNames));
+		};
+	}
+
+
+	// openIDB('localforage');
+
+
+
+
+	// setTimeout(()=>{
+	// 	// os('k').put({k:'jinxidong1', t:Date.now()})
+	// },1000);
+
+
+
+
+
+
+</script>
+
+</html>

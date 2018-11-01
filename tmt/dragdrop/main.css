@@ -1,0 +1,37 @@
+.item {
+    width:100px;
+    height: 100px;
+    background: #0f03;
+    border: 2px solid #0006;
+}
+
+.item::before {
+    content: attr(data-count) + attr(id);
+    font-weight: bold;
+    background: #fff;
+    border-radius: 3px;
+    border: 1px solid #000;
+}
+
+.box {
+    height: 300px;
+    background: #00f3;
+}
+
+.value {
+    margin: 0;
+    padding: 0;
+}
+.value::before {
+    content: attr(id);
+}
+
+.move {
+    cursor: move;
+    background: #0f0;
+    /* visibility: hidden; */
+}
+
+.not-allowed{
+    cursor: not-allowed;
+}

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>regexp</title>
+</head>
+<body>
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	border: none;
+}
+#app {
+	width:100vw;
+}
+#regExp {
+	width: 100vw;
+	background: #ff0;
+	border: inset 2px solid #00f;
+}
+.modify{
+	/*height: 2em;*/
+	min-height: 1px;
+	width: 100%;
+	background: #0f0;
+	-webkit-user-modify: read-write-plaintext-only;
+	user-modify: read-write-plaintext-only;
+}
+
+div *{
+	width: calc(50vw);
+	margin: 0 auto;
+}
+</style>
+
+
+<div id="app">
+<p id="input" class="modify"></p>
+<input id="regExp" autofocus>
+<div style="position:relative">
+<p id="word">实例<br>2014年，文章参演姜文导演的电影《一步之遥》，饰演主角之一武七。该片入围第65届柏林电影节。2016年，文章主演张黎导演的电视剧《少帅》饰演历史人物张学良。文章凭此片获得2017中国电视剧品质盛典年度品质表演剧星。同年七月，由文章的君竹（上海）影视文化有限公司参与制作的喜剧爱情电影《陆垚知马俐》在中国大陆，美国，加拿大，澳大利亚及新西兰上映。文章不仅担任导演，还兼任编剧。此片以中小成本获得近2亿票房。文章的导演风格被一些影评人誉为“文房四宝”-- “斗嘴皮、飙演技、抖机灵、戳心窝”。文章凭此处女作提名第十九届上海国际电影节之亚洲新人奖最佳导演奖。同年八月《陆垚知马俐》获得第40届加拿大蒙特利尔国际电影节中国电影银奖。2017年，《陆垚知马俐》获得第31届中国电影金鸡奖七项提名 - 最佳导演处女作，最佳男主角，最佳女主角，最佳男配角，最佳女配角，最佳录音和最佳摄影。最后文章荣获最佳导演处女作奖。2017年，文章的君竹（上海）影视文化有限公司参与制作谍战剧《剃刀边缘》，文章担任导演并饰演男主角许从良。妻子马伊俐出演女主角。此片打破以往谍战剧的套路，以小人物的成长为主线，加入爱情，探案等元素。电视剧播出后，口碑收视均取得良好的成绩。同年三月，文章重返舞台，出演独角话剧《每一件美妙的小事》。文章凭此剧获得2017上海静安现代戏剧谷壹戏剧大赏年度最佳男演员奖。<br>
+2017年11月12日，由文章编剧并导演，阿里巴巴创始人马云主演的微电影《功守道》在优酷独家播出。这部只有22分钟的短片汇集了当今中国顶尖功夫明星和武术指导，包括李连杰，甄子丹，吴京，袁和平，洪金宝以及程小东。电影播出不到两天，网络点击率突破1.5亿，评论量1.5万，顶8.1万。</p>
+</div>
+</div>
+
+<script>
+
+
+
+const ProxyManager=Object.create(null);
+ProxyManager.map=new Map();
+ProxyManager.open=function (obj,handle){
+	let map=ProxyManager.map, res;
+	if(map.has(obj)) {
+		res=map.get(obj).proxy;
+	}else{
+		res=Proxy.revocable(obj,handle||Object.create(null));
+		map.set(obj,res);
+		res=res.proxy;
+	}
+	return res;
+};
+ProxyManager.close=function (obj){
+	let map=ProxyManager.map, res=map.has(obj);
+	if(res) map.get(obj).revoke();
+	return res;
+};
+
+
+
+class EM{
+	static on(type,handle,thisArg){
+		let m=EM.manager;
+
+		if(!m.has(type)) {
+			m.set(type,[]);
+			window.addEventListener(type,function(e){
+				m.get(type).forEach(f=>{
+					f.bind(thisArg)(e);
+				});
+			});
+		}
+		if(typeof handle==='function') m.get(type).push(handle);
+	}
+
+	static off(type,handle){
+		let m=EM.manager;
+		if(!m.has(type)){
+			if(handle){
+				let t=m.get(type);
+				t.filter(e=>e!==handle);
+			}else{
+				m.set(type,[]);
+			}
+		}
+	}
+}
+EM.manager=new Map();
+
+EM.on('input', (e)=>{
+	// if(e.inputType=='insertFromPaste') return ;
+	if(e.data && e.data.trim()) {
+		console.log('['+e.inputType+']', e.data);
+	}else{
+		console.warn(JSON.stringify(e.data));
+	}
+});
+
+EM.on('paste', (e)=>{
+	console.log(e.type, e.clipboardData.getData('text/plain'));
+	e.stopImmediatePropagation();
+	e.stopPropagation();
+});
+
+
+class Mirror{
+	constructor(target){
+		this.target=target;
+		this.mirror=document.createElement('target'.nodeName);
+		this.mirror.style.position='absolute';
+		this.mirror.style.width=this.width;
+		this.mirror.style.height=this.height;
+		this.mirror.style.top=this.top;
+		this.mirror.style.left=this.left;
+		this.mirror.style.color='#fff0';
+		this.mirror.style.background='#ccc1';
+		this.mirror.style.whiteSpace='pre-line';
+		// this.mirror.style.transform='translateY(-100%)';
+		this.mirror.style.zIndex=-1;
+
+		this.mirror.innerText=target.innerText;
+
+		this.target.insertAdjacentElement('afterend',this.mirror);
+		target.addEventListener('resize',(e)=>{
+			console.log(e.type);
+		});
+	}
+
+	get top(){
+		return this.target.offsetTop;
+	}
+
+	get left(){
+		return this.target.offsetLeft;
+	}
+
+	get width(){
+		return this.target.offsetWidth;
+	}
+	get height(){
+		return this.target.offsetHeight;
+	}
+}
+
+let mirror=new Mirror(document.querySelector('#word'));
+
+EM.on('input',(e)=>{
+	let tar=e.target, v=tar.value;
+	if(v){
+		try{
+			let reg=new RegExp(v,'g');
+			let word=document.querySelector('#word');
+			let m=mirror.mirror;
+
+			m.innerHTML=word.innerText.replace(reg,(str,index,reg)=>{
+				console.log(str,index);
+				return '<span style="background:#cc0;">'+str+'</span>';
+			});
+		}catch(err){
+			return ;
+		}
+	}
+});
+
+</script>
+</body>
+</html>

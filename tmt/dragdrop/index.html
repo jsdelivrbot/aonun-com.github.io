@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>drag drop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="/lib/vue.min.js"></script>
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+    <div id="logPanel">
+        <p data-count="dragstart" class="value" id="dragstart"></p>
+        <p data-count="dragsend" class="value" id="dragsend"></p>
+        <p data-count="drag" class="value" id="drag"></p>
+        <p data-count="dragover" class="value" id="dragover"></p>
+        <p data-count="dragenter" class="value" id="dragenter"></p>
+        <p data-count="dragleave" class="value" id="dragleave"></p>
+        <p data-count="drop" class="value" id="drop"></p>
+    </div>
+    <div id="item1" class="item" draggable="true"></div>
+    <div id="item2" class="item" draggable="true"></div>
+    <div id="item3" class="item" draggable="true"></div>
+    <div id="item4" class="item" draggable="true"></div>
+    <div id="item5" class="item" draggable="true"></div>
+    <div id="item6" class="box"></div>
+    
+    <script src="main.js"></script>
+</body>
+</html>

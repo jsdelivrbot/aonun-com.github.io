@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html spellcheck="false">
+
+<head>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script src="/lib/jquery.min.js"></script>
+	<script src="/lib/vue.min.js"></script>
+	<script src="E.js"></script>
+	<title>mission list</title>
+</head>
+
+<body>
+<div class="app">
+	<textarea></textarea>
+	<div id="works">
+		<label><input type="checkbox" v-model="opts.editContentAutoCenter">중심이동</label>
+		<hr>
+		<p class="source modify" v-for="(e,i) in rows" v-on:focus.prevent="onCenter" v-on:blur.prevent="onText" v-bind:id="`id${i}`"
+		v-on:input="onInput">{{e}}</p>
+		<hr>
+	</div>
+</div>
+
+<!-- <div id="works">
+	<hr>
+	<textarea v-for="(row) in rows" type="text"
+	contenteditable="plaintext-only" 
+	v-bind:value="row" v-bind:id="`i${row}`"
+	v-on:focus.prevent="onCenter"></textarea>
+	<hr>
+</div> -->
+
+
+</body>
+</html>
+<script src="index.js"></script>
+<script src="index-E.js"></script>

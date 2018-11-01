@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>json</title>
+</head>
+<body>
+<style>
+*{
+  margin: 0;
+  padding: 0;
+}
+#text, #json {
+  height: 99vh;
+}
+.parent{
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.error{
+  background: #fcc;
+}
+</style>
+<div class="parent">
+<textarea id="text"></textarea>
+<textarea id="json"></textarea>
+</div>
+<script>
+let _text=document.querySelector('#text');
+let _json=document.querySelector('#json');
+
+_text.onchange=(e)=>{
+  let v=e.target.value;
+
+  try{
+    _json.value=JSON.stringify(v.split('\n').map(e=>{
+      let r=e.split('\t');
+      return {source:r[0],target:r[1]};
+    }));
+    _json.classList.remove('error');
+  }catch(err){
+    _json.value=err.message;
+    _json.classList.add('error');
+  }
+};
+
+</script>
+</body>
+</html>

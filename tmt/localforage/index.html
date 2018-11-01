@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>localforage upload</title>
+      <script src="https://cdn.rawgit.com/mozilla/localForage/master/dist/localforage.min.js"></script>
+      <style>
+        .button {border: 1px solid #ccc; background: #eee;padding:4px;border-radius: 4px; user-select:none; cursor:pointer;}
+      </style>
+</head>
+<body>
+
+<label for="inputfile-image" class="button">上传图片</label>
+<input type="file" id="inputfile-image" accept="image/*" hidden> 
+
+<article>
+<h3>input change 事件后, 用FileReader读取</h3>
+<img id="filereader-image"></img>
+</article>
+
+<article>
+<h3>更新页面时, 读取数据库中的 File 实例</h3>
+<img id="arraybuffer-image"></img>
+</article>
+
+
+<script>
+console.log(localforage.driver());
+
+// 选择标签
+let ii=document.querySelector('#inputfile-image');
+let fi=document.querySelector('#filereader-image');
+let ai=document.querySelector('#arraybuffer-image');
+
+
+// 选择图片文件
+ii.onchange=function(e){
+    let file=ii.files[0];
+    console.log('[change]', file);
+    let url=URL.createObjectURL(file);// url string
+    fi.src=url;
+    saveToLocalforage('inputfile-image',file);// file
+}
+
+// 将图片文件保存到数据库中
+function saveToLocalforage(name,file){
+    let _=localforage;
+    _.setDriver(_.INDEXEDDB).then(()=>{
+        _.setItem(name, file).then((file)=>{
+            console.log('[save db]', file);
+        });
+    });
+}
+
+// 从数据库中读取图片文件并显示
+function loadFromLocalforage(name){
+    let _=localforage;
+    _.setDriver(_.INDEXEDDB).then(()=>{
+        _.getItem(name).then((file)=>{
+            if(file){
+                ai.src=URL.createObjectURL(file);
+                console.log('[load db]', name, 'done');
+            }else{
+                console.log('[load db]', name, 'faild');
+            }
+        });
+    });
+}
+
+loadFromLocalforage('inputfile-image');
+</script>
+</body>
+</html>
+

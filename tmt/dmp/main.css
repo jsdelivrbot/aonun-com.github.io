@@ -1,0 +1,23 @@
+.grid4 {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: 3px;
+}
+
+textarea {
+	display: block;
+	min-height:10em;
+}
+
+del {
+	background: #faa;
+	text-decoration: none;
+	padding-bottom: 6px;
+	margin-bottom: 6px;
+}
+ins {
+	background: #afa;
+	text-decoration: none;
+	padding-top: 6px;
+	margin-top: 6px;
+}
