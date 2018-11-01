@@ -1138,6 +1138,8 @@ $(function () {
 				var a = dict.search(t, Number($('#similarPercent').val()));
 				// 提示内容
 				var table = ao.arrayToTable(a);
+				console.table(table);
+				
 				$('td:nth-child(4)', table).addClass('index');
 				$('td:nth-child(3)', table).addClass('similar').each((_, e) => e.textContent = parseInt(e.textContent) + '%');
 				$('td:nth-child(2)', table).attr({ 'contenteditable': 'plaintext-only' }).addClass('target');
