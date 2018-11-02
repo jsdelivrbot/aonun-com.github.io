@@ -5,7 +5,7 @@ MIT
 
 function longSegmentSplit(str) {
 	// let str = 'aaaa. bbbbbbb.ccccccc.4 4.5%.';
-	let r = /\.+/g;
+	let r = /\!\?+|\?\!+|\?+|\!+|\.+/g;
 	let s = str.split(r);
 	let m = str.match(r)
 	// console.log(JSON.stringify(s));
@@ -20,7 +20,7 @@ function longSegmentSplit(str) {
 		// console.log(after);
 		return e + '\0';
 	});
-	p = p.replace(/\{\\r\\n\}|\\r\\n|\\r|\\n/g, '$&\0');
+	p = p.replace(/\{\\r\\n\}|\\r\\n|\\r|\\n/g, '\0$&\0');
 	p = p.split('\0').map(e => e.trim()).filter(e => e.length > 0);
 
 	// console.log(JSON.stringify(p));
