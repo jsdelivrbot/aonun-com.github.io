@@ -4,7 +4,6 @@ MIT
 */
 
 function longSegmentSplit(str) {
-	// let str = 'aaaa. bbbbbbb.ccccccc.4 4.5%.';
 	let r = /\!\?+|\?\!+|\?+|\!+|\.+/g;
 	let s = str.split(r);
 	let m = str.match(r)
@@ -30,5 +29,5 @@ function longSegmentSplit(str) {
 
 //test:
 // {
-// 	console.log(JSON.stringify(longSegmentSplit('aaa.asdfsa1.{\\r\\n\\n}2asfasf.asf.')));
+	console.log(JSON.stringify(longSegmentSplit('aaa.asdfsa1.{\\r\\n}2asfasf.asf.')));
 // }

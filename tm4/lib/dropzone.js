@@ -1,4 +1,4 @@
-function (){
+(function (){
 
 
 	function Dropzone(t){
@@ -22,10 +22,6 @@ function (){
 Dropzone.prototype.on = function(e) {
 
 }
-Dropzone.prototype.off = function(type, handle)
+Dropzone.prototype.off = function(type, handle){};
 
-
-
-Dropzone
-
-
+})();

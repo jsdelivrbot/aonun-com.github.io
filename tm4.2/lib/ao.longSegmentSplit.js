@@ -30,5 +30,5 @@ function longSegmentSplit(str) {
 
 //test:
 // {
-// 	console.log(JSON.stringify(longSegmentSplit('aaa.asdfsa1.{\\r\\n\\n}2asfasf.asf.')));
+	console.log(JSON.stringify(longSegmentSplit('aaa.asdfsa1.{\\r\\n\\n}2asfasf.asf.')));
 // }

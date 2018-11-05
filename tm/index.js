@@ -562,4 +562,4 @@ if(typeof module==='object' && typeof module.exports==='object') {
 }
 
 
-console.log(JSON.stringify(TERM,null,2));
+
