@@ -5,6 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Replace</title>
+	<script src="/lib/ao/Replace.js"></script>
 	<script src="/lib/vue.min.js"></script>
 	<style>
 		#app {
@@ -65,33 +66,16 @@ label {
 					let regExp, source, option = (this.g ? 'g' : '') + (this.i ? 'i' : '') + (this.m ? 'm' : '');
 					if (this.source && this.string) {
 						// 用总结出来的类进行替换
-						let r = new Replacer();
+						let r = new Replace();
 						let prefix = this.useRegExp ? 'on' : 'off';
 						r[prefix+'RegExp'](this.source, option);
 						this.result = r[prefix](this.string, this.replace);
+						console.log(r.regExp);
 					}
 				}
 			}
 		})
 
-		class Replacer {
-			offRegExp(src, opt = 'gim') {
-				src = src.replace(/[\\\[\]\{\}\(\)\.\-\?\*\+\^\$]/g, '\\$&');
-				this.regExp = new RegExp(src, opt);
-				return this.regExp;
-			}
-			off(text, tar = '') {
-				return text.replace(this.regExp, tar);
-			}
-
-			onRegExp(src, opt = 'gim') {
-				this.regExp = new RegExp(src, opt);
-				return this.regExp;
-			}
-			on(text, tar = '') {
-				return text.replace(this.regExp, tar);
-			}
-		}
 
 	</script>
 </body>
