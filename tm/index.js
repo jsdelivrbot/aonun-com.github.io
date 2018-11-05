@@ -7,6 +7,8 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term=`
+标志	標誌
+關于	關於
 卷入	捲入
 闲聊	閒聊
 周末	週末
