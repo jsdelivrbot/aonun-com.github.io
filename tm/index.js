@@ -7,6 +7,7 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term=`
+周年	週年
 回复	回覆
 肉干	肉乾
 干嘛	幹嘛
