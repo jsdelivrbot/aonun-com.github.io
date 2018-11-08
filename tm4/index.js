@@ -743,7 +743,7 @@ $(function () {
 
 	// 全局按键侦听
 	$(window).on('keydown', function (e) {
-		if(e.keyCode===87&&e.ctrlKey) return e.preventDefault();
+		if (e.keyCode === 87 && e.ctrlKey) return e.preventDefault();
 
 		if ($(e.target).is('.currentEditRow .target')) SM.lastTargetRange = undefined;
 		if (e.keyCode === 87 && e.ctrlKey) {
@@ -2891,7 +2891,7 @@ function addTip(text, dom) {
 			let s = t.parent().find('.source');
 
 			let regExp = new RegExp((e.ctrlKey || e.altKey) ? _customChars : chars, 'gm');
-			let r = s.text().match(regExp).join('').replace('：',':');
+			let r = s.text().match(regExp).join('').replace('：', ':');
 			// console.debug(regExp,r);
 			if (e.altKey) {
 				r = r.replace(/'([\s\S]*?)'/g, '「$1」');
@@ -3242,3 +3242,5 @@ function splitLongSource(str) {
 		}
 	});
 }
+
+
