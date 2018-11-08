@@ -3244,7 +3244,7 @@ function splitLongSource(str) {
 }
 
 
-function cancelComment() {
+function cancelComment(change=true) {
 	$('#works td.comment').each((i, e) => {
 		let c = $(e);// comment
 		if (c.text().trim().length === 0) return true;
@@ -3261,6 +3261,9 @@ function cancelComment() {
 			st = st.replace(e[0],e[1]);
 			tt = tt.replace(e[0], e[1]);
 		});
-		console.log(st,tt);
+		if(change) {
+			s.text(st);
+			t.text(tt);
+		}
 	});
 }
