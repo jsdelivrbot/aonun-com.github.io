@@ -3253,8 +3253,8 @@ function cancelComment() {
 		let s = tr.find('td.source');
 		let t = tr.find('td.target');
 
-		let st = s.text();
-		let tt = t.text();
+		let st = s.text().trim();
+		let tt = t.text().trim();
 
 		let a = c.text().split(',').map(e => e.split(':'));
 		a.forEach(e => {
