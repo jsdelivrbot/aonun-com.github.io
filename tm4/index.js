@@ -981,11 +981,18 @@ $(function () {
 					// console.log('next')
 					current = p.nextAll().not('.hide,.hide1,.hide2,.emptyRow').find('td.target');
 					if (e.ctrlKey) {
-						console.log('skip')
 						current = current.not('.done,.doneAuto,.doneAutoSpace');
 					}
-					console.log('non skip')
-					current.eq(0).focus();
+					let c = current.eq(0);
+					if(c.length>0) {
+						c.focus();
+					}else{
+						c = tar.parent();
+						if (c.is('#works table')) {
+							c = c.next();
+							console.log(c);
+						}
+					}
 					return;
 				}
 				var i = $('td:last()', p).text().trim();
