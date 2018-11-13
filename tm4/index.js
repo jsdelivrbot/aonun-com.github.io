@@ -3251,3 +3251,11 @@ function splitLongSource(str) {
 }
 
 
+
+{
+	// 让单按Alt键失效（否则总会失真）
+	$(window).on('keyup', e=>{
+		e = e.originalEvent;
+		if(e.keyCode===18) e.preventDefault();
+	});
+}
