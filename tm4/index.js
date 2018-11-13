@@ -2009,7 +2009,7 @@ $(function () {
 			$('#works').html(v).find('tr').removeClass('hide hide2 hide3');
 			wpClac();
 			// 自动移动光标
-			$('#works tr.currentEditRow td.target').trigger('click');
+			$('#works .currentEditRow td.target').focus()
 		}
 	});
 	tm.getItem(formatName(location.search) + 'dict', (j, v) => { if (j) { console.warn('[Error] No read dict . ' + j.message); addDict() } else if (v) { addDict(v); } });
