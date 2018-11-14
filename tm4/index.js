@@ -3,7 +3,7 @@ let log = function (s, size = 5) {
 };
 log('TM 4');
 log('ddb@aonun.com', 2);
-log('20181113.1309', 1);
+log('20181114.1', 1);
 
 let SM = {
 	s: window.getSelection(),
@@ -1056,7 +1056,7 @@ $(function () {
 
 			// current = p.nextAll().not('.hide,.hide1,.hide2,.emptyRow').find('td.target');
 			current = p.nextAll().filter((i, e) => e.style.display !== 'none').eq(0).find('.target').trigger('focus')
-			
+
 			if (e.ctrlKey) {
 				current = current.not('.done,.doneAuto,doneAutoSpace');
 			}
