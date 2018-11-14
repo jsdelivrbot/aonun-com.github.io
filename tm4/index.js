@@ -1054,8 +1054,9 @@ $(function () {
 				wpClac();
 			}
 
-
-			current = p.nextAll().not('.hide,.hide1,.hide2,.emptyRow').find('td.target');
+			// current = p.nextAll().not('.hide,.hide1,.hide2,.emptyRow').find('td.target');
+			current = p.nextAll().filter((i, e) => e.style.display !== 'none').eq(0).find('.target').trigger('focus')
+			
 			if (e.ctrlKey) {
 				current = current.not('.done,.doneAuto,doneAutoSpace');
 			}
