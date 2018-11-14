@@ -13,3 +13,4 @@ function _f(){}
 
 export {_A as A, _f as f}
 
+console.log('m');
