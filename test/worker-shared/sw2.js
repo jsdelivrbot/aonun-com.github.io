@@ -1,15 +1,22 @@
-try{
-	// port.postMessage('多次调用sw2.js >> count:');
-	broadcast('sw2.js 실행하였습니다.'+port.id);
-	// broadcast(Object.getOwnPropertyNames(this).join());
-	// broadcast(Object.getOwnPropertyNames(this.__proto__).join());
-}catch(err){
-	port.postMessage(err.stack);
+// addEventListener('connect', function(e){
+// 	let port = e.ports[0];
+// 	port.start();
+
+// 	port.postMessage('sw2.js');
+// });
+
+function show(){
+	return Object.keys(this);
 }
 
+var name = 'sw2';
 
-// 用户sw测试调用，结果可用。
 function f(){
-	broadcast('f()');
-	// console.log('ok');// 不知道被送到哪里了。
+	this.postMessage(arguments);
+}
+
+function sum(...args) {
+	return args.reduce(function(r,e){
+		return r+e;
+	});
 }

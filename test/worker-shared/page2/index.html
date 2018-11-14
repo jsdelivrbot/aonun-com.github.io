@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="../jquery.min.js"></script>
-	<script src="../vue.min.js"></script>
+	<script src="/lib/jquery.min.js"></script>
+	<script src="/lib/vue.min.js"></script>
 	<title>SharedWorker</title>
 </head>
 <body>
@@ -12,13 +12,12 @@
 <a href="page2" target="_blank">打开另一个窗口</a>
 <pre class="ui log"></pre>
 <script>
-
-
 	let sw, port, info={el:'#swInfo', data:{ id:0 }}, v;
 
 	v=new Vue(info);
 
 	sw=new SharedWorker('../sw.js?t='+(new Date).getMinutes());// 相同的js即可共享，只要同域名即可，不同页面也行
+	// sw=new SharedWorker('../sw.js');
 	sw.addEventListener('error', function(e){
 		log('no connect');
 	});

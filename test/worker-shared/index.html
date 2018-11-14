@@ -1,85 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="/lib/localforage.js"></script>
-	<script src="jquery.min.js"></script>
-	<script src="vue.min.js"></script>
+	<script src="/lib/localforage.min.js"></script>
+	<script src="/lib/jquery.min.js"></script>
+	<script src="/lib/vue.min.js"></script>
 	<title>SharedWorker</title>
+	<style>
+	body{
+		font-family: D2Coding;
+		white-space: pre-wrap;
+		font-size: 12pt;
+	}</style>
 </head>
 <body>
 <div id="swInfo">
 	id: {{ id }}
 </div>
-<a href="page2" target="_blank">打开另一个窗口</a>
+<a href="./page2/index.html" target="_blank">打开另一个窗口</a>
 <pre class="ui log"></pre>
-<script>
-let sw, port, info={el:'#swInfo', data:{ id:-1 }}, v;
-
-v=new Vue(info);
-
-
-sw=new SharedWorker('sw.js?t='+Date.now());
-sw.addEventListener('error', function(e){
-	log('no connect');
-});
-
-port=sw.port;
-port.start();
-
-port.addEventListener('message', function(e){
-	let o=e.data, type=o.type, id=o.id, data=o.data;
-
-	console.group('port.onmessage');
-	console.log(type);
-	console.log(id);
-	console.log(data);
-	console.log(e.lastEventId);
-	console.log(e.ports);
-	console.groupEnd('port.onmessage');
-
-	if(type === 'connect') {
-		v.id=e.data.id;
-	}else if(e.data.type === 'message') {
-	}
-});
-
-
-function log(id, data){
-	document.querySelector('.ui.log').prepend(`shared worker ${id} : ${data}\n\n`);
-}
-
-sw.port.addEventListener('errormessage', function(e){
-	console.log(e)
-	document.querySelector('.ui.log').prepend(`@errormessage>> ${location.href} ${e.message}`);
-});
-
-
-sw.port.addEventListener('error', function(e){
-	console.log(e)
-	document.querySelector('.ui.log').prepend(`@error>> ${location.href} ${e.message}`);
-});
-
-sw.port.addEventListener('change', function(e){
-	console.log(e)
-	document.querySelector('.ui.log').prepend(`@change>> ${location.href}`);
-});
-
-sw.port.addEventListener('close', function(e){
-	console.log(e)
-	document.querySelector('.ui.log').prepend(`@close>> ${location.href}`);
-});
-
-
-window.onclick=window.ondblclick=window.onwheel=function(e){
-	let data={type:e.type, id:sw.id};
-	port.postMessage(data);
-}
-
-window.oncontextmenu=function(e){
-	e.preventDefault();
-	port.postMessage({ type:'throwError' });
-}
-
-</script>
+<script src="index.js"></script>
 </body>
 </html>
