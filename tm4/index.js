@@ -3,7 +3,7 @@ let log = function (s, size = 5) {
 };
 log('TM 4');
 log('ddb@aonun.com', 2);
-log('20181114.1', 1);
+log('20181115.2', 1);
 
 let SM = {
 	s: window.getSelection(),
@@ -145,8 +145,11 @@ let lwsd2 = new LocaleWorker('searchDictionary2',
 					.append($('<td class="index">').text(kv[2]))
 			});
 		}
-	}, code_Search_min + `function stringNormalize(s){
-    return typeof s!=='undefined' ? String(s).replace(/[\\x00-\\xff]/g,'') : s;
+	}, code_Search_min + `
+function stringNormalize(s){
+	console.log('stringNormalize');
+    // return typeof s!=='undefined' ? String(s).replace(/[\\x00-\\xff]/g,'') : s;
+    return s;
 }
 
 addEventListener('message',(e)=>{
