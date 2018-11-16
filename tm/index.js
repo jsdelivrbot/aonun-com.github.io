@@ -7,6 +7,7 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term =`
+重复	重複
 修复	修復
 抬举	抬舉
 相克	相剋
