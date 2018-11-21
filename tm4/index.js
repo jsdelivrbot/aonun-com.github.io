@@ -3,7 +3,7 @@ let log = function (s, size = 5) {
 };
 // log('TM 4');
 // log('ddb@aonun.com', 2);
-log('2', 1);
+log('3', 1);
 
 let SM = {
 	s: window.getSelection(),
@@ -1044,8 +1044,10 @@ $(function () {
 							'grid-template-columns': '1fr 1fr',
 						});
 						setTimeout(()=>tip.remove(),5000);
-						b.sa.map(e => $('<span style="padding:3px 6px">').text(e)).appendTo(tip.find('.sd'));
-						b.ta.map(e => $('<span style="padding:3px 6px">').text(e)).appendTo(tip.find('.td'));
+						let sd = tip.find('.sd');
+						let td = tip.find('.td');
+						b.sa.forEach(e => $('<span style="padding:3px 6px">').text(e).appendTo(sd));
+						b.ta.forEach(e => $('<span style="padding:3px 6px">').text(e).appendTo(td));
 					}
 
 
