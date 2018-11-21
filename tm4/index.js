@@ -3,7 +3,7 @@ let log = function (s, size = 5) {
 };
 // log('TM 4');
 // log('ddb@aonun.com', 2);
-log('5', 1);
+log('1', 1);
 
 let SM = {
 	s: window.getSelection(),
@@ -1041,10 +1041,11 @@ $(function () {
 						let tip = p.find('.tip');
 						if(tip.length===0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({background:'#f00',color:'#ff0'});
 						setTimeout(()=>tip.remove(),5000);
-						
+
 						if (b.sa.length) {
 							let sd = b.sa.map(e => $('<span style="padding:3px 6px">').text(e));
 							tip.find('.sd').text(sd);
+							console.log('sd', sd);
 							// let sd = $('<span>').append(b.sa.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
 							// rect = tar.prev('.source').get(0).getBoundingClientRect();
 							// // showTip({html:$('<div>').append(sd), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
@@ -1057,7 +1058,10 @@ $(function () {
 							// rect = tar.get(0).getBoundingClientRect();
 							// // showTip({html:$('<div>').append(td), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
 							// showTip({ html: $('<div>').append(td), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
+							console.log('td', td);
+							
 						}
+
 					}
 
 
