@@ -3,7 +3,7 @@ let log = function (s, size = 5) {
 };
 // log('TM 4');
 // log('ddb@aonun.com', 2);
-log('1', 1);
+log('2', 1);
 
 let SM = {
 	s: window.getSelection(),
