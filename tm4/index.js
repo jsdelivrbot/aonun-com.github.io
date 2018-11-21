@@ -1041,13 +1041,13 @@ $(function () {
 							let sd = $('<span>').append(b.sa.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
 							rect = tar.prev('.source').get(0).getBoundingClientRect();
 							// showTip({html:$('<div>').append(sd), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
-							showTip({ html: $('<div>').append(sd), x: rect.x, y: rect.y, delay: 5000, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
+							showTip({ html: $('<div>').append(sd), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
 						}
 						if (b.ta.length) {
 							let td = $('<span>').append(b.ta.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
 							rect = tar.get(0).getBoundingClientRect();
 							// showTip({html:$('<div>').append(td), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
-							showTip({ html: $('<div>').append(td), x: rect.x, y: rect.y, delay: 5000, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
+							showTip({ html: $('<div>').append(td), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
 						}
 					}
 
@@ -3132,9 +3132,9 @@ function showTip(opt) {
 		left: opt.x || 0,
 		top: opt.y || 0,
 		zIndex: 999,
-		opacity: 0.6,
+		opacity: 1,
 	}).css(Object.assign({
-		opacity: 0.6,
+		opacity: 0.1,
 		margin: 0,
 		padding: 6,
 		border: '2px solid #000',
