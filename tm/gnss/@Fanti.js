@@ -32,5 +32,6 @@ filenames.forEach(function (filename,index){
   var data=read(dirname+filename);
   // console.log(data);
 
-  fs.writeFileSync(dirname+filename.replace('.txt','.NAN.txt'), data, {encoding:'ucs2'});
+  // fs.writeFileSync(dirname+filename.replace('.txt','.NAN.txt'), data, {encoding:'ucs2'});
+  fs.writeFileSync(dirname+filename, data, {encoding:'ucs2'});
 });

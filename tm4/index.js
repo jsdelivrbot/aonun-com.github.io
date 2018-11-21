@@ -3150,7 +3150,7 @@ function showTip(opt) {
 			ui = ui.animate(opt.animate);
 		}
 	}
-	ui.delay(opt.delay || 3000).fadeOut(() => ui.remove());
+	ui.delay(opt.delay || 1500).fadeOut(() => ui.remove());
 	return ui;
 }
 
