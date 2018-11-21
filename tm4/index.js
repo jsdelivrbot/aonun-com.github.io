@@ -3,7 +3,7 @@ let log = function (s, size = 5) {
 };
 log('TM 4');
 log('ddb@aonun.com', 2);
-log('4', 1);
+log('5', 1);
 
 let SM = {
 	s: window.getSelection(),
@@ -1037,17 +1037,22 @@ $(function () {
 					let b = numCheck(s, t);
 					if (!b.done) {
 						let rect;
+						let tip = $('<td><span class="sd"></span><span class="td></span></td>').appendTo(p).css({background:'#00',color:'#ff0'}).delay(3000).hide();
 						if (b.sa.length) {
-							let sd = $('<span>').append(b.sa.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
-							rect = tar.prev('.source').get(0).getBoundingClientRect();
-							// showTip({html:$('<div>').append(sd), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
-							showTip({ html: $('<div>').append(sd), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
+							let sd = b.sa.map(e => $('<span style="padding:3px 6px">').text(e));
+							tip.find('.sd').text(sd);
+							// let sd = $('<span>').append(b.sa.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
+							// rect = tar.prev('.source').get(0).getBoundingClientRect();
+							// // showTip({html:$('<div>').append(sd), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
+							// showTip({ html: $('<div>').append(sd), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
 						}
 						if (b.ta.length) {
-							let td = $('<span>').append(b.ta.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
-							rect = tar.get(0).getBoundingClientRect();
-							// showTip({html:$('<div>').append(td), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
-							showTip({ html: $('<div>').append(td), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
+							let td = b.ta.map(e => $('<span style="padding:3px 6px">').text(e));
+							tip.find('.td').text(td);
+							// let td = $('<span>').append(b.ta.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
+							// rect = tar.get(0).getBoundingClientRect();
+							// // showTip({html:$('<div>').append(td), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
+							// showTip({ html: $('<div>').append(td), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
 						}
 					}
 
