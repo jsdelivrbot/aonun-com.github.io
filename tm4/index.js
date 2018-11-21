@@ -1036,6 +1036,8 @@ $(function () {
 				{// 检查数值是否正确
 					let b = numCheck(s, t);
 					if (!b.done) {
+						console.log(b);
+						
 						let rect;
 
 						let tip = p.find('.tip');
@@ -1043,6 +1045,7 @@ $(function () {
 						setTimeout(()=>tip.remove(),5000);
 
 						if (b.sa.length) {
+
 							let sd = b.sa.map(e => $('<span style="padding:3px 6px">').text(e));
 							tip.find('.sd').text(sd);
 							console.log('sd', sd);
