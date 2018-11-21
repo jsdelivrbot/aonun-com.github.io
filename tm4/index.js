@@ -1045,8 +1045,8 @@ $(function () {
 							'grid-template-columns': '1fr 1fr',
 						});
 						setTimeout(() => tip.remove(), 5000);
-						let sd = tip.find('.sd');
-						let td = tip.find('.td');
+						let sd = tip.find('.sd').empty();
+						let td = tip.find('.td').empty();
 						b.sa.forEach(e => $('<span>').css({ background: '#f00', margin: '1px'}).text(e).appendTo(sd));
 						b.ta.forEach(e => $('<span>').css({ background: '#00f', margin: '1px'}).text(e).appendTo(td));
 					}
