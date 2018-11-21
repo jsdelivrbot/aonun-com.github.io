@@ -3131,6 +3131,7 @@ function showTip(opt) {
 		top: opt.y || 0,
 		zIndex: 999
 	}).css(Object.assign({
+		opacity: 0.6,
 		margin: 0,
 		padding: 6,
 		border: '2px solid #000',
