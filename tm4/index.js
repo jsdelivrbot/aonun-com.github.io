@@ -1039,7 +1039,7 @@ $(function () {
 					let b = numCheck(s, t);
 					if (!b.done) {
 						let tip = p.find('.tip');
-						if (tip.length === 0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({
+						if (tip.length === 0) tip = $('<td class="tip"><span class="sd"></span><span class="td"></span></td>').appendTo(p).css({
 							color: '#ff0',
 							display: 'grid',
 							'grid-template-columns': '1fr 1fr',
