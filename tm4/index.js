@@ -2023,6 +2023,7 @@ $(function () {
 	tm.getItem(formatName(location.search) + 'useDaum', (j, v) => { if (j) { console.warn('[Error] No read useDaum . ' + j.message); } else if (v) { $('#useDaum').prop('checked', v); console.log('daum', v); } });
 	tm.getItem(formatName(location.search) + 'useDictTip', (j, v) => { if (j) { console.warn('[Error] No read useDictTip . ' + j.message); } else if (v) { $('#useDictTip').prop('checked', v); console.log('useDictTip', v); } });
 	tm.getItem(formatName(location.search) + 'worksFontSize', (j, v) => { if (j) { console.warn('[Error] No read fontSize . ' + j.message); } else if (v) { $('#worksFontSize').val(v); console.log('font-size', v); changeWorksFontSize(); } });
+	tm.getItem(formatName(location.search) + 'netTarget', (j, v) => { if (j) { console.warn('[Error] No read fontSize . ' + j.message); } else if (v) { $('#netTarget').val(v); } });
 
 });
 
@@ -2101,6 +2102,7 @@ function saveDatas() {
 	tm.setItem(formatName(location.search) + 'useDaum', $('#useDaum').prop('checked')).catch((e) => { if (e) { alert('[Error] no save useDaum. ' + e.message); } });
 	tm.setItem(formatName(location.search) + 'useDictTip', $('#useDictTip').prop('checked')).catch((e) => { if (e) { alert('[Error] no save useDictTip. ' + e.message); } });
 	tm.setItem(formatName(location.search) + 'worksFontSize', $('#worksFontSize').val()).catch((e) => { if (e) { alert('[Error] no save worksFontSize. ' + e.message); } });
+	tm.setItem(formatName(location.search) + 'netTarget', $('#netTarget').val()).catch((e) => { if (e) { alert('[Error] no save worksFontSize. ' + e.message); } });
 }
 
 
@@ -3129,7 +3131,8 @@ function showTip(opt) {
 		position: 'fixed',
 		left: opt.x || 0,
 		top: opt.y || 0,
-		zIndex: 999
+		zIndex: 999,
+		opacity: 0.6,
 	}).css(Object.assign({
 		opacity: 0.6,
 		margin: 0,
