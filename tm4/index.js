@@ -2022,7 +2022,7 @@ $(function () {
 	tm.getItem(formatName(location.search) + 'useNaver', (j, v) => { if (j) { console.warn('[Error] No read useNaver . ' + j.message); } else if (v) { $('#useNaver').prop('checked', v); console.log('naver', v); } });
 	tm.getItem(formatName(location.search) + 'useDaum', (j, v) => { if (j) { console.warn('[Error] No read useDaum . ' + j.message); } else if (v) { $('#useDaum').prop('checked', v); console.log('daum', v); } });
 	tm.getItem(formatName(location.search) + 'useDictTip', (j, v) => { if (j) { console.warn('[Error] No read useDictTip . ' + j.message); } else if (v) { $('#useDictTip').prop('checked', v); console.log('useDictTip', v); } });
-	tm.getItem(formatName(location.search) + 'worksFontSize', (j, v) => { if (j) { console.warn('[Error] No read fontSize . ' + j.message); } else if (v) { $('#worksFontSize').val(v); console.log('font-size', v); changeWorksFontSize(); } });
+	tm.getItem(formatName(location.search) + 'worksFontSize', (j, v) => { if (j) { console.warn('[Error] No read fontSize . ' + j.message); } else if (v) { $('#worksFontSize').val(v); console.log('font-size', v); changeWorksFontSize(); $('#works .tip').remove(); } });
 	tm.getItem(formatName(location.search) + 'netTarget', (j, v) => { if (j) { console.warn('[Error] No read fontSize . ' + j.message); } else if (v) { $('#netTarget').val(v); } });
 
 });
