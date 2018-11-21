@@ -1036,35 +1036,16 @@ $(function () {
 				{// 检查数值是否正确
 					let b = numCheck(s, t);
 					if (!b.done) {
-						console.log(b);
-						
-						let rect;
-
 						let tip = p.find('.tip');
-						if(tip.length===0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({background:'#f00',color:'#ff0'});
+						if(tip.length===0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({
+							background:'#f00',
+							color:'#ff0',
+							display: 'grid',
+							'grid-template-columns': '1fr 1fr',
+						});
 						setTimeout(()=>tip.remove(),5000);
-
-						if (b.sa.length) {
-
-							let sd = b.sa.map(e => $('<span style="padding:3px 6px">').text(e));
-							tip.find('.sd').text(sd);
-							console.log('sd', sd);
-							// let sd = $('<span>').append(b.sa.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
-							// rect = tar.prev('.source').get(0).getBoundingClientRect();
-							// // showTip({html:$('<div>').append(sd), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
-							// showTip({ html: $('<div>').append(sd), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
-						}
-						if (b.ta.length) {
-							let td = b.ta.map(e => $('<span style="padding:3px 6px">').text(e));
-							tip.find('.td').text(td);
-							// let td = $('<span>').append(b.ta.map(e => $('<span style="padding:3px 6px">').text(e))).get(0).outerHTML;
-							// rect = tar.get(0).getBoundingClientRect();
-							// // showTip({html:$('<div>').append(td), x:rect.x, y:Math.max(0,rect.y-rect.height), delay:5000, css:{background:'#f00',color:'#ff0'}});
-							// showTip({ html: $('<div>').append(td), x: rect.x, y: rect.y, delay: 1500, css: { background: '#f00', color: '#ff0', transform: 'translate(0,100%)' } });
-							console.log('td', td);
-							
-						}
-
+						b.sa.map(e => $('<span style="padding:3px 6px">').text(e)).appendTo(tip.find('.sd'));
+						b.ta.map(e => $('<span style="padding:3px 6px">').text(e)).appendTo(tip.find('.td'));
 					}
 
 
