@@ -1037,7 +1037,11 @@ $(function () {
 					let b = numCheck(s, t);
 					if (!b.done) {
 						let rect;
-						let tip = $('<td><span class="sd"></span><span class="td></span></td>').appendTo(p).css({background:'#00',color:'#ff0'}).delay(3000).hide();
+
+						let tip = p.find('.tip');
+						if(tip.length===0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({background:'#f00',color:'#ff0'});
+						setTimeout(()=>tip.remove(),5000);
+						
 						if (b.sa.length) {
 							let sd = b.sa.map(e => $('<span style="padding:3px 6px">').text(e));
 							tip.find('.sd').text(sd);
