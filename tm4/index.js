@@ -1050,10 +1050,7 @@ $(function () {
 						b.sa.forEach(e => $('<span>').css({ background: '#f00', margin: '1px'}).text(e).appendTo(sd));
 						b.ta.forEach(e => $('<span>').css({ background: '#00f', margin: '1px'}).text(e).appendTo(td));
 					}
-
-
 				}
-
 				wpClac();
 			}
 
@@ -2011,6 +2008,7 @@ $(function () {
 	tm.getItem(formatName(location.search) + 'works', (j, v) => {
 		if (j) { console.warn('[Error] No read works. ' + j.message) } else if (v) {
 			$('#works').html(v).find('tr').removeClass('hide hide2 hide3');
+			$('#works .tip').remove();
 			wpClac();
 			// 自动移动光标
 			$('#works .currentEditRow td.target').focus()
