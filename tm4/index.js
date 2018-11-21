@@ -1047,7 +1047,7 @@ $(function () {
 						setTimeout(() => tip.remove(), 5000);
 						let sd = tip.find('.sd');
 						let td = tip.find('.td');
-						b.sa.forEach(e => $('<span>').css({ background: '#f00', margin:'1px' }).text(e).appendTo(sd));
+						b.sa.forEach(e => $('<span>').css({ background: '#f00', margin: '1px'}).text(e).appendTo(sd));
 						b.ta.forEach(e => $('<span>').css({ background: '#00f', margin: '1px'}).text(e).appendTo(td));
 					}
 
