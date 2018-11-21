@@ -1,9 +1,11 @@
+console.log('version', 4 );
+
 let log = function (s, size = 5) {
 	console.log("%c" + s, " text-shadow: 0 1px 0 #ccc,0 2px 0 #c9c9c9,0 3px 0 #bbb,0 4px 0 #b9b9b9,0 5px 0 #aaa,0 6px 1px rgba(0,0,0,.1),0 0 5px rgba(0,0,0,.1),0 1px 3px rgba(0,0,0,.3),0 3px 5px rgba(0,0,0,.2),0 5px 10px rgba(0,0,0,.25),0 10px 10px rgba(0,0,0,.2),0 20px 20px rgba(0,0,0,.15);font-size:" + size + "em");
 };
 // log('TM 4');
 // log('ddb@aonun.com', 2);
-log('3', 1);
+
 
 let SM = {
 	s: window.getSelection(),
@@ -987,9 +989,9 @@ $(function () {
 						current = current.not('.done,.doneAuto,.doneAutoSpace');
 					}
 					let c = current.eq(0);
-					if(c.length>0) {
+					if (c.length > 0) {
 						c.focus();
-					}else{
+					} else {
 						c = tar.parent();
 						if (c.is('#works table')) {
 							c = c.next();
@@ -1037,17 +1039,16 @@ $(function () {
 					let b = numCheck(s, t);
 					if (!b.done) {
 						let tip = p.find('.tip');
-						if(tip.length===0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({
-							background:'#f00',
-							color:'#ff0',
+						if (tip.length === 0) tip = $('<td class="tip"><span class="sd"></span><span class="td></span></td>').appendTo(p).css({
+							color: '#ff0',
 							display: 'grid',
 							'grid-template-columns': '1fr 1fr',
 						});
-						setTimeout(()=>tip.remove(),5000);
+						setTimeout(() => tip.remove(), 5000);
 						let sd = tip.find('.sd');
 						let td = tip.find('.td');
-						b.sa.forEach(e => $('<span style="padding:3px 6px">').text(e).appendTo(sd));
-						b.ta.forEach(e => $('<span style="padding:3px 6px">').text(e).appendTo(td));
+						b.sa.forEach(e => $('<span>').css({ background: '#f00', padding: '3px' }).text(e).appendTo(sd));
+						b.ta.forEach(e => $('<span>').css({ background: '#f00', padding: '3px' }).text(e).appendTo(td));
 					}
 
 
@@ -3261,12 +3262,12 @@ function splitLongSource(str) {
 
 {
 	// 让单按Alt键失效（否则总会失真）
-	$(window).on('keyup', e=>{
+	$(window).on('keyup', e => {
 		disableAlt.call(e);
 	});
 
 	function disableAlt() {
 		// this === KeyboardEvent
-		if(this.keyCode) this.preventDefault();
+		if (this.keyCode) this.preventDefault();
 	}
 }
