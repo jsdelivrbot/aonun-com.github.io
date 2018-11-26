@@ -6,6 +6,8 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term =`
+干涉	干涉
+發泄	發洩
 干掉	幹掉
 卢安达	盧安達
 悉尼	雪梨
