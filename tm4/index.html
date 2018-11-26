@@ -475,7 +475,19 @@ label.button input[type=radio] {
 
 	<img id="page_counter" src="https://www.reliablecounter.com/count.php?page=aonun.com/tm4&digit=style/plain/30/&reloads=0"
 	 alt="" title="" border="0">
-</body>
+<div id="tm4Chat" v-if="tm4ChatOn">{{count}}</div>
+<style>
+	#tm4Chat {
+		position: fixed;
+		bottom: 0;
+		right: 0;
+	}
+</style>
+<script src="tm4Chat.js"></script>
+
+	</body>
 <style id="activeStyle"></style>
+
+
 
 </html>
