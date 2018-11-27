@@ -475,6 +475,7 @@ label.button input[type=radio] {
 
 	<img id="page_counter" src="https://www.reliablecounter.com/count.php?page=aonun.com/tm4&digit=style/plain/30/&reloads=0"
 	 alt="" title="" border="0">
+
 <div id="tm4Chat" v-if="tm4ChatOn">{{count}}</div>
 <style>
 	#tm4Chat {
@@ -483,7 +484,14 @@ label.button input[type=radio] {
 		right: 0;
 	}
 </style>
-<script src="tm4Chat.js"></script>
+<script>
+let tm4Chat, tm4Vue;
+tm4Vue = new Vue({ el: '#tm4Chat', data: { count: 0, tm4ChatOn: false } });
+tm4Chat = io('https://cihot.com', { reconnection: false, path: '/ws-tm4', serveClient: false, transports: ['websocket'] });
+tm4Chat.on('connect', (e) => { tm4Vue.tm4ChatOn = true; });
+tm4Chat.on('disconnect', (e) => { tm4Vue.tm4ChatOn = false; });
+tm4Chat.on('count', (n) => { tm4Vue.count = n; });
+</script>
 
 	</body>
 <style id="activeStyle"></style>
