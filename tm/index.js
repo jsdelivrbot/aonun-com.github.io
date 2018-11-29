@@ -6,6 +6,9 @@ for(let i=0,len=CN.length; i<len; i++) {
 	TERM.push([CN[i],TW[i]]);
 }
 let term =`
+干净	乾淨
+干干净净	乾乾淨淨
+一干二净	一乾二淨
 干涉	干涉
 發泄	發洩
 干掉	幹掉
